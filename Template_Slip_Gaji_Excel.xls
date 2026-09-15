@@ -148,12 +148,23 @@
     <td class="td-border num">&nbsp;</td>
   </tr>
 
+  <!-- Baris 6: Insentif Lain (Bonus/Lainnya) -->
+  <tr>
+    <td colspan="2" class="td-border">
+      Insentif Lain / Bonus<br>
+      <span class="note">(Opsional: Insentif performa, lembur luar, dll.)</span>
+    </td>
+    <td class="td-border num" style="vertical-align: top;">0</td>
+    <td class="td-border">&nbsp;</td>
+    <td class="td-border num">&nbsp;</td>
+  </tr>
+
   <!-- Total Baris -->
   <tr class="total-row">
     <td colspan="2" class="td-border"><b>TOTAL PENERIMAAN</b></td>
-    <td class="td-border num" style="font-weight: bold;">=SUM(C14:C18)</td>
+    <td class="td-border num" style="font-weight: bold;">=SUM(C14:C19)</td>
     <td class="td-border"><b>TOTAL POTONGAN</b></td>
-    <td class="td-border num" style="font-weight: bold; color: #b91c1c;">=SUM(E14:E18)</td>
+    <td class="td-border num" style="font-weight: bold; color: #b91c1c;">=SUM(E14:E19)</td>
   </tr>
 
   <tr><td colspan="5">&nbsp;</td></tr>
@@ -164,7 +175,7 @@
       <b>PENERIMAAN BERSIH (TAKE HOME PAY)</b>
     </td>
     <td colspan="2" class="thp-box num" style="padding: 10px; font-size: 14pt;">
-      =C19-E19
+      =C20-E20
     </td>
   </tr>
 

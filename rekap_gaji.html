@@ -777,7 +777,7 @@
             <tr>
               <th colspan="5">DATA KARYAWAN</th>
               <th colspan="2">KEHADIRAN</th>
-              <th colspan="6" class="th-income">PENERIMAAN (PENGHASILAN BRUTO)</th>
+              <th colspan="7" class="th-income">PENERIMAAN (PENGHASILAN BRUTO)</th>
               <th colspan="5" class="th-deduct">POTONGAN & PAJAK</th>
               <th class="th-net">BERSIH</th>
               <th rowspan="2">REKENING TRANSFER</th>
@@ -796,6 +796,7 @@
               <th class="th-income">TUNJ. MAKAN</th>
               <th class="th-income">TUNJ. TRANSPORT</th>
               <th class="th-income">INSENTIF MERAH</th>
+              <th class="th-income">INSENTIF LAIN</th>
               <th class="th-income" style="font-weight: 800; background: #dbeafe !important;">TOTAL BRUTO</th>
               <th class="th-deduct">PPh 21 (TER)</th>
               <th class="th-deduct">BPJS</th>
@@ -818,6 +819,7 @@
               <td class="col-right" id="footTunjMakan">Rp 0</td>
               <td class="col-right" id="footTunjTransport">Rp 0</td>
               <td class="col-right" id="footInsentifMerah">Rp 0</td>
+              <td class="col-right" id="footInsentifLain" style="color: #5eead4;">Rp 0</td>
               <td class="col-right col-bold" id="footTotalBruto" style="background: #1e40af; color: white;">Rp 0</td>
               <td class="col-right" id="footPph21" style="color: #fca5a5;">Rp 0</td>
               <td class="col-right" id="footBpjs">Rp 0</td>
@@ -1117,6 +1119,7 @@
       let sumTunjMakan = 0;
       let sumTunjTransport = 0;
       let sumInsentifMerah = 0;
+      let sumInsentifLain = 0;
       let sumTotalBruto = 0;
       let sumPph21 = 0;
       let sumBpjs = 0;
@@ -1135,7 +1138,8 @@
         const tm = r.totalMakan || (hariMasuk * (r.rateMakanPerHari || 25000));
         const tt = r.totalTransport || (hariMasuk * (r.rateTransportPerHari || 15000));
         const im = r.totalMerah || (hariMerah * 75000);
-        const bruto = r.totalPenghasilan || (gp + tj + tm + tt + im);
+        const il = r.insentifLain || 0;
+        const bruto = r.totalPenghasilan || (gp + tj + tm + tt + im + il);
 
         const pph21 = r.potonganPph21 || 0;
         const bpjs = r.iuranBpjs || 0;
@@ -1151,6 +1155,7 @@
         sumTunjMakan += tm;
         sumTunjTransport += tt;
         sumInsentifMerah += im;
+        sumInsentifLain += il;
         sumTotalBruto += bruto;
         sumPph21 += pph21;
         sumBpjs += bpjs;
@@ -1179,6 +1184,7 @@
             <td class="col-right">${formatRupiah(tm)}</td>
             <td class="col-right">${formatRupiah(tt)}</td>
             <td class="col-right" style="color: #86198f;">${formatRupiah(im)}</td>
+            <td class="col-right" style="color: #0f766e; font-weight: 600;">${formatRupiah(il)}</td>
             <td class="col-right col-bold" style="background: #eff6ff; color: #1e40af;">${formatRupiah(bruto)}</td>
             <td class="col-right" style="color: #991b1b;">${formatRupiah(pph21)}</td>
             <td class="col-right">${formatRupiah(bpjs)}</td>
@@ -1200,12 +1206,12 @@
 
       updateSummaryStats(
         filtered.length, sumHariKerja, sumHariMerah, sumGajiPokok, sumTunjJabatan,
-        sumTunjMakan, sumTunjTransport, sumInsentifMerah, sumTotalBruto,
+        sumTunjMakan, sumTunjTransport, sumInsentifMerah, sumInsentifLain, sumTotalBruto,
         sumPph21, sumBpjs, sumCicilan, sumPotLain, sumTotalPotongan, sumNetGaji
       );
     }
 
-    function updateSummaryStats(count, hariKerja, hariMerah, gp, tj, tm, tt, im, bruto, pph21, bpjs, cicilan, potLain, totalPot, netGaji) {
+    function updateSummaryStats(count, hariKerja, hariMerah, gp, tj, tm, tt, im, il, bruto, pph21, bpjs, cicilan, potLain, totalPot, netGaji) {
       document.getElementById('statTotalEmployees').innerText = count + " Orang";
       document.getElementById('statTotalBruto').innerText = "Rp " + formatRupiah(bruto);
       document.getElementById('statTotalPph21').innerText = "Rp " + formatRupiah(pph21);
@@ -1220,6 +1226,9 @@
       document.getElementById('footTunjMakan').innerText = "Rp " + formatRupiah(tm);
       document.getElementById('footTunjTransport').innerText = "Rp " + formatRupiah(tt);
       document.getElementById('footInsentifMerah').innerText = "Rp " + formatRupiah(im);
+      if (document.getElementById('footInsentifLain')) {
+        document.getElementById('footInsentifLain').innerText = "Rp " + formatRupiah(il || 0);
+      }
       document.getElementById('footTotalBruto').innerText = "Rp " + formatRupiah(bruto);
       document.getElementById('footPph21').innerText = "Rp " + formatRupiah(pph21);
       document.getElementById('footBpjs').innerText = "Rp " + formatRupiah(bpjs);
@@ -1261,7 +1270,7 @@
         return;
       }
 
-      let csv = "No,Tanggal Simpan,Periode,NIK,Nama Karyawan,Jabatan,Divisi,Status,Status PTKP,NPWP,Hari Masuk,Hari Tgl Merah,Gaji Pokok,Tunjangan Jabatan,Tunjangan Makan,Tunjangan Transport,Insentif Tgl Merah,TOTAL GAJI BRUTO,Potongan PPh 21,Iuran BPJS,Cicilan Kasbon,Potongan Lain,TOTAL POTONGAN,GAJI BERSIH (THP),No Rekening\n";
+      let csv = "No,Tanggal Simpan,Periode,NIK,Nama Karyawan,Jabatan,Divisi,Status,Status PTKP,NPWP,Hari Masuk,Hari Tgl Merah,Gaji Pokok,Tunjangan Jabatan,Tunjangan Makan,Tunjangan Transport,Insentif Tgl Merah,Insentif Lain,Keterangan Insentif,TOTAL GAJI BRUTO,Potongan PPh 21,Iuran BPJS,Cicilan Kasbon,Potongan Lain,TOTAL POTONGAN,GAJI BERSIH (THP),No Rekening\n";
 
       records.forEach((r, idx) => {
         const hm = r.hariKerja || 0;
@@ -1271,7 +1280,8 @@
         const tm = r.totalMakan || (hm * (r.rateMakanPerHari || 25000));
         const tt = r.totalTransport || (hm * (r.rateTransportPerHari || 15000));
         const im = r.totalMerah || (hrMerah * 75000);
-        const bruto = r.totalPenghasilan || (gp + tj + tm + tt + im);
+        const il = r.insentifLain || 0;
+        const bruto = r.totalPenghasilan || (gp + tj + tm + tt + im + il);
         const pph21 = r.potonganPph21 || 0;
         const bpjs = r.iuranBpjs || 0;
         const cicilan = r.cicilanPinjaman || 0;
@@ -1279,7 +1289,7 @@
         const totalPot = r.totalPotongan || (pph21 + bpjs + cicilan + potLain);
         const thp = r.netGaji || (bruto - totalPot);
 
-        csv += `"${idx+1}","${r.savedAt || ''}","${r.payPeriod || ''}","${r.empId || ''}","${r.empName || ''}","${r.empJabatan || ''}","${r.empDivisi || ''}","${r.empStatus || ''}","${r.empPtkp || 'TK/0'}","${r.empNpwp || '-'}","${hm}","${hrMerah}","${gp}","${tj}","${tm}","${tt}","${im}","${bruto}","${pph21}","${bpjs}","${cicilan}","${potLain}","${totalPot}","${thp}","${r.empRekening || ''}"\n`;
+        csv += `"${idx+1}","${r.savedAt || ''}","${r.payPeriod || ''}","${r.empId || ''}","${r.empName || ''}","${r.empJabatan || ''}","${r.empDivisi || ''}","${r.empStatus || ''}","${r.empPtkp || 'TK/0'}","${r.empNpwp || '-'}","${hm}","${hrMerah}","${gp}","${tj}","${tm}","${tt}","${im}","${il}","${(r.ketInsentifLain || '').replace(/"/g, '""')}","${bruto}","${pph21}","${bpjs}","${cicilan}","${potLain}","${totalPot}","${thp}","${r.empRekening || ''}"\n`;
       });
 
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
@@ -1321,6 +1331,8 @@
           totalMakan: 600000,
           totalTransport: 360000,
           totalMerah: 150000,
+          insentifLain: 0,
+          ketInsentifLain: '',
           totalPenghasilan: 6010000,
           potonganPph21: 45075,
           iuranBpjs: 150000,
@@ -1354,13 +1366,15 @@
           totalMakan: 625000,
           totalTransport: 500000,
           totalMerah: 75000,
-          totalPenghasilan: 8900000,
-          potonganPph21: 155750,
+          insentifLain: 500000,
+          ketInsentifLain: 'Bonus Kinerja',
+          totalPenghasilan: 9400000,
+          potonganPph21: 164500,
           iuranBpjs: 200000,
           cicilanPinjaman: 0,
           potonganLain: 0,
-          totalPotongan: 355750,
-          netGaji: 8544250
+          totalPotongan: 364500,
+          netGaji: 9035500
         },
         {
           id: 'SAMPLE_3',
@@ -1387,6 +1401,8 @@
           totalMakan: 720000,
           totalTransport: 600000,
           totalMerah: 150000,
+          insentifLain: 0,
+          ketInsentifLain: '',
           totalPenghasilan: 12970000,
           potonganPph21: 518800,
           iuranBpjs: 300000,
@@ -1420,6 +1436,8 @@
           totalMakan: 550000,
           totalTransport: 330000,
           totalMerah: 0,
+          insentifLain: 0,
+          ketInsentifLain: '',
           totalPenghasilan: 5280000,
           potonganPph21: 0,
           iuranBpjs: 120000,
@@ -1453,13 +1471,15 @@
           totalMakan: 650000,
           totalTransport: 520000,
           totalMerah: 225000,
-          totalPenghasilan: 5995000,
+          insentifLain: 300000,
+          ketInsentifLain: 'Insentif Lembur Pengiriman',
+          totalPenghasilan: 6295000,
           potonganPph21: 0,
           iuranBpjs: 140000,
           cicilanPinjaman: 100000,
           potonganLain: 0,
           totalPotongan: 240000,
-          netGaji: 5755000
+          netGaji: 6055000
         }
       ];
 

@@ -1599,6 +1599,26 @@
               </div>
             </div>
           </div>
+
+          <!-- Insentif Lain / Bonus Tambahan -->
+          <div style="margin-top: 0.75rem; background: #f0fdfa; border: 1px solid #99f6e4; padding: 0.85rem 1rem; border-radius: var(--radius-md);">
+            <div style="font-weight: 700; font-size: 0.825rem; color: #0f766e; margin-bottom: 0.45rem;">
+              <span>🎁 Insentif Lain / Bonus / Tambahan</span>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="insentifLain">Nominal Insentif Lain (Rp)</label>
+                <div class="input-wrapper">
+                  <span class="input-prefix">Rp</span>
+                  <input type="text" id="insentifLain" class="with-prefix currency-input" value="0" oninput="formatAndCalc(this)" placeholder="0">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="ketInsentifLain">Keterangan Insentif Lain</label>
+                <input type="text" id="ketInsentifLain" value="" oninput="updateSlip()" placeholder="Contoh: Bonus Target / Lembur Biasa">
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Section: Potongan & Pinjaman (Termasuk PPh 21 Sesuai PTKP & TER) -->
@@ -1879,6 +1899,13 @@
                     </td>
                     <td class="col-amount" id="viewInsentifMerah">Rp 150.000</td>
                   </tr>
+                  <tr id="rowInsentifLain" style="display: none;">
+                    <td>
+                      Insentif Lain
+                      <div class="sub-item-note" id="viewKetInsentifLain"></div>
+                    </td>
+                    <td class="col-amount" id="viewInsentifLain" style="color: #0f766e; font-weight: 600;">Rp 0</td>
+                  </tr>
                   <tr class="table-total-row penghasilan">
                     <td>TOTAL PENERIMAAN</td>
                     <td class="col-amount" id="viewTotalPenghasilan">Rp 6.010.000</td>
@@ -2006,6 +2033,10 @@
                   <tr><td>Tunjangan Makan (<span class="viewCountHariKerja2">24</span> hr)</td><td class="col-amount" id="viewTunjanganMakan2">Rp 600.000</td></tr>
                   <tr><td>Tunjangan Transport (<span class="viewCountHariKerja2">24</span> hr)</td><td class="col-amount" id="viewTunjanganTransport2">Rp 360.000</td></tr>
                   <tr><td>Insentif Tgl Merah (<span id="viewHariMerah2">2</span> hr)</td><td class="col-amount" id="viewInsentifMerah2">Rp 150.000</td></tr>
+                  <tr id="rowInsentifLain2" style="display: none;">
+                    <td>Insentif Lain <span id="viewKetInsentifLain2" style="font-size: 0.7rem; color: #64748b;"></span></td>
+                    <td class="col-amount" id="viewInsentifLain2" style="color: #0f766e; font-weight: 600;">Rp 0</td>
+                  </tr>
                   <tr class="table-total-row penghasilan"><td>TOTAL PENERIMAAN</td><td class="col-amount" id="viewTotalPenghasilan2">Rp 6.010.000</td></tr>
                 </tbody>
               </table>
@@ -2569,6 +2600,8 @@
         rateMakanPerHari: parseRupiah(document.getElementById('rateMakanPerHari').value),
         rateTransportPerHari: parseRupiah(document.getElementById('rateTransportPerHari').value),
         hariTanggalMerah: parseInt(document.getElementById('hariTanggalMerah').value, 10) || 0,
+        insentifLain: parseRupiah(document.getElementById('insentifLain') ? document.getElementById('insentifLain').value : 0),
+        ketInsentifLain: document.getElementById('ketInsentifLain') ? document.getElementById('ketInsentifLain').value : "",
         pph21Mode: pph21Mode,
         potonganPph21: parseRupiah(document.getElementById('potonganPph21').value),
         iuranBpjs: parseRupiah(document.getElementById('iuranBpjs').value),
@@ -2585,7 +2618,8 @@
       record.totalMakan = record.hariKerja * record.rateMakanPerHari;
       record.totalTransport = record.hariKerja * record.rateTransportPerHari;
       record.totalMerah = record.hariTanggalMerah * 75000;
-      record.totalPenghasilan = record.gajiPokok + record.tunjanganJabatan + record.totalMakan + record.totalTransport + record.totalMerah;
+      record.insentifLain = record.insentifLain || 0;
+      record.totalPenghasilan = record.gajiPokok + record.tunjanganJabatan + record.totalMakan + record.totalTransport + record.totalMerah + record.insentifLain;
       record.totalPotongan = record.iuranBpjs + record.potonganPph21 + record.cicilanPinjaman + record.potonganLain;
       record.netGaji = record.totalPenghasilan - record.totalPotongan;
 
@@ -2631,6 +2665,13 @@
       document.getElementById('rateMakanPerHari').value = formatRupiah(rec.rateMakanPerHari || 25000);
       document.getElementById('rateTransportPerHari').value = formatRupiah(rec.rateTransportPerHari || 15000);
       document.getElementById('hariTanggalMerah').value = rec.hariTanggalMerah || 0;
+      
+      if (document.getElementById('insentifLain')) {
+        document.getElementById('insentifLain').value = formatRupiah(rec.insentifLain || 0);
+      }
+      if (document.getElementById('ketInsentifLain')) {
+        document.getElementById('ketInsentifLain').value = rec.ketInsentifLain || "";
+      }
 
       if (rec.pph21Mode && document.getElementById('pph21Mode')) {
         document.getElementById('pph21Mode').value = rec.pph21Mode;
@@ -2687,10 +2728,10 @@
         return;
       }
 
-      let csv = "No,Tanggal Simpan,Periode,NIK,Nama Karyawan,Jabatan,Divisi,Status,Status PTKP,NPWP,Hari Masuk,Gaji Pokok,Tunjangan Jabatan,Tunjangan Makan,Tunjangan Transport,Insentif Tgl Merah,TOTAL PENERIMAAN,Potongan PPh 21,Iuran BPJS,Cicilan Pinjaman,Potongan Lain,TOTAL POTONGAN,GAJI BERSIH (THP),No Rekening\n";
+      let csv = "No,Tanggal Simpan,Periode,NIK,Nama Karyawan,Jabatan,Divisi,Status,Status PTKP,NPWP,Hari Masuk,Gaji Pokok,Tunjangan Jabatan,Tunjangan Makan,Tunjangan Transport,Insentif Tgl Merah,Insentif Lain,Keterangan Insentif,TOTAL PENERIMAAN,Potongan PPh 21,Iuran BPJS,Cicilan Pinjaman,Potongan Lain,TOTAL POTONGAN,GAJI BERSIH (THP),No Rekening\n";
 
       records.forEach((r, idx) => {
-        csv += `"${idx+1}","${r.savedAt}","${r.payPeriod}","${r.empId}","${r.empName}","${r.empJabatan}","${r.empDivisi}","${r.empStatus}","${r.empPtkp || 'TK/0'}","${r.empNpwp || '-'}","${r.hariKerja}","${r.gajiPokok}","${r.tunjanganJabatan}","${r.totalMakan}","${r.totalTransport}","${r.totalMerah}","${r.totalPenghasilan}","${r.potonganPph21 || 0}","${r.iuranBpjs}","${r.cicilanPinjaman}","${r.potonganLain}","${r.totalPotongan}","${r.netGaji}","${r.empRekening}"\n`;
+        csv += `"${idx+1}","${r.savedAt}","${r.payPeriod}","${r.empId}","${r.empName}","${r.empJabatan}","${r.empDivisi}","${r.empStatus}","${r.empPtkp || 'TK/0'}","${r.empNpwp || '-'}","${r.hariKerja}","${r.gajiPokok}","${r.tunjanganJabatan}","${r.totalMakan}","${r.totalTransport}","${r.totalMerah}","${r.insentifLain || 0}","${(r.ketInsentifLain || '').replace(/"/g, '""')}","${r.totalPenghasilan}","${r.potonganPph21 || 0}","${r.iuranBpjs}","${r.cicilanPinjaman}","${r.potonganLain}","${r.totalPotongan}","${r.netGaji}","${r.empRekening}"\n`;
       });
 
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
@@ -3178,8 +3219,10 @@
       const tunjanganTransport = hariKerja * rateTransport;
       const hariMerah = parseInt(document.getElementById('hariTanggalMerah').value, 10) || 0;
       const insentifMerah = hariMerah * 75000;
+      const insentifLain = parseRupiah(document.getElementById('insentifLain') ? document.getElementById('insentifLain').value : 0);
+      const ketInsentifLain = document.getElementById('ketInsentifLain') ? document.getElementById('ketInsentifLain').value.trim() : "";
 
-      const totalPenghasilan = gajiPokok + tunjanganJabatan + tunjanganMakan + tunjanganTransport + insentifMerah;
+      const totalPenghasilan = gajiPokok + tunjanganJabatan + tunjanganMakan + tunjanganTransport + insentifMerah + insentifLain;
 
       // PPh 21 Calculation based on PTKP & TER (PP 58/2023)
       const ptkpStatus = document.getElementById('empPtkp') ? document.getElementById('empPtkp').value : 'TK/0';
@@ -3267,6 +3310,20 @@
 
       document.getElementById('viewHariMerah').innerText = hariMerah;
       document.getElementById('viewInsentifMerah').innerText = "Rp " + formatRupiah(insentifMerah);
+
+      // Insentif Lain Preview Slip 1
+      const rowInsLain = document.getElementById('rowInsentifLain');
+      if (rowInsLain) {
+        if (insentifLain > 0) {
+          rowInsLain.style.display = '';
+          document.getElementById('viewInsentifLain').innerText = "Rp " + formatRupiah(insentifLain);
+          const viewKet = document.getElementById('viewKetInsentifLain');
+          if (viewKet) viewKet.innerText = ketInsentifLain ? `(${ketInsentifLain})` : "";
+        } else {
+          rowInsLain.style.display = 'none';
+        }
+      }
+
       document.getElementById('viewTotalPenghasilan').innerText = "Rp " + formatRupiah(totalPenghasilan);
 
       document.getElementById('viewIuranBpjs').innerText = "Rp " + formatRupiah(bpjs);
@@ -3308,6 +3365,20 @@
 
         document.getElementById('viewHariMerah2').innerText = hariMerah;
         document.getElementById('viewInsentifMerah2').innerText = "Rp " + formatRupiah(insentifMerah);
+
+        // Insentif Lain Preview Slip 2 (Arsip)
+        const rowInsLain2 = document.getElementById('rowInsentifLain2');
+        if (rowInsLain2) {
+          if (insentifLain > 0) {
+            rowInsLain2.style.display = '';
+            document.getElementById('viewInsentifLain2').innerText = "Rp " + formatRupiah(insentifLain);
+            const viewKet2 = document.getElementById('viewKetInsentifLain2');
+            if (viewKet2) viewKet2.innerText = ketInsentifLain ? `(${ketInsentifLain})` : "";
+          } else {
+            rowInsLain2.style.display = 'none';
+          }
+        }
+
         document.getElementById('viewTotalPenghasilan2').innerText = "Rp " + formatRupiah(totalPenghasilan);
         document.getElementById('viewIuranBpjs2').innerText = "Rp " + formatRupiah(bpjs);
         document.getElementById('viewPph21_2').innerText = "Rp " + formatRupiah(pph21Amount);
@@ -3411,6 +3482,8 @@
         document.getElementById('tunjanganJabatan').value = "0";
         document.getElementById('hariTanggalMerah').value = "0";
         document.getElementById('totalInsentifMerah').value = "0";
+        if (document.getElementById('insentifLain')) document.getElementById('insentifLain').value = "0";
+        if (document.getElementById('ketInsentifLain')) document.getElementById('ketInsentifLain').value = "";
         document.getElementById('pph21Mode').value = cfg.defaultPphMode || "auto";
         document.getElementById('potonganPph21').value = "0";
         document.getElementById('iuranBpjs').value = "0";
