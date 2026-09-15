@@ -1311,6 +1311,14 @@
         renderPayrollReport();
       }
     });
+
+    // Shortcut Keyboard Ctrl+P untuk Cetak Rekap
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+        e.preventDefault();
+        window.print();
+      }
+    });
   </script>
 </body>
 </html>

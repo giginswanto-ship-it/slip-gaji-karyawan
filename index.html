@@ -2615,6 +2615,9 @@
               <button class="btn btn-sm btn-load-sm" onclick="loadRecordToForm('${r.id}')" title="Buka data ke formulir">
                 👁️ Buka
               </button>
+              <button class="btn btn-sm btn-success" style="padding: 0.32rem 0.65rem; font-size: 0.75rem;" onclick="loadRecordAndPrint('${r.id}')" title="Cetak slip karyawan ini langsung">
+                🖨️ Cetak
+              </button>
               <button class="btn btn-sm btn-danger-sm" onclick="deleteRecord('${r.id}', '${r.empName}')" title="Hapus dari database">
                 🗑️
               </button>
@@ -2624,6 +2627,13 @@
       });
 
       tbody.innerHTML = html;
+    }
+
+    function loadRecordAndPrint(id) {
+      loadRecordToForm(id);
+      setTimeout(() => {
+        triggerPrint();
+      }, 250);
     }
 
     function filterDatabaseTable() {
@@ -2748,7 +2758,18 @@
     }
 
     function triggerPrint() {
-      window.print();
+      // Pastikan modal ditutup agar cetakan bersih
+      if (document.getElementById('dbModal')) {
+        document.getElementById('dbModal').classList.remove('show');
+      }
+      // Sinkronkan seluruh data dan perhitungan
+      updateSlip();
+      calcAllowancesAndTotals();
+      
+      // Berikan delay kecil untuk browser rendering layout sebelum print dialog muncul
+      setTimeout(() => {
+        window.print();
+      }, 100);
     }
 
     function setJabatan(jabatanName, defaultDivisi) {
@@ -3084,6 +3105,14 @@
       setPaperSize('a4');
       setOrientation('portrait');
       updateDatabaseBadge();
+    });
+
+    // Shortcut Keyboard Ctrl+P untuk Cetak Slip
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+        e.preventDefault();
+        triggerPrint();
+      }
     });
   </script>
 </body>
