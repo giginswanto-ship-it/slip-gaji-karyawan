@@ -1,0 +1,196 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!--[if gte mso 9]><xml>
+ <x:ExcelWorkbook>
+  <x:ExcelWorksheets>
+   <x:ExcelWorksheet>
+    <x:Name>Slip Gaji</x:Name>
+    <x:WorksheetOptions>
+     <x:DisplayGridlines/>
+    </x:WorksheetOptions>
+   </x:ExcelWorksheet>
+  </x:ExcelWorksheets>
+ </x:ExcelWorkbook>
+</xml><![endif]-->
+<style>
+  body { font-family: Calibri, sans-serif; font-size: 11pt; }
+  .title { font-size: 16pt; font-weight: bold; text-align: center; }
+  .subtitle { font-size: 11pt; text-align: center; color: #555; }
+  .header-box { background-color: #1e3a8a; color: #ffffff; font-weight: bold; text-align: center; font-size: 12pt; }
+  .th-penghasilan { background-color: #dbeafe; font-weight: bold; border: 1px solid #94a3b8; }
+  .th-potongan { background-color: #fee2e2; font-weight: bold; border: 1px solid #94a3b8; }
+  .td-border { border: 1px solid #cbd5e1; padding: 4px 8px; }
+  .total-row { font-weight: bold; background-color: #f1f5f9; border-top: 2px solid #000; border-bottom: 2px solid #000; }
+  .thp-box { background-color: #dcfce7; font-weight: bold; font-size: 13pt; color: #15803d; border: 2px solid #16a34a; }
+  .num { text-align: right; mso-number-format:"\#\,\#\#0"; }
+  .note { font-size: 9pt; color: #475569; font-style: italic; }
+  .loan-note { font-size: 9pt; color: #92400e; font-style: italic; }
+</style>
+</head>
+<body>
+<table cellpadding="4" cellspacing="0" border="0" width="760">
+  <tr>
+    <td colspan="5" class="title">PT. MAJU BERSAMA SUKSES</td>
+  </tr>
+  <tr>
+    <td colspan="5" class="subtitle">Jl. Jenderal Sudirman No. 88, Jakarta</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="border-bottom: 2px solid #000000;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center; font-weight: bold; font-size: 13pt; padding-top: 10px;">SLIP GAJI KARYAWAN</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center; font-size: 10pt; color: #333;">Periode: September 2026</td>
+  </tr>
+  <tr><td colspan="5">&nbsp;</td></tr>
+
+  <!-- Data Lengkap Karyawan & Hari Kerja -->
+  <tr>
+    <td width="130"><b>Nama Karyawan</b></td>
+    <td width="10">:</td>
+    <td width="230">Budi Santoso</td>
+    <td width="130"><b>Jabatan</b></td>
+    <td width="260">: Staff Operasional</td>
+  </tr>
+  <tr>
+    <td><b>NIK / ID</b></td>
+    <td>:</td>
+    <td>EMP-20260901</td>
+    <td><b>Divisi / Dept</b></td>
+    <td>: Operasional</td>
+  </tr>
+  <tr>
+    <td><b>Status Kerja</b></td>
+    <td>:</td>
+    <td>Karyawan Tetap</td>
+    <td><b>Status PTKP</b></td>
+    <td style="color: #1e40af; font-weight: bold;">: TK/0 (Kat A - Rp 54 Jt)</td>
+  </tr>
+  <tr>
+    <td><b>Hari Masuk Kerja</b></td>
+    <td>:</td>
+    <td style="color: #1e40af; font-weight: bold;">24 Hari</td>
+    <td><b>Tanggal Bayar</b></td>
+    <td>: 25 September 2026</td>
+  </tr>
+  <tr>
+    <td><b>No. Rekening</b></td>
+    <td>:</td>
+    <td>BCA - 1234567890</td>
+    <td><b>NPWP / BPJS</b></td>
+    <td>: 09.123.456.7-012.000</td>
+  </tr>
+  <tr><td colspan="5">&nbsp;</td></tr>
+
+  <!-- Header Tabel -->
+  <tr>
+    <td colspan="2" class="th-penghasilan" align="center"><b>A. PENERIMAAN (PENGHASILAN)</b></td>
+    <td class="th-penghasilan" align="center"><b>JUMLAH (RP)</b></td>
+    <td class="th-potongan" align="center"><b>B. POTONGAN & PINJAMAN</b></td>
+    <td class="th-potongan" align="center"><b>JUMLAH (RP)</b></td>
+  </tr>
+
+  <!-- Baris 1: Gaji Pokok & BPJS -->
+  <tr>
+    <td colspan="2" class="td-border">Gaji Pokok</td>
+    <td class="td-border num">4500000</td>
+    <td class="td-border">Iuran BPJS (Kesehatan / TK)</td>
+    <td class="td-border num">150000</td>
+  </tr>
+
+  <!-- Baris 2: Tunjangan Jabatan & PPh 21 -->
+  <tr>
+    <td colspan="2" class="td-border">Tunjangan Jabatan</td>
+    <td class="td-border num">400000</td>
+    <td class="td-border">
+      PPh Pasal 21<br>
+      <span class="note">(TER PP 58/2023 Kat. A: 0.75%)</span>
+    </td>
+    <td class="td-border num" style="vertical-align: top; color: #991b1b;">45075</td>
+  </tr>
+
+  <!-- Baris 3: Tunjangan Makan & Pinjaman Detail -->
+  <tr>
+    <td colspan="2" class="td-border">
+      Tunjangan Makan<br>
+      <span class="note">(24 hari masuk @ Rp 25.000 / hari)</span>
+    </td>
+    <td class="td-border num" style="vertical-align: top;">=24*25000</td>
+    <td class="td-border">
+      <b>Potongan Cicilan Pinjaman</b><br>
+      <span class="loan-note">• Jml Pinjaman: Rp 2.000.000 (Cicilan ke-1 dari 10)<br>• Sisa Pinjaman: Rp 1.800.000</span>
+    </td>
+    <td class="td-border num" style="vertical-align: top;">200000</td>
+  </tr>
+
+  <!-- Baris 4: Tunjangan Transport -->
+  <tr>
+    <td colspan="2" class="td-border">
+      Tunjangan Transport<br>
+      <span class="note">(24 hari masuk @ Rp 15.000 / hari)</span>
+    </td>
+    <td class="td-border num" style="vertical-align: top;">=24*15000</td>
+    <td class="td-border">Potongan Lainnya</td>
+    <td class="td-border num">0</td>
+  </tr>
+
+  <!-- Baris 5: Insentif Tgl Merah -->
+  <tr>
+    <td colspan="2" class="td-border">
+      Insentif Kerja Tgl Merah<br>
+      <span class="note">(2 hari @ Rp 75.000 / hari)</span>
+    </td>
+    <td class="td-border num" style="vertical-align: top;">=2*75000</td>
+    <td class="td-border">&nbsp;</td>
+    <td class="td-border num">&nbsp;</td>
+  </tr>
+
+  <!-- Total Baris -->
+  <tr class="total-row">
+    <td colspan="2" class="td-border"><b>TOTAL PENERIMAAN</b></td>
+    <td class="td-border num" style="font-weight: bold;">=SUM(C14:C18)</td>
+    <td class="td-border"><b>TOTAL POTONGAN</b></td>
+    <td class="td-border num" style="font-weight: bold; color: #b91c1c;">=SUM(E14:E18)</td>
+  </tr>
+
+  <tr><td colspan="5">&nbsp;</td></tr>
+
+  <!-- Gaji Bersih (THP) -->
+  <tr>
+    <td colspan="3" class="thp-box" align="left" style="padding: 10px;">
+      <b>PENERIMAAN BERSIH (TAKE HOME PAY)</b>
+    </td>
+    <td colspan="2" class="thp-box num" style="padding: 10px; font-size: 14pt;">
+      =C19-E19
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="5" style="font-style: italic; font-size: 9pt; padding-top: 5px; color: #475569;">
+      Terbilang: Lima Juta Enam Ratus Empat Belas Ribu Sembilan Ratus Dua Puluh Lima Rupiah
+    </td>
+  </tr>
+
+  <tr><td colspan="5">&nbsp;</td></tr>
+
+  <!-- Tanda Tangan -->
+  <tr>
+    <td colspan="2" align="center">
+      Penerima,
+      <br><br><br><br>
+      <b>( Budi Santoso )</b>
+    </td>
+    <td>&nbsp;</td>
+    <td colspan="2" align="center">
+      Jakarta, 25 September 2026<br>
+      Dibuat / Disetujui Oleh,
+      <br><br><br><br>
+      <b>( Hendra Wijaya, S.E. )</b>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rekapitulasi Daftar Gaji Karyawan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --accent: #0284c7;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --dark: #0f172a;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      --radius-lg: 14px;
+      --radius-md: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f1f5f9;
+      color: var(--gray-800);
+      line-height: 1.45;
+      min-height: 100vh;
+    }
+
+    /* Top Navigation / App Bar */
+    .app-header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #0284c7 100%);
+      color: white;
+      padding: 0.9rem 1.8rem;
+      box-shadow: 0 4px 20px rgba(30, 58, 138, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .app-header-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-title svg {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 7px;
+      border-radius: 10px;
+      width: 38px;
+      height: 38px;
+    }
+
+    .brand-title h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-title p {
+      font-size: 0.76rem;
+      opacity: 0.85;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.825rem;
+      padding: 0.55rem 1rem;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background: #16a34a;
+      color: white;
+    }
+    .btn-success:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+    }
+
+    .btn-amber {
+      background: #d97706;
+      color: white;
+    }
+    .btn-amber:hover {
+      background: #b45309;
+    }
+
+    .btn-outline-white {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(4px);
+    }
+    .btn-outline-white:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-sm {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+      border-radius: 6px;
+    }
+
+    .btn-danger-sm {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+    .btn-danger-sm:hover {
+      background: #fecaca;
+    }
+
+    .btn-edit-sm {
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+    .btn-edit-sm:hover {
+      background: #dbeafe;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1600px;
+      margin: 1.25rem auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Summary Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--gray-200);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.blue { background: #dbeafe; color: #1e40af; }
+    .stat-icon.green { background: #dcfce7; color: #15803d; }
+    .stat-icon.red { background: #fee2e2; color: #b91c1c; }
+    .stat-icon.amber { background: #fef3c7; color: #b45309; }
+    .stat-icon.purple { background: #f3e8ff; color: #7e22ce; }
+
+    .stat-info {
+      flex: 1;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .stat-val {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--gray-800);
+      margin-top: 0.15rem;
+    }
+
+    .stat-card.highlight {
+      background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+      color: white;
+      border-color: #15803d;
+    }
+    .stat-card.highlight .stat-label { color: rgba(255,255,255,0.85); }
+    .stat-card.highlight .stat-val { color: white; }
+    .stat-card.highlight .stat-icon { background: rgba(255,255,255,0.2); color: white; }
+
+    /* Filter & Toolbar Box */
+    .filter-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--gray-200);
+      box-shadow: var(--card-shadow);
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .filter-item label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gray-700);
+      white-space: nowrap;
+    }
+
+    select, input[type="text"] {
+      padding: 0.45rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.825rem;
+      border-radius: 6px;
+      border: 1.5px solid var(--gray-300);
+      background: white;
+      color: var(--gray-800);
+      outline: none;
+    }
+
+    select:focus, input[type="text"]:focus {
+      border-color: var(--primary);
+    }
+
+    /* Report Table Card */
+    .report-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-200);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Formal Printable Report Header */
+    .report-formal-header {
+      padding: 1.5rem 1.75rem 1rem;
+      border-bottom: 2px solid var(--gray-800);
+      text-align: center;
+      position: relative;
+    }
+
+    .report-formal-header h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+
+    .report-formal-header h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 0.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .report-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--gray-600);
+      font-weight: 600;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* Payroll Data Table */
+    .table-scroll-wrapper {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+
+    .payroll-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.76rem;
+      min-width: 1350px;
+    }
+
+    .payroll-table thead tr:first-child th {
+      background: #1e293b;
+      color: white;
+      font-weight: 700;
+      text-align: center;
+      padding: 0.55rem 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.74rem;
+      letter-spacing: 0.03em;
+    }
+
+    .payroll-table thead tr:nth-child(2) th {
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 700;
+      text-align: center;
+      padding: 0.45rem 0.4rem;
+      border: 1px solid var(--gray-200);
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    .payroll-table thead th.th-income { background: #eff6ff !important; color: #1e40af !important; }
+    .payroll-table thead th.th-deduct { background: #fef2f2 !important; color: #991b1b !important; }
+    .payroll-table thead th.th-net { background: #f0fdf4 !important; color: #15803d !important; }
+
+    .payroll-table tbody td {
+      padding: 0.5rem 0.55rem;
+      border: 1px solid var(--gray-200);
+      vertical-align: middle;
+    }
+
+    .payroll-table tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .payroll-table tbody tr:hover {
+      background: #f1f5f9;
+    }
+
+    .payroll-table .col-center { text-align: center; }
+    .payroll-table .col-right { text-align: right; font-variant-numeric: tabular-nums; }
+    .payroll-table .col-bold { font-weight: 700; }
+    
+    .cell-name {
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .cell-jabatan {
+      font-size: 0.7rem;
+      color: #64748b;
+    }
+
+    .badge-ptkp {
+      font-size: 0.68rem;
+      background: #e2e8f0;
+      color: #334155;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .badge-present {
+      font-size: 0.72rem;
+      color: #1e40af;
+      font-weight: 700;
+    }
+
+    /* Table Footer Summary */
+    .payroll-table tfoot td {
+      background: #f8fafc;
+      font-weight: 800;
+      padding: 0.65rem 0.55rem;
+      border: 1.5px solid #0f172a;
+      font-size: 0.78rem;
+    }
+
+    .payroll-table tfoot tr.total-row-main td {
+      background: #1e293b;
+      color: white;
+      border-color: #0f172a;
+    }
+    .payroll-table tfoot tr.total-row-main td.net-total {
+      background: #15803d;
+      color: white;
+      font-size: 0.875rem;
+    }
+
+    /* Formal Signatures Box */
+    .report-signatures {
+      padding: 1.75rem 2rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      background: white;
+      border-top: 1px solid var(--gray-200);
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .sig-col {
+      width: 28%;
+      min-width: 180px;
+    }
+
+    .sig-col-role {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--gray-700);
+      margin-bottom: 3.5rem;
+    }
+
+    .sig-col-name {
+      font-weight: 700;
+      font-size: 0.825rem;
+      color: var(--gray-900);
+      border-top: 1px solid var(--gray-700);
+      padding-top: 0.25rem;
+      display: inline-block;
+      min-width: 160px;
+    }
+
+    .sig-col-title {
+      font-size: 0.7rem;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    /* Terbilang Banner */
+    .rekap-terbilang-bar {
+      padding: 0.75rem 1.25rem;
+      background: #f0fdf4;
+      border-top: 1px solid #bbf7d0;
+      border-bottom: 1px solid #bbf7d0;
+      font-size: 0.8rem;
+      color: #166534;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Print Media Query */
+    @page {
+      size: A4 landscape;
+      margin: 8mm 8mm;
+    }
+
+    @media print {
+      body {
+        background: white !important;
+        color: black !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-size: 7.5pt !important;
+      }
+
+      .app-header,
+      .stats-grid,
+      .filter-card,
+      .no-print,
+      .col-action {
+        display: none !important;
+      }
+
+      .main-container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .report-card {
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+      }
+
+      .report-formal-header {
+        padding: 0 0 0.5cm !important;
+      }
+
+      .payroll-table {
+        min-width: 100% !important;
+        width: 100% !important;
+        font-size: 7pt !important;
+      }
+
+      .payroll-table th, .payroll-table td {
+        padding: 2.5mm 1.5mm !important;
+        border: 0.5pt solid #475569 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .report-signatures {
+        padding: 0.8cm 0 0 !important;
+        page-break-inside: avoid !important;
+      }
+
+      .sig-col-role {
+        margin-bottom: 2.2cm !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top App Navigation -->
+  <header class="app-header">
+    <div class="app-header-inner">
+      <div class="brand-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <div>
+          <h1>Rekapitulasi Daftar Gaji Karyawan</h1>
+          <p>Laporan Penggajian Keseluruhan Karyawan (Payroll Master Sheet)</p>
+        </div>
+      </div>
+      <div class="header-actions no-print">
+        <a href="index.html" class="btn btn-outline-white" title="Kembali ke formulir pembuatan slip gaji individu">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          📝 Pembuat Slip Gaji
+        </a>
+        <button class="btn btn-amber" onclick="exportToCSV()" title="Download data rekap ke file Excel CSV">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          📊 Export Excel
+        </button>
+        <button class="btn btn-success" onclick="window.print()" title="Cetak Rekapitulasi Gaji (Landscape)">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          🖨️ Cetak Rekap (Landscape)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+
+    <!-- Summary Stats Bar -->
+    <div class="stats-grid no-print">
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Total Karyawan</div>
+          <div class="stat-val" id="statTotalEmployees">0 Orang</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon purple">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Total Gaji Bruto</div>
+          <div class="stat-val" id="statTotalBruto">Rp 0</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon red">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Total PPh 21 Disetor</div>
+          <div class="stat-val" id="statTotalPph21">Rp 0</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon amber">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Total Potongan (BPJS/Kasbon)</div>
+          <div class="stat-val" id="statTotalDeduction">Rp 0</div>
+        </div>
+      </div>
+
+      <div class="stat-card highlight">
+        <div class="stat-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">TOTAL GAJI BERSIH (THP)</div>
+          <div class="stat-val" id="statTotalNet">Rp 0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Toolbar -->
+    <div class="filter-card no-print">
+      <div class="filter-group">
+        <div class="filter-item">
+          <label for="filterPeriod">📅 Periode Gaji:</label>
+          <select id="filterPeriod" onchange="renderPayrollReport()">
+            <option value="ALL">Semua Periode</option>
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label for="filterDivisi">🏢 Divisi:</label>
+          <select id="filterDivisi" onchange="renderPayrollReport()">
+            <option value="ALL">Semua Divisi</option>
+            <option value="Operasional">Operasional</option>
+            <option value="Keuangan">Keuangan & Akuntansi</option>
+            <option value="HRD">HRD & Personalia</option>
+            <option value="Pemasaran">Pemasaran & Sales</option>
+            <option value="Logistik">Gudang & Logistik</option>
+            <option value="IT">IT & Teknik</option>
+          </select>
+        </div>
+
+        <div class="filter-item" style="flex: 1; min-width: 200px;">
+          <input type="text" id="searchInput" placeholder="🔍 Cari Nama / NIK / Jabatan..." oninput="renderPayrollReport()" style="width: 100%;">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-sm btn-edit-sm" onclick="loadSampleDataIfEmpty()" title="Isi data contoh jika database masih kosong">
+          💡 Isi Contoh Data
+        </button>
+        <button class="btn btn-sm btn-danger-sm" onclick="clearAllData()" title="Hapus semua data rekap">
+          🗑️ Hapus Semua
+        </button>
+      </div>
+    </div>
+
+    <!-- Formal Report Document Card -->
+    <div class="report-card">
+      
+      <!-- Formal Document Kop -->
+      <div class="report-formal-header">
+        <h2 id="reportCompanyName">PT. MAJU BERSAMA SUKSES</h2>
+        <p style="font-size: 0.78rem; color: #475569;" id="reportCompanyAddress">Jl. Jenderal Sudirman No. 88, Jakarta</p>
+        <h3>REKAPITULASI DAFTAR GAJI & UPAH KARYAWAN</h3>
+        
+        <div class="report-meta-row">
+          <div>Periode Penggajian: <strong id="reportPeriodText" style="color: #1e3a8a;">September 2026</strong></div>
+          <div>Tanggal Pembayaran: <strong id="reportPayDateText">25 September 2026</strong></div>
+          <div>Status Pajak: <strong>PPh 21 TER (PP 58/2023)</strong></div>
+        </div>
+      </div>
+
+      <!-- Terbilang Banner -->
+      <div class="rekap-terbilang-bar">
+        <strong>Total Dana Transfer Gaji:</strong>
+        <span id="rekapTerbilangText" style="font-style: italic; font-weight: 600;">Nol Rupiah</span>
+      </div>
+
+      <!-- Main Payroll Table -->
+      <div class="table-scroll-wrapper">
+        <table class="payroll-table">
+          <thead>
+            <tr>
+              <th colspan="5">DATA KARYAWAN</th>
+              <th colspan="2">KEHADIRAN</th>
+              <th colspan="6" class="th-income">PENERIMAAN (PENGHASILAN BRUTO)</th>
+              <th colspan="5" class="th-deduct">POTONGAN & PAJAK</th>
+              <th class="th-net">BERSIH</th>
+              <th rowspan="2">REKENING TRANSFER</th>
+              <th rowspan="2" class="no-print col-action">AKSI</th>
+            </tr>
+            <tr>
+              <th>NO</th>
+              <th>NIK</th>
+              <th>NAMA KARYAWAN</th>
+              <th>JABATAN / DIVISI</th>
+              <th>PTKP</th>
+              <th>MASUK</th>
+              <th>MERAH</th>
+              <th class="th-income">GAJI POKOK</th>
+              <th class="th-income">TUNJ. JABATAN</th>
+              <th class="th-income">TUNJ. MAKAN</th>
+              <th class="th-income">TUNJ. TRANSPORT</th>
+              <th class="th-income">INSENTIF MERAH</th>
+              <th class="th-income" style="font-weight: 800; background: #dbeafe !important;">TOTAL BRUTO</th>
+              <th class="th-deduct">PPh 21 (TER)</th>
+              <th class="th-deduct">BPJS</th>
+              <th class="th-deduct">CICILAN KASBON</th>
+              <th class="th-deduct">POT. LAIN</th>
+              <th class="th-deduct" style="font-weight: 800; background: #fee2e2 !important;">TOTAL POTONGAN</th>
+              <th class="th-net" style="font-weight: 800; background: #dcfce7 !important;">TAKE HOME PAY</th>
+            </tr>
+          </thead>
+          <tbody id="payrollTableBody">
+            <!-- Data rows dynamically injected by JS -->
+          </tbody>
+          <tfoot id="payrollTableFoot">
+            <tr class="total-row-main">
+              <td colspan="5" class="col-center">TOTAL KESELURUHAN (<span id="footTotalCount">0</span> Karyawan)</td>
+              <td class="col-center" id="footHariKerja">0</td>
+              <td class="col-center" id="footHariMerah">0</td>
+              <td class="col-right" id="footGajiPokok">Rp 0</td>
+              <td class="col-right" id="footTunjJabatan">Rp 0</td>
+              <td class="col-right" id="footTunjMakan">Rp 0</td>
+              <td class="col-right" id="footTunjTransport">Rp 0</td>
+              <td class="col-right" id="footInsentifMerah">Rp 0</td>
+              <td class="col-right col-bold" id="footTotalBruto" style="background: #1e40af; color: white;">Rp 0</td>
+              <td class="col-right" id="footPph21" style="color: #fca5a5;">Rp 0</td>
+              <td class="col-right" id="footBpjs">Rp 0</td>
+              <td class="col-right" id="footCicilan">Rp 0</td>
+              <td class="col-right" id="footPotLain">Rp 0</td>
+              <td class="col-right col-bold" id="footTotalPotongan" style="background: #991b1b; color: white;">Rp 0</td>
+              <td class="col-right col-bold net-total" id="footNetGaji">Rp 0</td>
+              <td colspan="2" class="col-center" style="font-size: 0.7rem; color: #cbd5e1;">Sah & Terverifikasi</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Formal Approval Signatures -->
+      <div class="report-signatures">
+        <div class="sig-col">
+          <div class="sig-col-role">Dibuat Oleh (Payroll / HRD),</div>
+          <div class="sig-col-name" id="sigDibuat">( Siti Rahmawati, S.E. )</div>
+          <div class="sig-col-title">Staff Keuangan & Penggajian</div>
+        </div>
+
+        <div class="sig-col">
+          <div class="sig-col-role">Diperiksa Oleh (Finance Manager),</div>
+          <div class="sig-col-name" id="sigDiperiksa">( Hendra Wijaya, S.E. )</div>
+          <div class="sig-col-title">Manager Keuangan & Akuntansi</div>
+        </div>
+
+        <div class="sig-col">
+          <div class="sig-col-role">Disetujui Oleh (Direktur / Pimpinan),</div>
+          <div class="sig-col-name" id="sigDisetujui">( Ir. Bambang Prakoso )</div>
+          <div class="sig-col-title">Direktur Utama</div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    const DB_STORAGE_KEY = 'SLIP_GAJI_DATABASE_V1';
+
+    function formatRupiah(number) {
+      if (isNaN(number)) return "0";
+      return new Intl.NumberFormat('id-ID').format(Math.round(number));
+    }
+
+    function parseRupiah(str) {
+      if (!str) return 0;
+      const clean = str.toString().replace(/[^0-9-]/g, '');
+      const val = parseInt(clean, 10);
+      return isNaN(val) ? 0 : val;
+    }
+
+    function terbilang(bilangan) {
+      const angka = [
+        "", "Satu", "Dua", "Tiga", "Empat", "Lima", 
+        "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"
+      ];
+      bilangan = Math.floor(Math.abs(bilangan));
+      
+      if (bilangan < 12) {
+        return " " + angka[bilangan];
+      } else if (bilangan < 20) {
+        return terbilang(bilangan - 10) + " Belas";
+      } else if (bilangan < 100) {
+        return terbilang(Math.floor(bilangan / 10)) + " Puluh" + terbilang(bilangan % 10);
+      } else if (bilangan < 200) {
+        return " Seratus" + terbilang(bilangan - 100);
+      } else if (bilangan < 1000) {
+        return terbilang(Math.floor(bilangan / 100)) + " Ratus" + terbilang(bilangan % 100);
+      } else if (bilangan < 2000) {
+        return " Seribu" + terbilang(bilangan - 1000);
+      } else if (bilangan < 1000000) {
+        return terbilang(Math.floor(bilangan / 1000)) + " Ribu" + terbilang(bilangan % 1000);
+      } else if (bilangan < 1000000000) {
+        return terbilang(Math.floor(bilangan / 1000000)) + " Juta" + terbilang(bilangan % 1000000);
+      } else if (bilangan < 1000000000000) {
+        return terbilang(Math.floor(bilangan / 1000000000)) + " Miliar" + terbilang(bilangan % 1000000000);
+      } else {
+        return " Angka Terlalu Besar";
+      }
+    }
+
+    function getDatabaseRecords() {
+      try {
+        const raw = localStorage.getItem(DB_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        console.error("Error reading database", e);
+        return [];
+      }
+    }
+
+    function saveDatabaseRecords(records) {
+      try {
+        localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(records));
+      } catch (e) {
+        console.error("Error saving database", e);
+      }
+    }
+
+    // Populate Period Dropdown
+    function populatePeriodOptions() {
+      const records = getDatabaseRecords();
+      const select = document.getElementById('filterPeriod');
+      const currentVal = select.value;
+      
+      const periods = new Set();
+      records.forEach(r => {
+        if (r.payPeriod) periods.add(r.payPeriod);
+      });
+
+      let html = '<option value="ALL">Semua Periode</option>';
+      periods.forEach(p => {
+        html += `<option value="${p}">${p}</option>`;
+      });
+      select.innerHTML = html;
+
+      if (periods.size > 0 && currentVal !== 'ALL') {
+        select.value = Array.from(periods)[0];
+      }
+    }
+
+    // Render Full Payroll Report
+    function renderPayrollReport() {
+      const records = getDatabaseRecords();
+      const periodFilter = document.getElementById('filterPeriod').value;
+      const divisiFilter = document.getElementById('filterDivisi').value;
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      const filtered = records.filter(r => {
+        const matchPeriod = (periodFilter === 'ALL' || r.payPeriod === periodFilter);
+        const matchDivisi = (divisiFilter === 'ALL' || (r.empDivisi && r.empDivisi.toLowerCase().includes(divisiFilter.toLowerCase())));
+        const matchSearch = (!search || 
+          (r.empName && r.empName.toLowerCase().includes(search)) ||
+          (r.empId && r.empId.toLowerCase().includes(search)) ||
+          (r.empJabatan && r.empJabatan.toLowerCase().includes(search))
+        );
+        return matchPeriod && matchDivisi && matchSearch;
+      });
+
+      // Update Formal Meta Header
+      if (filtered.length > 0) {
+        const sample = filtered[0];
+        document.getElementById('reportCompanyName').innerText = sample.companyName || "PT. MAJU BERSAMA SUKSES";
+        document.getElementById('reportCompanyAddress').innerText = sample.companyAddress || "Jl. Jenderal Sudirman No. 88, Jakarta";
+        document.getElementById('reportPeriodText').innerText = periodFilter === 'ALL' ? (sample.payPeriod || 'Semua Periode') : periodFilter;
+        document.getElementById('reportPayDateText').innerText = sample.payDate || new Date().toLocaleDateString('id-ID');
+      }
+
+      const tbody = document.getElementById('payrollTableBody');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="20" style="text-align: center; padding: 2.5rem; color: #94a3b8; font-size: 0.85rem;">
+              Belum ada data slip gaji tersimpan di database. Klik <strong>"📝 Pembuat Slip Gaji"</strong> untuk mulai input atau klik <strong>"💡 Isi Contoh Data"</strong> di atas.
+            </td>
+          </tr>
+        `;
+        updateSummaryStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        return;
+      }
+
+      let sumHariKerja = 0;
+      let sumHariMerah = 0;
+      let sumGajiPokok = 0;
+      let sumTunjJabatan = 0;
+      let sumTunjMakan = 0;
+      let sumTunjTransport = 0;
+      let sumInsentifMerah = 0;
+      let sumTotalBruto = 0;
+      let sumPph21 = 0;
+      let sumBpjs = 0;
+      let sumCicilan = 0;
+      let sumPotLain = 0;
+      let sumTotalPotongan = 0;
+      let sumNetGaji = 0;
+
+      let html = '';
+
+      filtered.forEach((r, idx) => {
+        const hariMasuk = r.hariKerja || 0;
+        const hariMerah = r.hariTanggalMerah || 0;
+        const gp = r.gajiPokok || 0;
+        const tj = r.tunjanganJabatan || 0;
+        const tm = r.totalMakan || (hariMasuk * (r.rateMakanPerHari || 25000));
+        const tt = r.totalTransport || (hariMasuk * (r.rateTransportPerHari || 15000));
+        const im = r.totalMerah || (hariMerah * 75000);
+        const bruto = r.totalPenghasilan || (gp + tj + tm + tt + im);
+
+        const pph21 = r.potonganPph21 || 0;
+        const bpjs = r.iuranBpjs || 0;
+        const cicilan = r.cicilanPinjaman || 0;
+        const potLain = r.potonganLain || 0;
+        const potongan = r.totalPotongan || (pph21 + bpjs + cicilan + potLain);
+        const thp = r.netGaji || (bruto - potongan);
+
+        sumHariKerja += hariMasuk;
+        sumHariMerah += hariMerah;
+        sumGajiPokok += gp;
+        sumTunjJabatan += tj;
+        sumTunjMakan += tm;
+        sumTunjTransport += tt;
+        sumInsentifMerah += im;
+        sumTotalBruto += bruto;
+        sumPph21 += pph21;
+        sumBpjs += bpjs;
+        sumCicilan += cicilan;
+        sumPotLain += potLain;
+        sumTotalPotongan += potongan;
+        sumNetGaji += thp;
+
+        html += `
+          <tr>
+            <td class="col-center"><strong>${idx + 1}</strong></td>
+            <td class="col-center"><code>${r.empId || '-'}</code></td>
+            <td>
+              <div class="cell-name">${r.empName}</div>
+              <div class="cell-jabatan">${r.empStatus || 'Tetap'}</div>
+            </td>
+            <td>
+              <div>${r.empJabatan || '-'}</div>
+              <div class="cell-jabatan">${r.empDivisi || '-'}</div>
+            </td>
+            <td class="col-center"><span class="badge-ptkp">${r.empPtkp || 'TK/0'}</span></td>
+            <td class="col-center"><span class="badge-present">${hariMasuk}</span></td>
+            <td class="col-center" style="color: #86198f; font-weight: 700;">${hariMerah}</td>
+            <td class="col-right">${formatRupiah(gp)}</td>
+            <td class="col-right">${formatRupiah(tj)}</td>
+            <td class="col-right">${formatRupiah(tm)}</td>
+            <td class="col-right">${formatRupiah(tt)}</td>
+            <td class="col-right" style="color: #86198f;">${formatRupiah(im)}</td>
+            <td class="col-right col-bold" style="background: #eff6ff; color: #1e40af;">${formatRupiah(bruto)}</td>
+            <td class="col-right" style="color: #991b1b;">${formatRupiah(pph21)}</td>
+            <td class="col-right">${formatRupiah(bpjs)}</td>
+            <td class="col-right" style="color: #b45309;">${formatRupiah(cicilan)}</td>
+            <td class="col-right">${formatRupiah(potLain)}</td>
+            <td class="col-right col-bold" style="background: #fef2f2; color: #991b1b;">${formatRupiah(potongan)}</td>
+            <td class="col-right col-bold" style="background: #f0fdf4; color: #15803d; font-size: 0.8rem;">${formatRupiah(thp)}</td>
+            <td style="font-size: 0.72rem; white-space: nowrap;">${r.empRekening || '-'}</td>
+            <td class="col-center no-print col-action" style="white-space: nowrap;">
+              <a href="index.html" class="btn btn-sm btn-edit-sm" title="Edit di Form Slip">👁️</a>
+              <button class="btn btn-sm btn-danger-sm" onclick="deleteRecord('${r.id}', '${r.empName}')" title="Hapus">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+
+      updateSummaryStats(
+        filtered.length, sumHariKerja, sumHariMerah, sumGajiPokok, sumTunjJabatan,
+        sumTunjMakan, sumTunjTransport, sumInsentifMerah, sumTotalBruto,
+        sumPph21, sumBpjs, sumCicilan, sumPotLain, sumTotalPotongan, sumNetGaji
+      );
+    }
+
+    function updateSummaryStats(count, hariKerja, hariMerah, gp, tj, tm, tt, im, bruto, pph21, bpjs, cicilan, potLain, totalPot, netGaji) {
+      document.getElementById('statTotalEmployees').innerText = count + " Orang";
+      document.getElementById('statTotalBruto').innerText = "Rp " + formatRupiah(bruto);
+      document.getElementById('statTotalPph21').innerText = "Rp " + formatRupiah(pph21);
+      document.getElementById('statTotalDeduction').innerText = "Rp " + formatRupiah((bpjs || 0) + (cicilan || 0) + (potLain || 0));
+      document.getElementById('statTotalNet').innerText = "Rp " + formatRupiah(netGaji);
+
+      document.getElementById('footTotalCount').innerText = count;
+      document.getElementById('footHariKerja').innerText = hariKerja;
+      document.getElementById('footHariMerah').innerText = hariMerah;
+      document.getElementById('footGajiPokok').innerText = "Rp " + formatRupiah(gp);
+      document.getElementById('footTunjJabatan').innerText = "Rp " + formatRupiah(tj);
+      document.getElementById('footTunjMakan').innerText = "Rp " + formatRupiah(tm);
+      document.getElementById('footTunjTransport').innerText = "Rp " + formatRupiah(tt);
+      document.getElementById('footInsentifMerah').innerText = "Rp " + formatRupiah(im);
+      document.getElementById('footTotalBruto').innerText = "Rp " + formatRupiah(bruto);
+      document.getElementById('footPph21').innerText = "Rp " + formatRupiah(pph21);
+      document.getElementById('footBpjs').innerText = "Rp " + formatRupiah(bpjs);
+      document.getElementById('footCicilan').innerText = "Rp " + formatRupiah(cicilan);
+      document.getElementById('footPotLain').innerText = "Rp " + formatRupiah(potLain);
+      document.getElementById('footTotalPotongan').innerText = "Rp " + formatRupiah(totalPot);
+      document.getElementById('footNetGaji').innerText = "Rp " + formatRupiah(netGaji);
+
+      let terbilangText = "Nol Rupiah";
+      if (netGaji > 0) {
+        terbilangText = terbilang(netGaji).trim() + " Rupiah";
+      }
+      document.getElementById('rekapTerbilangText').innerText = terbilangText;
+    }
+
+    function deleteRecord(id, name) {
+      if (confirm(`Yakin ingin menghapus data karyawan "${name}" dari rekapitulasi gaji?`)) {
+        let records = getDatabaseRecords();
+        records = records.filter(r => r.id !== id);
+        saveDatabaseRecords(records);
+        populatePeriodOptions();
+        renderPayrollReport();
+      }
+    }
+
+    function clearAllData() {
+      if (confirm("Peringatan: Seluruh data rekapitulasi gaji akan dihapus. Lanjutkan?")) {
+        saveDatabaseRecords([]);
+        populatePeriodOptions();
+        renderPayrollReport();
+      }
+    }
+
+    // Export CSV / Excel
+    function exportToCSV() {
+      const records = getDatabaseRecords();
+      if (records.length === 0) {
+        alert("Belum ada data untuk diekspor.");
+        return;
+      }
+
+      let csv = "No,Tanggal Simpan,Periode,NIK,Nama Karyawan,Jabatan,Divisi,Status,Status PTKP,NPWP,Hari Masuk,Hari Tgl Merah,Gaji Pokok,Tunjangan Jabatan,Tunjangan Makan,Tunjangan Transport,Insentif Tgl Merah,TOTAL GAJI BRUTO,Potongan PPh 21,Iuran BPJS,Cicilan Kasbon,Potongan Lain,TOTAL POTONGAN,GAJI BERSIH (THP),No Rekening\n";
+
+      records.forEach((r, idx) => {
+        const hm = r.hariKerja || 0;
+        const hrMerah = r.hariTanggalMerah || 0;
+        const gp = r.gajiPokok || 0;
+        const tj = r.tunjanganJabatan || 0;
+        const tm = r.totalMakan || (hm * (r.rateMakanPerHari || 25000));
+        const tt = r.totalTransport || (hm * (r.rateTransportPerHari || 15000));
+        const im = r.totalMerah || (hrMerah * 75000);
+        const bruto = r.totalPenghasilan || (gp + tj + tm + tt + im);
+        const pph21 = r.potonganPph21 || 0;
+        const bpjs = r.iuranBpjs || 0;
+        const cicilan = r.cicilanPinjaman || 0;
+        const potLain = r.potonganLain || 0;
+        const totalPot = r.totalPotongan || (pph21 + bpjs + cicilan + potLain);
+        const thp = r.netGaji || (bruto - totalPot);
+
+        csv += `"${idx+1}","${r.savedAt || ''}","${r.payPeriod || ''}","${r.empId || ''}","${r.empName || ''}","${r.empJabatan || ''}","${r.empDivisi || ''}","${r.empStatus || ''}","${r.empPtkp || 'TK/0'}","${r.empNpwp || '-'}","${hm}","${hrMerah}","${gp}","${tj}","${tm}","${tt}","${im}","${bruto}","${pph21}","${bpjs}","${cicilan}","${potLain}","${totalPot}","${thp}","${r.empRekening || ''}"\n`;
+      });
+
+      const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Rekapitulasi_Daftar_Gaji_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Seed Sample Data for Instant Demo
+    function loadSampleDataIfEmpty() {
+      const sample = [
+        {
+          id: 'SAMPLE_1',
+          savedAt: new Date().toLocaleString('id-ID'),
+          companyName: 'PT. MAJU BERSAMA SUKSES',
+          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
+          payPeriod: 'September 2026',
+          payDate: '25 September 2026',
+          empName: 'Budi Santoso',
+          empId: 'EMP-20260901',
+          empJabatan: 'Staff Operasional',
+          empDivisi: 'Operasional',
+          empStatus: 'Karyawan Tetap',
+          empPtkp: 'TK/0',
+          empNpwp: '09.123.456.7-012.000',
+          hariKerja: 24,
+          empKeteranganHadir: 'Hadir Penuh (24 Hari)',
+          empRekening: 'BCA - 1234567890 (Budi)',
+          gajiPokok: 4500000,
+          tunjanganJabatan: 400000,
+          rateMakanPerHari: 25000,
+          rateTransportPerHari: 15000,
+          hariTanggalMerah: 2,
+          totalMakan: 600000,
+          totalTransport: 360000,
+          totalMerah: 150000,
+          totalPenghasilan: 6010000,
+          potonganPph21: 45075,
+          iuranBpjs: 150000,
+          cicilanPinjaman: 200000,
+          potonganLain: 0,
+          totalPotongan: 395075,
+          netGaji: 5614925
+        },
+        {
+          id: 'SAMPLE_2',
+          savedAt: new Date().toLocaleString('id-ID'),
+          companyName: 'PT. MAJU BERSAMA SUKSES',
+          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
+          payPeriod: 'September 2026',
+          payDate: '25 September 2026',
+          empName: 'Siti Nurhaliza, S.E.',
+          empId: 'EMP-20260902',
+          empJabatan: 'Supervisor Keuangan',
+          empDivisi: 'Keuangan & Akuntansi',
+          empStatus: 'Karyawan Tetap',
+          empPtkp: 'TK/1',
+          empNpwp: '08.234.567.8-013.000',
+          hariKerja: 25,
+          empKeteranganHadir: 'Hadir Penuh',
+          empRekening: 'Mandiri - 1370009876543 (Siti)',
+          gajiPokok: 6500000,
+          tunjanganJabatan: 1200000,
+          rateMakanPerHari: 25000,
+          rateTransportPerHari: 20000,
+          hariTanggalMerah: 1,
+          totalMakan: 625000,
+          totalTransport: 500000,
+          totalMerah: 75000,
+          totalPenghasilan: 8900000,
+          potonganPph21: 155750,
+          iuranBpjs: 200000,
+          cicilanPinjaman: 0,
+          potonganLain: 0,
+          totalPotongan: 355750,
+          netGaji: 8544250
+        },
+        {
+          id: 'SAMPLE_3',
+          savedAt: new Date().toLocaleString('id-ID'),
+          companyName: 'PT. MAJU BERSAMA SUKSES',
+          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
+          payPeriod: 'September 2026',
+          payDate: '25 September 2026',
+          empName: 'Ahmad Fauzi',
+          empId: 'EMP-20260903',
+          empJabatan: 'Manager Operasional',
+          empDivisi: 'Operasional',
+          empStatus: 'Karyawan Tetap',
+          empPtkp: 'K/2',
+          empNpwp: '07.345.678.9-014.000',
+          hariKerja: 24,
+          empKeteranganHadir: 'Hadir Penuh',
+          empRekening: 'BNI - 0234567891 (Ahmad)',
+          gajiPokok: 9000000,
+          tunjanganJabatan: 2500000,
+          rateMakanPerHari: 30000,
+          rateTransportPerHari: 25000,
+          hariTanggalMerah: 2,
+          totalMakan: 720000,
+          totalTransport: 600000,
+          totalMerah: 150000,
+          totalPenghasilan: 12970000,
+          potonganPph21: 518800,
+          iuranBpjs: 300000,
+          cicilanPinjaman: 500000,
+          potonganLain: 0,
+          totalPotongan: 1318800,
+          netGaji: 11651200
+        },
+        {
+          id: 'SAMPLE_4',
+          savedAt: new Date().toLocaleString('id-ID'),
+          companyName: 'PT. MAJU BERSAMA SUKSES',
+          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
+          payPeriod: 'September 2026',
+          payDate: '25 September 2026',
+          empName: 'Dewi Lestari',
+          empId: 'EMP-20260904',
+          empJabatan: 'Staff Administrasi',
+          empDivisi: 'HRD & Personalia',
+          empStatus: 'Karyawan Kontrak (PKWT)',
+          empPtkp: 'TK/0',
+          empNpwp: '06.456.789.0-015.000',
+          hariKerja: 22,
+          empKeteranganHadir: '2 Hari Izin',
+          empRekening: 'BCA - 5432109876 (Dewi)',
+          gajiPokok: 4200000,
+          tunjanganJabatan: 200000,
+          rateMakanPerHari: 25000,
+          rateTransportPerHari: 15000,
+          hariTanggalMerah: 0,
+          totalMakan: 550000,
+          totalTransport: 330000,
+          totalMerah: 0,
+          totalPenghasilan: 5280000,
+          potonganPph21: 0,
+          iuranBpjs: 120000,
+          cicilanPinjaman: 150000,
+          potonganLain: 0,
+          totalPotongan: 270000,
+          netGaji: 5010000
+        },
+        {
+          id: 'SAMPLE_5',
+          savedAt: new Date().toLocaleString('id-ID'),
+          companyName: 'PT. MAJU BERSAMA SUKSES',
+          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
+          payPeriod: 'September 2026',
+          payDate: '25 September 2026',
+          empName: 'Rian Kurniawan',
+          empId: 'EMP-20260905',
+          empJabatan: 'Driver / Kurir Logistik',
+          empDivisi: 'Gudang & Logistik',
+          empStatus: 'Karyawan Tetap',
+          empPtkp: 'K/1',
+          empNpwp: '05.567.890.1-016.000',
+          hariKerja: 26,
+          empKeteranganHadir: 'Hadir Penuh',
+          empRekening: 'BRI - 001234567890123 (Rian)',
+          gajiPokok: 4300000,
+          tunjanganJabatan: 300000,
+          rateMakanPerHari: 25000,
+          rateTransportPerHari: 20000,
+          hariTanggalMerah: 3,
+          totalMakan: 650000,
+          totalTransport: 520000,
+          totalMerah: 225000,
+          totalPenghasilan: 5995000,
+          potonganPph21: 0,
+          iuranBpjs: 140000,
+          cicilanPinjaman: 100000,
+          potonganLain: 0,
+          totalPotongan: 240000,
+          netGaji: 5755000
+        }
+      ];
+
+      const existing = getDatabaseRecords();
+      if (existing.length === 0) {
+        saveDatabaseRecords(sample);
+      } else {
+        if (confirm("Tambahkan 5 data karyawan contoh ke database?")) {
+          saveDatabaseRecords([...sample, ...existing]);
+        }
+      }
+      populatePeriodOptions();
+      renderPayrollReport();
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const records = getDatabaseRecords();
+      if (records.length === 0) {
+        loadSampleDataIfEmpty();
+      } else {
+        populatePeriodOptions();
+        renderPayrollReport();
+      }
+    });
+  </script>
+</body>
+</html>
