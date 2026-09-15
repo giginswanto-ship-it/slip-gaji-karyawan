@@ -1,4 +1,5 @@
-﻿# Sistem Slip Gaji & Rekapitulasi Penggajian Karyawan
+# Sistem Slip Gaji & Rekapitulasi Penggajian Karyawan
+> **dev by dutaglobaltech enterprise**
 
 Aplikasi web modern berbasis HTML5, Tailwind CSS, dan JavaScript Vanilla untuk pembuatan **Slip Gaji Karyawan** dan **Rekapitulasi Daftar Gaji (Payroll Master Sheet)** lengkap dengan perhitungan otomatis **PPh 21 TER (PP 58/2023 & PMK 168/2023)** dan **Status PTKP**.
 
@@ -40,6 +41,7 @@ Atau langsung buka file `index.html` dan `rekap_gaji.html` menggunakan browser m
 
 ---
 
-## 💻 Lisensi & Pembuat
-Dibuat untuk kebutuhan operasional penggajian karyawan.
-GitHub: [@giginswanto-ship-it](https://github.com/giginswanto-ship-it)
+## 💻 Lisensi & Pengembang
+- **Developer**: `dev by dutaglobaltech enterprise`
+- **GitHub**: [@giginswanto-ship-it](https://github.com/giginswanto-ship-it)
+

@@ -1,5 +1,6 @@
 ===================================================================
               PETUNJUK PENGGUNAAN APLIKASI SLIP GAJI
+             >> dev by dutaglobaltech enterprise <<
 ===================================================================
 
 Aplikasi Slip Gaji Karyawan ini dibuat lengkap dengan perhitungan otomatis:
@@ -60,4 +61,6 @@ CARA MENGGUNAKAN:
 6. Template Excel:
    Buka file [ Template_Slip_Gaji_Excel.xls ] langsung dengan Microsoft Excel jika ingin mengedit via spreadsheet.
 
+===================================================================
+Developer: dev by dutaglobaltech enterprise
 ===================================================================
