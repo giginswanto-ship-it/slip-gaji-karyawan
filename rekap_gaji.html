@@ -499,6 +499,64 @@
       gap: 0.5rem;
     }
 
+    /* Modal Backdrop & Content */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.75rem;
+      background: #1e3a8a;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
     /* Print Media Query */
     @page {
       size: A4 landscape;
@@ -581,6 +639,10 @@
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
           📝 Pembuat Slip Gaji
         </a>
+        <button class="btn btn-outline-white" onclick="openSettingsModal()" title="Pengaturan profil perusahaan, tarif default, & backup">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          ⚙️ Pengaturan
+        </button>
         <button class="btn btn-amber" onclick="exportToCSV()" title="Download data rekap ke file Excel CSV">
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
           📊 Export Excel
@@ -795,21 +857,132 @@
         Laporan Rekapitulasi Daftar Gaji Karyawan Sah &bull; Dicetak Otomatis &bull; <em>dev by dutaglobaltech enterprise</em>
       </div>
 
-    </div>
-
-  </main>
-
-  <!-- Application Footer -->
-  <footer class="no-print" style="text-align: center; padding: 1.5rem 1.5rem 2rem; color: #64748b; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem;">
-    <div style="max-width: 1600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
-      <div>
-        <strong>Rekapitulasi Daftar Gaji Karyawan</strong> &copy; 2026 &bull; Master Sheet Penggajian &amp; Pajak PPh 21
+  <!-- Settings / Pengaturan Sistem Modal Popup -->
+  <div class="modal-backdrop no-print" id="settingsModal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-content" style="max-width: 860px;">
+      <div class="modal-header" style="background: #1e3a8a;">
+        <h3>
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Pengaturan Sistem, Tarif &amp; Integrasi
+        </h3>
+        <button onclick="closeSettingsModal()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.5rem; line-height: 1;">&times;</button>
       </div>
-      <div style="background: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 9999px; font-weight: 600; font-size: 0.8rem;">
-        🚀 dev by dutaglobaltech enterprise
+      
+      <div class="modal-body">
+        
+        <!-- Tab 1: Profil Perusahaan -->
+        <div style="margin-bottom: 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem;">
+          <h4 style="color: #1e3a8a; font-weight: 700; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.4rem;">
+            🏢 Profil Perusahaan &amp; Otorisasi Pengesahan
+          </h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgCompanyName" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Nama Perusahaan / Kantor</label>
+              <input type="text" id="cfgCompanyName" placeholder="Nama Perusahaan" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgCompanyAddress" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Alamat &amp; Kontak</label>
+              <input type="text" id="cfgCompanyAddress" placeholder="Alamat Perusahaan" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 0.6rem;">
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgCompanyCity" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Kota Lokasi</label>
+              <input type="text" id="cfgCompanyCity" placeholder="Kota" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgSignerName" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Penandatangan Slip / Diperiksa</label>
+              <input type="text" id="cfgSignerName" placeholder="Nama Manager Finance" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgSignerRole" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Jabatan Penandatangan Slip</label>
+              <input type="text" id="cfgSignerRole" placeholder="Jabatan" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.6rem;">
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgMakerName" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Pembuat Rekapitulasi (HRD / Payroll)</label>
+              <input type="text" id="cfgMakerName" placeholder="Nama Staff Payroll" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgDirectorName" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Pimpinan Tertinggi / Direktur (Rekap)</label>
+              <input type="text" id="cfgDirectorName" placeholder="Nama Direktur" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Standar Tarif Penggajian -->
+        <div style="margin-bottom: 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem;">
+          <h4 style="color: #1e3a8a; font-weight: 700; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.4rem;">
+            💰 Standar Hari Kerja &amp; Tarif Tunjangan
+          </h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgDefaultWorkDays" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Standar Hari Kerja</label>
+              <input type="number" id="cfgDefaultWorkDays" value="24" min="1" max="31" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgDefaultMakanRate" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Tarif Tunj. Makan (Rp/Hr)</label>
+              <input type="text" id="cfgDefaultMakanRate" value="25.000" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgDefaultTransportRate" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Tarif Tunj. Transport (Rp/Hr)</label>
+              <input type="text" id="cfgDefaultTransportRate" value="15.000" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.6rem;">
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgDefaultMerahRate" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Insentif Tanggal Merah (Rp/Hr)</label>
+              <input type="text" id="cfgDefaultMerahRate" value="75.000" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="cfgDefaultPtkp" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Default Status PTKP</label>
+              <select id="cfgDefaultPtkp" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+                <option value="TK/0">TK/0 (Belum Menikah, 0 Tanggungan - Kat A)</option>
+                <option value="TK/1">TK/1 (Belum Menikah, 1 Tanggungan - Kat A)</option>
+                <option value="TK/2">TK/2 (Belum Menikah, 2 Tanggungan - Kat B)</option>
+                <option value="TK/3">TK/3 (Belum Menikah, 3 Tanggungan - Kat B)</option>
+                <option value="K/0">K/0 (Menikah, 0 Tanggungan - Kat A)</option>
+                <option value="K/1">K/1 (Menikah, 1 Tanggungan - Kat B)</option>
+                <option value="K/2">K/2 (Menikah, 2 Tanggungan - Kat B)</option>
+                <option value="K/3">K/3 (Menikah, 3 Tanggungan - Kat C)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Backup & Restore -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem;">
+          <h4 style="color: #1e3a8a; font-weight: 700; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.4rem;">
+            💾 Cadangan Data &amp; Pemulihan (Backup &amp; Restore)
+          </h4>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button type="button" class="btn btn-primary" onclick="exportBackupJSON()">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              ⬇️ Download Backup Data (.JSON)
+            </button>
+            <label class="btn btn-amber" style="cursor: pointer; margin: 0;">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l4-4m0 0l4 4m-4-4v12"/></svg>
+              ⬆️ Pulihkan Data dari (.JSON)
+              <input type="file" id="backupFileInput" accept=".json" onchange="importBackupJSON(event)" style="display: none;">
+            </label>
+            <button type="button" class="btn btn-danger-sm" onclick="resetSettingsToDefault()">
+              🔄 Reset Pengaturan ke Default
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="padding: 1rem 1.5rem; background: #f1f5f9; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.75rem; color: #64748b;">dev by dutaglobaltech enterprise</span>
+        <div style="display: flex; gap: 0.6rem;">
+          <button class="btn btn-secondary" onclick="closeSettingsModal()">Tutup</button>
+          <button class="btn btn-success" onclick="saveSettingsFromModal()">💾 Terapkan &amp; Simpan Pengaturan</button>
+        </div>
       </div>
     </div>
-  </footer>
+  </div>
 
   <script>
     const DB_STORAGE_KEY = 'SLIP_GAJI_DATABASE_V1';
@@ -1015,8 +1188,9 @@
             <td class="col-right col-bold" style="background: #f0fdf4; color: #15803d; font-size: 0.8rem;">${formatRupiah(thp)}</td>
             <td style="font-size: 0.72rem; white-space: nowrap;">${r.empRekening || '-'}</td>
             <td class="col-center no-print col-action" style="white-space: nowrap;">
-              <a href="index.html" class="btn btn-sm btn-edit-sm" title="Edit di Form Slip">👁️</a>
-              <button class="btn btn-sm btn-danger-sm" onclick="deleteRecord('${r.id}', '${r.empName}')" title="Hapus">🗑️</button>
+              <a href="index.html?loadId=${r.id}" class="btn btn-sm btn-edit-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;" title="Buka / Edit di Formulir Slip Gaji">👁️ Buka</a>
+              <a href="index.html?loadId=${r.id}&print=1" class="btn btn-sm btn-success" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;" title="Cetak Slip Gaji Karyawan Ini Langsung">🖨️ Cetak</a>
+              <button class="btn btn-sm btn-danger-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;" onclick="deleteRecord('${r.id}', '${r.empName}')" title="Hapus dari Database">🗑️</button>
             </td>
           </tr>
         `;
@@ -1301,8 +1475,180 @@
       renderPayrollReport();
     }
 
+    // =========================================================================
+    // GLOBAL SETTINGS & BACKUP/RESTORE SYSTEM
+    // =========================================================================
+    const SETTINGS_STORAGE_KEY = 'PAYROLL_SYSTEM_SETTINGS_V1';
+
+    const DEFAULT_SETTINGS = {
+      companyName: "PT. MAJU BERSAMA SUKSES",
+      companyAddress: "Jl. Jenderal Sudirman No. 88, Jakarta",
+      companyCity: "Jakarta",
+      defaultPeriod: "September 2026",
+      defaultPayDate: "25 September 2026",
+      signerName: "Hendra Wijaya, S.E.",
+      signerRole: "Manager Keuangan & Akuntansi",
+      makerName: "Siti Rahmawati, S.E.",
+      makerRole: "Staff Keuangan & Penggajian",
+      directorName: "Ir. Bambang Prakoso",
+      directorRole: "Direktur Utama",
+      defaultWorkDays: 24,
+      defaultMakanRate: 25000,
+      defaultTransportRate: 15000,
+      defaultMerahRate: 75000,
+      defaultPtkp: "TK/0",
+      defaultPphMode: "auto",
+      defaultPaper: "a4",
+      defaultOrientation: "portrait"
+    };
+
+    function getSettings() {
+      try {
+        const raw = localStorage.getItem(SETTINGS_STORAGE_KEY);
+        if (!raw) return { ...DEFAULT_SETTINGS };
+        return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+      } catch (e) {
+        console.error("Error reading settings", e);
+        return { ...DEFAULT_SETTINGS };
+      }
+    }
+
+    function saveSettings(settings) {
+      try {
+        localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+        return true;
+      } catch (e) {
+        console.error("Error saving settings", e);
+        return false;
+      }
+    }
+
+    function openSettingsModal() {
+      const cfg = getSettings();
+      document.getElementById('cfgCompanyName').value = cfg.companyName;
+      document.getElementById('cfgCompanyAddress').value = cfg.companyAddress;
+      document.getElementById('cfgCompanyCity').value = cfg.companyCity;
+      document.getElementById('cfgSignerName').value = cfg.signerName;
+      document.getElementById('cfgSignerRole').value = cfg.signerRole || "Manager Keuangan";
+      document.getElementById('cfgMakerName').value = cfg.makerName || "Staff Payroll";
+      document.getElementById('cfgDirectorName').value = cfg.directorName || "Direktur Utama";
+      document.getElementById('cfgDefaultWorkDays').value = cfg.defaultWorkDays || 24;
+      document.getElementById('cfgDefaultMakanRate').value = formatRupiah(cfg.defaultMakanRate || 25000);
+      document.getElementById('cfgDefaultTransportRate').value = formatRupiah(cfg.defaultTransportRate || 15000);
+      document.getElementById('cfgDefaultMerahRate').value = formatRupiah(cfg.defaultMerahRate || 75000);
+      document.getElementById('cfgDefaultPtkp').value = cfg.defaultPtkp || 'TK/0';
+
+      document.getElementById('settingsModal').classList.add('show');
+    }
+
+    function closeSettingsModal() {
+      document.getElementById('settingsModal').classList.remove('show');
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'settingsModal') {
+        closeSettingsModal();
+      }
+    }
+
+    function saveSettingsFromModal() {
+      const newSettings = {
+        companyName: document.getElementById('cfgCompanyName').value.trim() || DEFAULT_SETTINGS.companyName,
+        companyAddress: document.getElementById('cfgCompanyAddress').value.trim() || DEFAULT_SETTINGS.companyAddress,
+        companyCity: document.getElementById('cfgCompanyCity').value.trim() || DEFAULT_SETTINGS.companyCity,
+        signerName: document.getElementById('cfgSignerName').value.trim() || DEFAULT_SETTINGS.signerName,
+        signerRole: document.getElementById('cfgSignerRole').value.trim() || DEFAULT_SETTINGS.signerRole,
+        makerName: document.getElementById('cfgMakerName').value.trim() || DEFAULT_SETTINGS.makerName,
+        directorName: document.getElementById('cfgDirectorName').value.trim() || DEFAULT_SETTINGS.directorName,
+        defaultWorkDays: parseInt(document.getElementById('cfgDefaultWorkDays').value, 10) || 24,
+        defaultMakanRate: parseRupiah(document.getElementById('cfgDefaultMakanRate').value) || 25000,
+        defaultTransportRate: parseRupiah(document.getElementById('cfgDefaultTransportRate').value) || 15000,
+        defaultMerahRate: parseRupiah(document.getElementById('cfgDefaultMerahRate').value) || 75000,
+        defaultPtkp: document.getElementById('cfgDefaultPtkp').value,
+        defaultPphMode: 'auto',
+        defaultPaper: 'a4',
+        defaultOrientation: 'portrait'
+      };
+
+      saveSettings(newSettings);
+      applySettingsToReport(newSettings);
+      closeSettingsModal();
+      alert("Pengaturan sistem berhasil disimpan & diterapkan ke seluruh laporan!");
+    }
+
+    function applySettingsToReport(cfg = null) {
+      if (!cfg) cfg = getSettings();
+      if (document.getElementById('reportCompanyName')) document.getElementById('reportCompanyName').innerText = cfg.companyName;
+      if (document.getElementById('reportCompanyAddress')) document.getElementById('reportCompanyAddress').innerText = cfg.companyAddress;
+      if (document.getElementById('sigDibuat')) document.getElementById('sigDibuat').innerText = `( ${cfg.makerName} )`;
+      if (document.getElementById('sigDiperiksa')) document.getElementById('sigDiperiksa').innerText = `( ${cfg.signerName} )`;
+      if (document.getElementById('sigDisetujui')) document.getElementById('sigDisetujui').innerText = `( ${cfg.directorName} )`;
+    }
+
+    function resetSettingsToDefault() {
+      if (confirm("Kembalikan seluruh pengaturan sistem ke standar awal?")) {
+        saveSettings(DEFAULT_SETTINGS);
+        openSettingsModal();
+        applySettingsToReport(DEFAULT_SETTINGS);
+        alert("Pengaturan telah dikembalikan ke standar awal.");
+      }
+    }
+
+    // EXPORT FULL BACKUP JSON
+    function exportBackupJSON() {
+      const records = getDatabaseRecords();
+      const settings = getSettings();
+      const payload = {
+        app: "Sistem Slip Gaji & Rekapitulasi Karyawan",
+        developer: "dev by dutaglobaltech enterprise",
+        exportedAt: new Date().toISOString(),
+        version: "1.0",
+        settings: settings,
+        records: records
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
+      const dlAnchorElem = document.createElement('a');
+      dlAnchorElem.setAttribute("href", dataStr);
+      dlAnchorElem.setAttribute("download", `Backup_Payroll_Database_${new Date().toISOString().slice(0,10)}.json`);
+      dlAnchorElem.click();
+    }
+
+    // IMPORT BACKUP JSON
+    function importBackupJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (parsed && (Array.isArray(parsed.records) || parsed.settings)) {
+            if (Array.isArray(parsed.records)) {
+              saveDatabaseRecords(parsed.records);
+            }
+            if (parsed.settings) {
+              saveSettings(parsed.settings);
+            }
+            applySettingsToReport();
+            populatePeriodOptions();
+            renderPayrollReport();
+            closeSettingsModal();
+            alert(`Backup berhasil dipulihkan! (${(parsed.records || []).length} slip gaji dimuat)`);
+          } else {
+            alert("Format file JSON tidak valid.");
+          }
+        } catch (err) {
+          alert("Gagal membaca file JSON: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
+    }
+
     // Initialize on load
     window.addEventListener('DOMContentLoaded', () => {
+      applySettingsToReport();
       const records = getDatabaseRecords();
       if (records.length === 0) {
         loadSampleDataIfEmpty();
