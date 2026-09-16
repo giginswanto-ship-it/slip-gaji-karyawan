@@ -617,10 +617,287 @@
       .sig-col-role {
         margin-bottom: 2.2cm !important;
       }
+      .sig-col-role {
+        margin-bottom: 2.2cm !important;
+      }
+    }
+
+    /* ========================================================================= */
+    /* HALAMAN MUKA / PORTAL LOGIN 3 UNIT USAHA (SEBELUM MASUK KE SISTEM)       */
+    /* ========================================================================= */
+    .front-gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 15%, #1e3a8a 0%, #0f172a 100%);
+      z-index: 9999;
+      display: none;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem 1rem;
+      overflow-y: auto;
+      backdrop-filter: blur(12px);
+      animation: gateFadeIn 0.3s ease-out;
+    }
+
+    @keyframes gateFadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .front-gate-container {
+      background: white;
+      width: 100%;
+      max-width: 980px;
+      border-radius: 18px;
+      box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      margin: auto;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .front-gate-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0284c7 100%);
+      color: white;
+      padding: 2rem 2rem 1.75rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .front-gate-body {
+      padding: 2rem;
+      background: #f8fafc;
+    }
+
+    .user-credential-card {
+      background: white;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 1.15rem;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-credential-card:hover {
+      border-color: #2563eb;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px -5px rgba(37, 99, 235, 0.15);
+    }
+
+    .cred-badge {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      font-family: monospace;
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
+
+  <!-- ========================================================================= -->
+  <!-- HALAMAN MUKA / PORTAL LOGIN 3 UNIT USAHA (SEBELUM MASUK SISTEM)           -->
+  <!-- ========================================================================= -->
+  <div id="frontLoginGate" class="front-gate-overlay no-print">
+    <div class="front-gate-container">
+      
+      <!-- Kop / Header Halaman Muka -->
+      <div class="front-gate-header">
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; background: rgba(255,255,255,0.18); border-radius: 16px; margin-bottom: 0.85rem; border: 1.5px solid rgba(255,255,255,0.3);">
+          <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <h1 style="font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.35rem;">
+          PORTAL REKAPITULASI DAFTAR GAJI 3 UNIT USAHA
+        </h1>
+        <p style="font-size: 0.92rem; color: #e0f2fe; max-width: 700px; margin: 0 auto 0.85rem;">
+          Master Rekapitulasi Gaji Karyawan &bull; Perhitungan PPh 21 TER (PP 58/2023) &bull; Format Cetak Landscape
+        </p>
+        <div style="display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap;">
+          <span style="background: #be123c; color: white; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.3);">
+            👑 DIREKTUR UTAMA: Ir. Swanto
+          </span>
+          <span style="background: rgba(255,255,255,0.18); color: white; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">
+            🏢 3 Unit Usaha: Grand Wisata &amp; Zamrud
+          </span>
+          <span style="background: rgba(255,255,255,0.18); color: #e0f2fe; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">
+            dev by dutaglobaltech enterprise
+          </span>
+        </div>
+      </div>
+
+      <!-- Body Halaman Muka: Daftar Akun & Form Login -->
+      <div class="front-gate-body">
+        
+        <!-- Judul Bagian Daftar Akun -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <h3 style="color: #0f172a; font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem;">
+              🔑 DAFTAR USERNAME &amp; PASSWORD PENGGUNA SISTEM
+            </h3>
+            <p style="font-size: 0.8rem; color: #64748b;">
+              Pilih salah satu akun di bawah ini untuk <strong>Masuk Cepat (1-Klik)</strong> atau gunakan form login manual:
+            </p>
+          </div>
+          <span style="font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 0.25rem 0.65rem; border-radius: 6px; font-weight: 700;">
+            ⚡ 1-Click Fast Login
+          </span>
+        </div>
+
+        <!-- 4 Grid Kartu Akun Lengkap -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+          
+          <!-- Kartu 1: Direktur Utama -->
+          <div class="user-credential-card" style="border-top: 4px solid #be123c; background: linear-gradient(to bottom, #fff1f2 0%, #ffffff 100%);">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
+                <span style="font-size: 0.7rem; font-weight: 800; background: #ffe4e6; color: #9f1239; padding: 2px 8px; border-radius: 4px;">PIMPINAN</span>
+                <span style="font-size: 1.25rem;">👑</span>
+              </div>
+              <h4 style="color: #9f1239; font-size: 0.95rem; font-weight: 800; margin-bottom: 2px;">Ir. Swanto</h4>
+              <p style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.6rem;">Direktur Utama (Semua Unit Usaha)</p>
+              
+              <div style="background: rgba(255,255,255,0.9); border: 1px dashed #f43f5e; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.25rem;">
+                <div>User: <span class="cred-badge" style="background: #ffe4e6; color: #9f1239; border-color: #fecdd3;">direktur</span> / <span class="cred-badge" style="background: #ffe4e6; color: #9f1239; border-color: #fecdd3;">swanto</span></div>
+                <div>Pass: <span class="cred-badge" style="background: #ffe4e6; color: #9f1239; border-color: #fecdd3;">swanto123</span></div>
+                <div style="font-size: 0.68rem; color: #881337; font-weight: 600; margin-top: 2px;">✓ Akses Penuh + Edit Pengaturan</div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="quickLoginAndEnter('direktur', 'swanto123', 'rekap')" style="width: 100%; justify-content: center; background: #be123c; font-size: 0.8rem; padding: 0.55rem;">
+              🚀 Masuk sbg Direktur
+            </button>
+          </div>
+
+          <!-- Kartu 2: PIC Shop And Drive GW -->
+          <div class="user-credential-card" style="border-top: 4px solid #0284c7;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
+                <span style="font-size: 0.7rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">UNIT 1</span>
+                <span style="font-size: 1.25rem;">🚗</span>
+              </div>
+              <h4 style="color: #0369a1; font-size: 0.95rem; font-weight: 800; margin-bottom: 2px;">Adis Setiawan</h4>
+              <p style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.6rem;">Shop And Drive Grand Wisata</p>
+              
+              <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.25rem;">
+                <div>User: <span class="cred-badge">adis</span></div>
+                <div>Pass: <span class="cred-badge">adis123</span></div>
+                <div style="font-size: 0.68rem; color: #0284c7; font-weight: 600; margin-top: 2px;">✓ Rekap Cabang Grand Wisata</div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="quickLoginAndEnter('adis', 'adis123', 'rekap')" style="width: 100%; justify-content: center; background: #0284c7; font-size: 0.8rem; padding: 0.55rem;">
+              🚀 Masuk sbg PIC Adis
+            </button>
+          </div>
+
+          <!-- Kartu 3: PIC Snaprint GW -->
+          <div class="user-credential-card" style="border-top: 4px solid #16a34a;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
+                <span style="font-size: 0.7rem; font-weight: 800; background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 4px;">UNIT 2</span>
+                <span style="font-size: 1.25rem;">🖨️</span>
+              </div>
+              <h4 style="color: #15803d; font-size: 0.95rem; font-weight: 800; margin-bottom: 2px;">Eki Dwi Saputra</h4>
+              <p style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.6rem;">Snaprint Grand Wisata</p>
+              
+              <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.25rem;">
+                <div>User: <span class="cred-badge" style="background: #f0fdf4; color: #166534; border-color: #bbf7d0;">eki</span></div>
+                <div>Pass: <span class="cred-badge" style="background: #f0fdf4; color: #166534; border-color: #bbf7d0;">eki123</span></div>
+                <div style="font-size: 0.68rem; color: #16a34a; font-weight: 600; margin-top: 2px;">✓ Rekap Snaprint Grand Wisata</div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-success" onclick="quickLoginAndEnter('eki', 'eki123', 'rekap')" style="width: 100%; justify-content: center; font-size: 0.8rem; padding: 0.55rem;">
+              🚀 Masuk sbg PIC Eki
+            </button>
+          </div>
+
+          <!-- Kartu 4: PIC Snaprint Zamrud -->
+          <div class="user-credential-card" style="border-top: 4px solid #d97706;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
+                <span style="font-size: 0.7rem; font-weight: 800; background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 4px;">UNIT 3</span>
+                <span style="font-size: 1.25rem;">🏢</span>
+              </div>
+              <h4 style="color: #b45309; font-size: 0.92rem; font-weight: 800; margin-bottom: 2px;">M. Rengga Swana H.</h4>
+              <p style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.6rem;">Snaprint Dukuh Zamrud</p>
+              
+              <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.25rem;">
+                <div>User: <span class="cred-badge" style="background: #fffbeb; color: #92400e; border-color: #fde68a;">rengga</span></div>
+                <div>Pass: <span class="cred-badge" style="background: #fffbeb; color: #92400e; border-color: #fde68a;">rengga123</span></div>
+                <div style="font-size: 0.68rem; color: #d97706; font-weight: 600; margin-top: 2px;">✓ Rekap Snaprint Zamrud</div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-amber" onclick="quickLoginAndEnter('rengga', 'rengga123', 'rekap')" style="width: 100%; justify-content: center; font-size: 0.8rem; padding: 0.55rem;">
+              🚀 Masuk sbg PIC Rengga
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Bagian Bawah: Form Login Manual & Shortcut Menu -->
+        <div style="background: white; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 1.25rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem; align-items: center;">
+          
+          <!-- Form Manual Input -->
+          <form onsubmit="handleFrontGateSubmit(event)">
+            <h4 style="font-size: 0.88rem; font-weight: 800; color: #1e3a8a; margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.35rem;">
+              📝 Atau Masukkan Akun Secara Manual:
+            </h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.65rem;">
+              <div>
+                <label for="frontGateUser" style="font-size: 0.74rem; font-weight: 700; color: #475569;">Username:</label>
+                <input type="text" id="frontGateUser" placeholder="direktur / adis / eki / rengga" required style="width: 100%; padding: 0.45rem 0.65rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem;">
+              </div>
+              <div>
+                <label for="frontGatePass" style="font-size: 0.74rem; font-weight: 700; color: #475569;">Password:</label>
+                <input type="password" id="frontGatePass" placeholder="Masukkan password..." required style="width: 100%; padding: 0.45rem 0.65rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem;">
+              </div>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <select id="frontGateTarget" style="flex: 1; padding: 0.45rem 0.65rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.8rem; font-weight: 600; color: #1e3a8a;">
+                <option value="rekap">📊 Buka Rekapitulasi 3 Unit</option>
+                <option value="slip">📝 Buka Pembuat Slip Gaji</option>
+              </select>
+              <button type="submit" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.82rem; background: #1e40af;">
+                🔓 Masuk ke Sistem
+              </button>
+            </div>
+          </form>
+
+          <!-- Navigasi Pintas & Keamanan Direktur Note -->
+          <div style="border-left: 1px solid #e2e8f0; padding-left: 1.25rem;">
+            <div style="background: #fff1f2; border: 1px dashed #f43f5e; border-radius: 8px; padding: 0.75rem; margin-bottom: 0.75rem;">
+              <div style="font-size: 0.76rem; font-weight: 800; color: #9f1239; display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.25rem;">
+                <span>🔒</span> CATATAN RESMI OTORISASI:
+              </div>
+              <p style="font-size: 0.72rem; color: #881337; line-height: 1.4; margin: 0;">
+                Perubahan Pengaturan hanya boleh dilakukan Oleh Direktur <strong>( Ir. Swanto )</strong>. Jika mencoba merubah tanpa izin akan muncul Note: <em>HARUS IZIN DIREKTUR</em>.
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="btn btn-outline-white" onclick="closeFrontGate()" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; font-size: 0.75rem; flex: 1; justify-content: center;">
+                ➡️ Lanjut Tanpa Ubah Akun
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Footer Halaman Muka -->
+      <div style="background: #0f172a; color: #94a3b8; padding: 0.75rem 2rem; font-size: 0.72rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <span>Sistem Penggajian &amp; Rekapitulasi 3 Unit Usaha &bull; Direktur: Ir. Swanto</span>
+        <span>dev by dutaglobaltech enterprise</span>
+      </div>
+
+    </div>
+  </div>
 
   <!-- Top App Navigation -->
   <header class="app-header">
@@ -630,11 +907,26 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
         <div>
-          <h1>Rekapitulasi Daftar Gaji Karyawan</h1>
-          <p>Laporan Penggajian Keseluruhan Karyawan &bull; <span style="background: rgba(255,255,255,0.18); padding: 2px 8px; border-radius: 4px; font-weight: 600; color: #e0f2fe; font-size: 0.76rem;">dev by dutaglobaltech enterprise</span></p>
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <h1 style="margin: 0;">Rekapitulasi Daftar Gaji Karyawan</h1>
+            <span id="activeUnitBadge" style="background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.4); padding: 2px 10px; border-radius: 20px; font-size: 0.76rem; font-weight: 700; color: #fff; letter-spacing: 0.02em;">
+              👑 Semua Unit Usaha
+            </span>
+          </div>
+          <p>3 Unit Usaha &bull; Direktur: <strong>Ir. Swanto</strong> &bull; <span style="background: rgba(255,255,255,0.18); padding: 2px 8px; border-radius: 4px; font-weight: 600; color: #e0f2fe; font-size: 0.76rem;">dev by dutaglobaltech enterprise</span></p>
         </div>
       </div>
       <div class="header-actions no-print">
+        <!-- User Session Indicator & Switcher Button (Kembali ke Halaman Muka) -->
+        <button class="btn btn-outline-white" onclick="openFrontGate()" style="background: rgba(15, 23, 42, 0.4); border: 1.5px solid rgba(255,255,255,0.35);" title="Klik untuk membuka Halaman Muka / Ganti Akun & Unit Usaha">
+          <span style="font-size: 1rem;">👤</span>
+          <span style="display: flex; flex-direction: column; text-align: left; line-height: 1.15;">
+            <strong id="headerUserName" style="font-size: 0.8rem; color: #fff;">Ir. Swanto</strong>
+            <span id="headerUserRole" style="font-size: 0.68rem; opacity: 0.85;">Direktur Utama</span>
+          </span>
+          <span style="font-size: 0.7rem; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; margin-left: 4px;">Ganti / Login</span>
+        </button>
+
         <a href="index.html" class="btn btn-outline-white" title="Kembali ke formulir pembuatan slip gaji individu">
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
           📝 Pembuat Slip Gaji
@@ -713,6 +1005,16 @@
     <!-- Filter Toolbar -->
     <div class="filter-card no-print">
       <div class="filter-group">
+        <div class="filter-item">
+          <label for="filterUnit">🏢 Unit Usaha:</label>
+          <select id="filterUnit" onchange="renderPayrollReport()" style="font-weight: 700; color: #1e3a8a;">
+            <option value="ALL">Semua Unit Usaha</option>
+            <option value="shop_and_drive_gw">🚗 Shop And Drive Grand Wisata</option>
+            <option value="snaprint_gw">🖨️ Snaprint Grand Wisata</option>
+            <option value="snaprint_zamrud">🏢 Snaprint Zamrud</option>
+          </select>
+        </div>
+
         <div class="filter-item">
           <label for="filterPeriod">📅 Periode Gaji:</label>
           <select id="filterPeriod" onchange="renderPayrollReport()">
@@ -849,7 +1151,7 @@
 
         <div class="sig-col">
           <div class="sig-col-role">Disetujui Oleh (Direktur / Pimpinan),</div>
-          <div class="sig-col-name" id="sigDisetujui">( Ir. Bambang Prakoso )</div>
+          <div class="sig-col-name" id="sigDisetujui">( Ir. Swanto )</div>
           <div class="sig-col-title">Direktur Utama</div>
         </div>
       </div>
@@ -872,6 +1174,27 @@
       
       <div class="modal-body">
         
+        <!-- Director Authorization Banner -->
+        <div style="background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%); border: 1.5px solid #f43f5e; border-left: 6px solid #e11d48; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 0.85rem;">
+          <div style="font-size: 1.75rem; line-height: 1;">🔒</div>
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.25rem;">
+              <h4 style="color: #9f1239; font-weight: 800; font-size: 0.92rem; margin: 0;">HAK AKSES OTORISASI KHUSUS DIREKTUR</h4>
+              <span style="background: #be123c; color: white; padding: 0.2rem 0.65rem; border-radius: 20px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em;">DIREKTUR: Ir. Swanto</span>
+            </div>
+            <p style="font-size: 0.8rem; color: #881337; line-height: 1.45; margin-bottom: 0.5rem;">
+              Perubahan Pengaturan hanya boleh dilakukan Oleh Direktur <strong>( Ir. Swanto )</strong>. Wajib masukkan PIN / Izin Direktur untuk menyimpan perubahan.
+            </p>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; background: rgba(255, 255, 255, 0.85); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px dashed #f43f5e;">
+              <label for="cfgDirectorAuthPin" style="font-size: 0.78rem; font-weight: 700; color: #9f1239; white-space: nowrap; margin: 0;">
+                🔑 PIN / Izin Direktur:
+              </label>
+              <input type="password" id="cfgDirectorAuthPin" placeholder="Masukkan PIN Izin..." style="padding: 0.35rem 0.6rem; font-size: 0.8rem; border: 1.5px solid #fda4af; border-radius: 6px; width: 180px; background: white;" autocomplete="off">
+              <span style="font-size: 0.73rem; color: #9f1239; font-style: italic;">*Harus Izin Direktur (Ir. Swanto)</span>
+            </div>
+          </div>
+        </div>
+
         <!-- Tab 1: Profil Perusahaan -->
         <div style="margin-bottom: 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem;">
           <h4 style="color: #1e3a8a; font-weight: 700; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.4rem;">
@@ -908,7 +1231,7 @@
             </div>
             <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
               <label for="cfgDirectorName" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Pimpinan Tertinggi / Direktur (Rekap)</label>
-              <input type="text" id="cfgDirectorName" placeholder="Nama Direktur" style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+              <input type="text" id="cfgDirectorName" placeholder="Nama Direktur" readonly style="padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; background: #f1f5f9; font-weight: 700; color: #1e3a8a;">
             </div>
           </div>
         </div>
@@ -963,12 +1286,12 @@
               <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
               ⬇️ Download Backup Data (.JSON)
             </button>
-            <label class="btn btn-amber" style="cursor: pointer; margin: 0;">
+            <label class="btn btn-amber" style="cursor: pointer; margin: 0; background: #f59e0b; color: white; padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;">
               <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l4-4m0 0l4 4m-4-4v12"/></svg>
               ⬆️ Pulihkan Data dari (.JSON)
               <input type="file" id="backupFileInput" accept=".json" onchange="importBackupJSON(event)" style="display: none;">
             </label>
-            <button type="button" class="btn btn-danger-sm" onclick="resetSettingsToDefault()">
+            <button type="button" class="btn btn-danger-sm" onclick="resetSettingsToDefault()" style="background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">
               🔄 Reset Pengaturan ke Default
             </button>
           </div>
@@ -986,8 +1309,358 @@
     </div>
   </div>
 
+  <!-- Modal Note: Akses Izin Direktur Ditolak -->
+  <div class="modal-backdrop no-print" id="directorAuthNoteModal" style="z-index: 200;">
+    <div class="modal-content" style="max-width: 500px; border-top: 6px solid #dc2626; text-align: center; box-shadow: 0 25px 50px -12px rgba(220, 38, 38, 0.35); border-radius: 12px; overflow: hidden;">
+      <div style="padding: 1.75rem 1.75rem 1.5rem;">
+        <div style="width: 65px; height: 65px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; border: 2px solid #fca5a5;">
+          ⛔
+        </div>
+        <h3 style="color: #991b1b; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem; letter-spacing: -0.01em;">
+          AKSES DITOLAK!
+        </h3>
+        <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 1.1rem;">
+          Sistem Keamanan Otorisasi Penggajian &bull; <em>dev by dutaglobaltech enterprise</em>
+        </p>
+
+        <!-- Box Note Resmi -->
+        <div style="background: #fef2f2; border: 1.5px dashed #ef4444; border-radius: 10px; padding: 1.15rem; text-align: left; margin-bottom: 1.1rem;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: #991b1b; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem;">
+            <span>📌</span> <span>Pemberitahuan Sistem (Note Resmi Direksi):</span>
+          </div>
+          <p style="font-size: 0.88rem; color: #1e293b; line-height: 1.5; margin-bottom: 0.75rem;">
+            Seluruh Pengaturan hanya boleh dilihat dan diubah Oleh Direktur <strong style="color: #1e3a8a; font-weight: 800;">( Ir. Swanto )</strong>.
+          </p>
+          <div style="background: #dc2626; color: white; padding: 0.55rem 0.85rem; border-radius: 6px; font-weight: 800; font-size: 0.88rem; text-align: center; letter-spacing: 0.03em;">
+            ⚠️ HARUS IZIN DIREKTUR !
+          </div>
+        </div>
+
+        <!-- Box PIN Masuk Langsung -->
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 0.9rem 1.1rem; text-align: left; margin-bottom: 1.25rem;">
+          <div style="font-size: 0.82rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.35rem;">
+            <span>🔑</span> <span>Buka Khusus Direktur (Ir. Swanto):</span>
+          </div>
+          <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 0.55rem;">
+            Jika Anda adalah Direktur (Ir. Swanto), silakan masukkan Password/PIN untuk membuka pengaturan:
+          </p>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="password" id="noteDirectorAuthPin" placeholder="Masukkan PIN Direktur..." style="flex: 1; padding: 0.45rem 0.75rem; font-size: 0.85rem; border: 1.5px solid #cbd5e1; border-radius: 6px; outline: none;" onkeyup="if(event.key==='Enter') unlockSettingsWithPin()">
+            <button type="button" class="btn btn-save" style="padding: 0.45rem 0.85rem; font-size: 0.82rem; white-space: nowrap;" onclick="unlockSettingsWithPin()">
+              🔓 Buka Pengaturan
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem;">
+          <button type="button" class="btn btn-secondary" style="flex: 1; justify-content: center; padding: 0.55rem 1rem; font-size: 0.85rem;" onclick="closeDirectorAuthNote()">
+            Tutup
+          </button>
+          <button type="button" class="btn btn-primary" style="flex: 1; justify-content: center; padding: 0.55rem 1rem; font-size: 0.85rem;" onclick="closeDirectorAuthNote(); openLoginModal();">
+            👤 Switch Akun Direktur
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Login & Switcher Akun / Unit Usaha -->
+  <div class="modal-backdrop no-print" id="loginModal" onclick="closeModalOnBackdrop(event)" style="z-index: 150;">
+    <div class="modal-content" style="max-width: 600px; border-top: 5px solid #1e40af;">
+      <div class="modal-header" style="background: #1e3a8a;">
+        <h3>
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Login &amp; Otorisasi 3 Unit Usaha
+        </h3>
+        <button onclick="closeLoginModal()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.5rem; line-height: 1;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Info Header -->
+        <div style="text-align: center; margin-bottom: 1.25rem;">
+          <h4 style="color: #1e3a8a; font-size: 1.05rem; font-weight: 800;">Sistem Penggajian 3 Unit Usaha</h4>
+          <p style="font-size: 0.78rem; color: #64748b;">Masuk sebagai Direktur atau PIC Unit Usaha untuk memproses slip gaji &amp; rekapitulasi</p>
+        </div>
+
+        <!-- Quick User Selector Cards -->
+        <div style="font-size: 0.8rem; font-weight: 700; color: #334155; margin-bottom: 0.6rem; display: flex; justify-content: space-between;">
+          <span>⚡ Pilih Cepat Akun / Unit Usaha:</span>
+          <span style="font-size: 0.72rem; color: #0284c7;">Klik untuk isi otomatis</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 1.25rem;">
+          <div class="quick-user-card" onclick="quickFillLogin('direktur', 'swanto123')" style="border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 0.75rem; cursor: pointer; transition: all 0.2s ease; background: #f8fafc;">
+            <div style="font-weight: 700; font-size: 0.84rem; color: #1e3a8a;">👑 Ir. Swanto</div>
+            <div style="font-size: 0.72rem; color: #64748b;">Direktur Utama (Semua Unit)</div>
+            <div style="font-size: 0.7rem; color: #0284c7; font-weight: 600; margin-top: 0.25rem;">User: <code>direktur</code> / Pass: <code>swanto123</code></div>
+          </div>
+
+          <div class="quick-user-card" onclick="quickFillLogin('adis', 'adis123')" style="border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 0.75rem; cursor: pointer; transition: all 0.2s ease; background: #f8fafc;">
+            <div style="font-weight: 700; font-size: 0.84rem; color: #1e3a8a;">🚗 Adis Setiawan</div>
+            <div style="font-size: 0.72rem; color: #64748b;">PIC Shop &amp; Drive Grand Wisata</div>
+            <div style="font-size: 0.7rem; color: #0284c7; font-weight: 600; margin-top: 0.25rem;">User: <code>adis</code> / Pass: <code>adis123</code></div>
+          </div>
+
+          <div class="quick-user-card" onclick="quickFillLogin('eki', 'eki123')" style="border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 0.75rem; cursor: pointer; transition: all 0.2s ease; background: #f8fafc;">
+            <div style="font-weight: 700; font-size: 0.84rem; color: #1e3a8a;">🖨️ Eki Dwi Saputra</div>
+            <div style="font-size: 0.72rem; color: #64748b;">PIC Snaprint Grand Wisata</div>
+            <div style="font-size: 0.7rem; color: #0284c7; font-weight: 600; margin-top: 0.25rem;">User: <code>eki</code> / Pass: <code>eki123</code></div>
+          </div>
+
+          <div class="quick-user-card" onclick="quickFillLogin('rengga', 'rengga123')" style="border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 0.75rem; cursor: pointer; transition: all 0.2s ease; background: #f8fafc;">
+            <div style="font-weight: 700; font-size: 0.84rem; color: #1e3a8a;">🏢 M. Rengga Swana Herlambang</div>
+            <div style="font-size: 0.72rem; color: #64748b;">PIC Snaprint Zamrud</div>
+            <div style="font-size: 0.7rem; color: #0284c7; font-weight: 600; margin-top: 0.25rem;">User: <code>rengga</code> / Pass: <code>rengga123</code></div>
+          </div>
+        </div>
+
+        <!-- Manual Login Form -->
+        <form onsubmit="handleLoginSubmit(event)" style="border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="loginUsername" style="font-size: 0.8rem; font-weight: 600; color: #334155;">Username / ID:</label>
+              <input type="text" id="loginUsername" placeholder="Contoh: direktur / adis / eki / rengga" required style="padding: 0.5rem 0.75rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="loginPassword" style="font-size: 0.8rem; font-weight: 600; color: #334155;">Password:</label>
+              <input type="password" id="loginPassword" placeholder="Masukkan password..." required style="padding: 0.5rem 0.75rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem;">
+              <button type="button" class="btn btn-secondary" onclick="closeLoginModal()">Batal</button>
+              <button type="submit" class="btn btn-primary" style="background: #1e40af;">Masuk / Beralih Akun</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script>
     const DB_STORAGE_KEY = 'SLIP_GAJI_DATABASE_V1';
+    const SESSION_STORAGE_KEY = 'ACTIVE_PAYROLL_SESSION_V1';
+    const SETTINGS_STORAGE_KEY = 'PAYROLL_SYSTEM_SETTINGS_V1';
+
+    // Master 3 Unit Usaha
+    const BUSINESS_UNITS = {
+      'shop_and_drive_gw': {
+        id: 'shop_and_drive_gw',
+        name: 'Shop And Drive Grand Wisata',
+        shortName: 'Shop And Drive GW',
+        address: 'Kawasan Niaga Grand Wisata Blok AA No. 10, Bekasi',
+        city: 'Bekasi',
+        picName: 'Adis Setiawan',
+        picRole: 'PIC / Kepala Cabang',
+        directorName: 'Ir. Swanto',
+        badge: '🚗 Shop And Drive GW'
+      },
+      'snaprint_gw': {
+        id: 'snaprint_gw',
+        name: 'Snaprint Grand Wisata',
+        shortName: 'Snaprint GW',
+        address: 'Ruko Grand Wisata Blok AA No. 12, Bekasi',
+        city: 'Bekasi',
+        picName: 'Eki Dwi Saputra',
+        picRole: 'PIC / Unit Manager',
+        directorName: 'Ir. Swanto',
+        badge: '🖨️ Snaprint GW'
+      },
+      'snaprint_zamrud': {
+        id: 'snaprint_zamrud',
+        name: 'Snaprint Zamrud',
+        shortName: 'Snaprint Zamrud',
+        address: 'Dukuh Zamrud Blok M No. 12, Mustikajaya, Kota Bekasi',
+        city: 'Bekasi',
+        picName: 'M. Rengga Swana Herlambang',
+        picRole: 'PIC / Unit Manager',
+        directorName: 'Ir. Swanto',
+        badge: '🏢 Snaprint Zamrud'
+      }
+    };
+
+    // Master Pengguna Akun & Password
+    const SYSTEM_USERS = [
+      {
+        username: 'direktur',
+        aliases: ['direktur', 'swanto', 'admin'],
+        password: 'swanto123',
+        name: 'Ir. Swanto',
+        role: 'Direktur Utama',
+        roleType: 'director',
+        defaultUnit: 'ALL',
+        allowedUnits: ['ALL', 'shop_and_drive_gw', 'snaprint_gw', 'snaprint_zamrud'],
+        canEditSettings: true
+      },
+      {
+        username: 'adis',
+        aliases: ['adis', 'shopdrive_gw', 'adis_gw'],
+        password: 'adis123',
+        name: 'Adis Setiawan',
+        role: 'PIC Shop And Drive Grand Wisata',
+        roleType: 'pic',
+        defaultUnit: 'shop_and_drive_gw',
+        allowedUnits: ['shop_and_drive_gw'],
+        canEditSettings: false
+      },
+      {
+        username: 'eki',
+        aliases: ['eki', 'snaprint_gw', 'eki_gw'],
+        password: 'eki123',
+        name: 'Eki Dwi Saputra',
+        role: 'PIC Snaprint Grand Wisata',
+        roleType: 'pic',
+        defaultUnit: 'snaprint_gw',
+        allowedUnits: ['snaprint_gw'],
+        canEditSettings: false
+      },
+      {
+        username: 'rengga',
+        aliases: ['rengga', 'snaprint_zamrud', 'rengga_zamrud'],
+        password: 'rengga123',
+        name: 'M. Rengga Swana Herlambang',
+        role: 'PIC Snaprint Zamrud',
+        roleType: 'pic',
+        defaultUnit: 'snaprint_zamrud',
+        allowedUnits: ['snaprint_zamrud'],
+        canEditSettings: false
+      }
+    ];
+
+    function getCurrentSession() {
+      try {
+        const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+        if (raw) {
+          return JSON.parse(raw);
+        }
+      } catch (e) {
+        console.error("Error reading session", e);
+      }
+      return {
+        username: 'direktur',
+        name: 'Ir. Swanto',
+        role: 'Direktur Utama',
+        roleType: 'director',
+        activeUnit: 'ALL'
+      };
+    }
+
+    function saveCurrentSession(sessionData) {
+      try {
+        localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(sessionData));
+        applySessionToUI();
+      } catch (e) {
+        console.error("Error saving session", e);
+      }
+    }
+
+    function applySessionToUI() {
+      const session = getCurrentSession();
+      const userEl = document.getElementById('headerUserName');
+      const roleEl = document.getElementById('headerUserRole');
+      const badgeEl = document.getElementById('activeUnitBadge');
+      const filterUnitSelect = document.getElementById('filterUnit');
+
+      if (userEl) userEl.innerText = session.name || 'User';
+      if (roleEl) roleEl.innerText = session.role || 'PIC';
+
+      if (session.activeUnit && session.activeUnit !== 'ALL' && BUSINESS_UNITS[session.activeUnit]) {
+        const u = BUSINESS_UNITS[session.activeUnit];
+        if (badgeEl) badgeEl.innerText = u.badge;
+        if (filterUnitSelect && (session.roleType !== 'director' || !filterUnitSelect.value || filterUnitSelect.value === 'ALL')) {
+          filterUnitSelect.value = session.activeUnit;
+        }
+      } else {
+        if (badgeEl) badgeEl.innerText = '👑 Semua Unit Usaha';
+        if (filterUnitSelect && session.roleType === 'director') {
+          // If director, default to ALL or keep current filter
+        }
+      }
+
+      renderPayrollReport();
+    }
+
+    function openFrontGate() {
+      const gate = document.getElementById('frontLoginGate');
+      if (gate) {
+        gate.style.display = 'flex';
+      }
+    }
+
+    function closeFrontGate() {
+      const gate = document.getElementById('frontLoginGate');
+      if (gate) {
+        gate.style.display = 'none';
+        sessionStorage.setItem('GATE_PASSED', 'true');
+      }
+    }
+
+    function quickLoginAndEnter(username, password, destination = 'rekap') {
+      const success = processLogin(username, password, false);
+      if (success) {
+        closeFrontGate();
+        sessionStorage.setItem('GATE_PASSED', 'true');
+        if (destination === 'slip') {
+          window.location.href = 'index.html';
+        }
+      }
+    }
+
+    function handleFrontGateSubmit(e) {
+      e.preventDefault();
+      const user = document.getElementById('frontGateUser').value.trim().toLowerCase();
+      const pass = document.getElementById('frontGatePass').value.trim();
+      const target = document.getElementById('frontGateTarget').value;
+      quickLoginAndEnter(user, pass, target);
+    }
+
+    function openLoginModal() {
+      openFrontGate();
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById('loginModal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    function quickFillLogin(username, password) {
+      document.getElementById('loginUsername').value = username;
+      document.getElementById('loginPassword').value = password;
+      processLogin(username, password);
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const user = document.getElementById('loginUsername').value.trim().toLowerCase();
+      const pass = document.getElementById('loginPassword').value.trim();
+      processLogin(user, pass);
+    }
+
+    function processLogin(username, password, showWelcomeToast = true) {
+      const userLower = username.toLowerCase();
+      const foundUser = SYSTEM_USERS.find(u => 
+        (u.username.toLowerCase() === userLower || (u.aliases && u.aliases.includes(userLower))) &&
+        u.password === password
+      );
+
+      if (!foundUser) {
+        alert("⛔ Login Gagal: Username atau Password tidak sesuai!\n\nSilakan periksa kembali daftar username & password di halaman muka.");
+        return false;
+      }
+
+      const activeUnit = foundUser.defaultUnit || 'shop_and_drive_gw';
+      const newSession = {
+        username: foundUser.username,
+        name: foundUser.name,
+        role: foundUser.role,
+        roleType: foundUser.roleType,
+        activeUnit: activeUnit
+      };
+
+      saveCurrentSession(newSession);
+      closeLoginModal();
+      closeFrontGate();
+      if (showWelcomeToast) {
+        alert(`✅ Selamat datang, ${foundUser.name}!\nMasuk sebagai: ${foundUser.role}`);
+      }
+      return true;
+    }
 
     function formatRupiah(number) {
       if (isNaN(number)) return "0";
@@ -1074,29 +1747,47 @@
     // Render Full Payroll Report
     function renderPayrollReport() {
       const records = getDatabaseRecords();
+      const unitFilter = document.getElementById('filterUnit') ? document.getElementById('filterUnit').value : 'ALL';
       const periodFilter = document.getElementById('filterPeriod').value;
       const divisiFilter = document.getElementById('filterDivisi').value;
       const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
       const filtered = records.filter(r => {
+        const matchUnit = (unitFilter === 'ALL' || r.unitId === unitFilter || (r.companyName && r.companyName.toLowerCase().includes(unitFilter.replace(/_/g, ' '))));
         const matchPeriod = (periodFilter === 'ALL' || r.payPeriod === periodFilter);
         const matchDivisi = (divisiFilter === 'ALL' || (r.empDivisi && r.empDivisi.toLowerCase().includes(divisiFilter.toLowerCase())));
         const matchSearch = (!search || 
           (r.empName && r.empName.toLowerCase().includes(search)) ||
           (r.empId && r.empId.toLowerCase().includes(search)) ||
-          (r.empJabatan && r.empJabatan.toLowerCase().includes(search))
+          (r.empJabatan && r.empJabatan.toLowerCase().includes(search)) ||
+          (r.unitUsaha && r.unitUsaha.toLowerCase().includes(search))
         );
-        return matchPeriod && matchDivisi && matchSearch;
+        return matchUnit && matchPeriod && matchDivisi && matchSearch;
       });
 
-      // Update Formal Meta Header
+      // Update Formal Meta Header & Signatures based on selected Unit
+      if (unitFilter !== 'ALL' && BUSINESS_UNITS[unitFilter]) {
+        const u = BUSINESS_UNITS[unitFilter];
+        document.getElementById('reportCompanyName').innerText = u.name;
+        document.getElementById('reportCompanyAddress').innerText = u.address;
+        document.getElementById('sigDibuat').innerText = `( ${u.picName} )`;
+      } else if (filtered.length > 0 && filtered[0].companyName) {
+        const sample = filtered[0];
+        document.getElementById('reportCompanyName').innerText = unitFilter === 'ALL' ? "KONSOLIDASI 3 UNIT USAHA" : (sample.companyName || "PT. MAJU BERSAMA SUKSES");
+        document.getElementById('reportCompanyAddress').innerText = unitFilter === 'ALL' ? "Shop & Drive Grand Wisata • Snaprint GW • Snaprint Zamrud" : (sample.companyAddress || "Bekasi");
+        document.getElementById('sigDibuat').innerText = `( ${sample.picName || 'Adis Setiawan'} )`;
+      } else {
+        document.getElementById('reportCompanyName').innerText = "KONSOLIDASI 3 UNIT USAHA";
+        document.getElementById('reportCompanyAddress').innerText = "Shop & Drive Grand Wisata • Snaprint GW • Snaprint Zamrud";
+        document.getElementById('sigDibuat').innerText = "( Adis Setiawan )";
+      }
+
       if (filtered.length > 0) {
         const sample = filtered[0];
-        document.getElementById('reportCompanyName').innerText = sample.companyName || "PT. MAJU BERSAMA SUKSES";
-        document.getElementById('reportCompanyAddress').innerText = sample.companyAddress || "Jl. Jenderal Sudirman No. 88, Jakarta";
-        document.getElementById('reportPeriodText').innerText = periodFilter === 'ALL' ? (sample.payPeriod || 'Semua Periode') : periodFilter;
-        document.getElementById('reportPayDateText').innerText = sample.payDate || new Date().toLocaleDateString('id-ID');
+        document.getElementById('reportPeriodText').innerText = periodFilter === 'ALL' ? (sample.payPeriod || 'September 2026') : periodFilter;
+        document.getElementById('reportPayDateText').innerText = sample.payDate || '25 September 2026';
       }
+      document.getElementById('sigDisetujui').innerText = "( Ir. Swanto )";
 
       const tbody = document.getElementById('payrollTableBody');
 
@@ -1104,7 +1795,7 @@
         tbody.innerHTML = `
           <tr>
             <td colspan="20" style="text-align: center; padding: 2.5rem; color: #94a3b8; font-size: 0.85rem;">
-              Belum ada data slip gaji tersimpan di database. Klik <strong>"📝 Pembuat Slip Gaji"</strong> untuk mulai input atau klik <strong>"💡 Isi Contoh Data"</strong> di atas.
+              Belum ada data slip gaji tersimpan untuk filter yang dipilih. Klik <strong>"📝 Pembuat Slip Gaji"</strong> untuk mulai input atau klik <strong>"💡 Isi Contoh Data"</strong> di atas.
             </td>
           </tr>
         `;
@@ -1164,12 +1855,15 @@
         sumTotalPotongan += potongan;
         sumNetGaji += thp;
 
+        const unitTag = r.unitUsaha ? `<div style="font-size: 0.68rem; color: #0284c7; font-weight: 700;">${r.unitUsaha}</div>` : '';
+
         html += `
           <tr>
             <td class="col-center"><strong>${idx + 1}</strong></td>
             <td class="col-center"><code>${r.empId || '-'}</code></td>
             <td>
               <div class="cell-name">${r.empName}</div>
+              ${unitTag}
               <div class="cell-jabatan">${r.empStatus || 'Tetap'}</div>
             </td>
             <td>
@@ -1262,7 +1956,7 @@
       }
     }
 
-    // Export CSV / Excel
+    // Export CSV / Excel with Unit Usaha Column
     function exportToCSV() {
       const records = getDatabaseRecords();
       if (records.length === 0) {
@@ -1270,7 +1964,7 @@
         return;
       }
 
-      let csv = "No,Tanggal Simpan,Periode,NIK,Nama Karyawan,Jabatan,Divisi,Status,Status PTKP,NPWP,Hari Masuk,Hari Tgl Merah,Gaji Pokok,Tunjangan Jabatan,Tunjangan Makan,Tunjangan Transport,Insentif Tgl Merah,Insentif Lain,Keterangan Insentif,TOTAL GAJI BRUTO,Potongan PPh 21,Iuran BPJS,Cicilan Kasbon,Potongan Lain,TOTAL POTONGAN,GAJI BERSIH (THP),No Rekening\n";
+      let csv = "No,Tanggal Simpan,Unit Usaha,PIC Unit,Periode,NIK,Nama Karyawan,Jabatan,Divisi,Status,Status PTKP,NPWP,Hari Masuk,Hari Tgl Merah,Gaji Pokok,Tunjangan Jabatan,Tunjangan Makan,Tunjangan Transport,Insentif Tgl Merah,Insentif Lain,Keterangan Insentif,TOTAL GAJI BRUTO,Potongan PPh 21,Iuran BPJS,Cicilan Kasbon,Potongan Lain,TOTAL POTONGAN,GAJI BERSIH (THP),No Rekening\n";
 
       records.forEach((r, idx) => {
         const hm = r.hariKerja || 0;
@@ -1289,33 +1983,37 @@
         const totalPot = r.totalPotongan || (pph21 + bpjs + cicilan + potLain);
         const thp = r.netGaji || (bruto - totalPot);
 
-        csv += `"${idx+1}","${r.savedAt || ''}","${r.payPeriod || ''}","${r.empId || ''}","${r.empName || ''}","${r.empJabatan || ''}","${r.empDivisi || ''}","${r.empStatus || ''}","${r.empPtkp || 'TK/0'}","${r.empNpwp || '-'}","${hm}","${hrMerah}","${gp}","${tj}","${tm}","${tt}","${im}","${il}","${(r.ketInsentifLain || '').replace(/"/g, '""')}","${bruto}","${pph21}","${bpjs}","${cicilan}","${potLain}","${totalPot}","${thp}","${r.empRekening || ''}"\n`;
+        csv += `"${idx+1}","${r.savedAt || ''}","${r.unitUsaha || r.companyName || ''}","${r.picName || ''}","${r.payPeriod || ''}","${r.empId || ''}","${r.empName || ''}","${r.empJabatan || ''}","${r.empDivisi || ''}","${r.empStatus || ''}","${r.empPtkp || 'TK/0'}","${r.empNpwp || '-'}","${hm}","${hrMerah}","${gp}","${tj}","${tm}","${tt}","${im}","${il}","${(r.ketInsentifLain || '').replace(/"/g, '""')}","${bruto}","${pph21}","${bpjs}","${cicilan}","${potLain}","${totalPot}","${thp}","${r.empRekening || ''}"\n`;
       });
 
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Rekapitulasi_Daftar_Gaji_${new Date().toISOString().slice(0,10)}.csv`;
+      a.download = `Rekapitulasi_Daftar_Gaji_3_Unit_${new Date().toISOString().slice(0,10)}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
 
-    // Seed Sample Data for Instant Demo
+    // Seed Sample Data representing all 3 Business Units
     function loadSampleDataIfEmpty() {
       const sample = [
+        // Unit 1: Shop And Drive Grand Wisata (PIC: Adis Setiawan)
         {
-          id: 'SAMPLE_1',
+          id: 'SAMPLE_SND_1',
           savedAt: new Date().toLocaleString('id-ID'),
-          companyName: 'PT. MAJU BERSAMA SUKSES',
-          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
+          unitId: 'shop_and_drive_gw',
+          unitUsaha: 'Shop And Drive Grand Wisata',
+          picName: 'Adis Setiawan',
+          companyName: 'Shop And Drive Grand Wisata',
+          companyAddress: 'Kawasan Niaga Grand Wisata Blok AA No. 10, Bekasi',
           payPeriod: 'September 2026',
           payDate: '25 September 2026',
           empName: 'Budi Santoso',
-          empId: 'EMP-20260901',
-          empJabatan: 'Staff Operasional',
+          empId: 'SND-001',
+          empJabatan: 'Mekanik Senior',
           empDivisi: 'Operasional',
           empStatus: 'Karyawan Tetap',
           empPtkp: 'TK/0',
@@ -1342,128 +2040,144 @@
           netGaji: 5614925
         },
         {
-          id: 'SAMPLE_2',
+          id: 'SAMPLE_SND_2',
           savedAt: new Date().toLocaleString('id-ID'),
-          companyName: 'PT. MAJU BERSAMA SUKSES',
-          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
+          unitId: 'shop_and_drive_gw',
+          unitUsaha: 'Shop And Drive Grand Wisata',
+          picName: 'Adis Setiawan',
+          companyName: 'Shop And Drive Grand Wisata',
+          companyAddress: 'Kawasan Niaga Grand Wisata Blok AA No. 10, Bekasi',
           payPeriod: 'September 2026',
           payDate: '25 September 2026',
-          empName: 'Siti Nurhaliza, S.E.',
-          empId: 'EMP-20260902',
-          empJabatan: 'Supervisor Keuangan',
-          empDivisi: 'Keuangan & Akuntansi',
+          empName: 'Ahmad Fauzi',
+          empId: 'SND-002',
+          empJabatan: 'Teknisi Aki & Oli',
+          empDivisi: 'Operasional',
+          empStatus: 'Karyawan Tetap',
+          empPtkp: 'K/1',
+          empNpwp: '07.345.678.9-014.000',
+          hariKerja: 24,
+          empKeteranganHadir: 'Hadir Penuh',
+          empRekening: 'BNI - 0234567891 (Ahmad)',
+          gajiPokok: 4800000,
+          tunjanganJabatan: 350000,
+          rateMakanPerHari: 25000,
+          rateTransportPerHari: 15000,
+          hariTanggalMerah: 1,
+          totalMakan: 600000,
+          totalTransport: 360000,
+          totalMerah: 75000,
+          insentifLain: 200000,
+          ketInsentifLain: 'Insentif Servis',
+          totalPenghasilan: 6385000,
+          potonganPph21: 0,
+          iuranBpjs: 140000,
+          cicilanPinjaman: 0,
+          potonganLain: 0,
+          totalPotongan: 140000,
+          netGaji: 6245000
+        },
+
+        // Unit 2: Snaprint Grand Wisata (PIC: Eki Dwi Saputra)
+        {
+          id: 'SAMPLE_SNP_GW_1',
+          savedAt: new Date().toLocaleString('id-ID'),
+          unitId: 'snaprint_gw',
+          unitUsaha: 'Snaprint Grand Wisata',
+          picName: 'Eki Dwi Saputra',
+          companyName: 'Snaprint Grand Wisata',
+          companyAddress: 'Ruko Grand Wisata Blok AA No. 12, Bekasi',
+          payPeriod: 'September 2026',
+          payDate: '25 September 2026',
+          empName: 'Siti Nurhaliza, S.Ds.',
+          empId: 'SNP-GW01',
+          empJabatan: 'Graphic Designer & Operator',
+          empDivisi: 'Operasional',
           empStatus: 'Karyawan Tetap',
           empPtkp: 'TK/1',
           empNpwp: '08.234.567.8-013.000',
           hariKerja: 25,
           empKeteranganHadir: 'Hadir Penuh',
           empRekening: 'Mandiri - 1370009876543 (Siti)',
-          gajiPokok: 6500000,
-          tunjanganJabatan: 1200000,
+          gajiPokok: 5200000,
+          tunjanganJabatan: 500000,
           rateMakanPerHari: 25000,
           rateTransportPerHari: 20000,
           hariTanggalMerah: 1,
           totalMakan: 625000,
           totalTransport: 500000,
           totalMerah: 75000,
-          insentifLain: 500000,
-          ketInsentifLain: 'Bonus Kinerja',
-          totalPenghasilan: 9400000,
-          potonganPph21: 164500,
-          iuranBpjs: 200000,
+          insentifLain: 350000,
+          ketInsentifLain: 'Bonus Desain Kilat',
+          totalPenghasilan: 7250000,
+          potonganPph21: 54375,
+          iuranBpjs: 160000,
           cicilanPinjaman: 0,
           potonganLain: 0,
-          totalPotongan: 364500,
-          netGaji: 9035500
+          totalPotongan: 214375,
+          netGaji: 7035625
         },
         {
-          id: 'SAMPLE_3',
+          id: 'SAMPLE_SNP_GW_2',
           savedAt: new Date().toLocaleString('id-ID'),
-          companyName: 'PT. MAJU BERSAMA SUKSES',
-          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
-          payPeriod: 'September 2026',
-          payDate: '25 September 2026',
-          empName: 'Ahmad Fauzi',
-          empId: 'EMP-20260903',
-          empJabatan: 'Manager Operasional',
-          empDivisi: 'Operasional',
-          empStatus: 'Karyawan Tetap',
-          empPtkp: 'K/2',
-          empNpwp: '07.345.678.9-014.000',
-          hariKerja: 24,
-          empKeteranganHadir: 'Hadir Penuh',
-          empRekening: 'BNI - 0234567891 (Ahmad)',
-          gajiPokok: 9000000,
-          tunjanganJabatan: 2500000,
-          rateMakanPerHari: 30000,
-          rateTransportPerHari: 25000,
-          hariTanggalMerah: 2,
-          totalMakan: 720000,
-          totalTransport: 600000,
-          totalMerah: 150000,
-          insentifLain: 0,
-          ketInsentifLain: '',
-          totalPenghasilan: 12970000,
-          potonganPph21: 518800,
-          iuranBpjs: 300000,
-          cicilanPinjaman: 500000,
-          potonganLain: 0,
-          totalPotongan: 1318800,
-          netGaji: 11651200
-        },
-        {
-          id: 'SAMPLE_4',
-          savedAt: new Date().toLocaleString('id-ID'),
-          companyName: 'PT. MAJU BERSAMA SUKSES',
-          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
+          unitId: 'snaprint_gw',
+          unitUsaha: 'Snaprint Grand Wisata',
+          picName: 'Eki Dwi Saputra',
+          companyName: 'Snaprint Grand Wisata',
+          companyAddress: 'Ruko Grand Wisata Blok AA No. 12, Bekasi',
           payPeriod: 'September 2026',
           payDate: '25 September 2026',
           empName: 'Dewi Lestari',
-          empId: 'EMP-20260904',
-          empJabatan: 'Staff Administrasi',
-          empDivisi: 'HRD & Personalia',
-          empStatus: 'Karyawan Kontrak (PKWT)',
+          empId: 'SNP-GW02',
+          empJabatan: 'Staff Kasir & Customer Service',
+          empDivisi: 'Keuangan & Akuntansi',
+          empStatus: 'Karyawan Tetap',
           empPtkp: 'TK/0',
           empNpwp: '06.456.789.0-015.000',
-          hariKerja: 22,
-          empKeteranganHadir: '2 Hari Izin',
+          hariKerja: 24,
+          empKeteranganHadir: 'Hadir Penuh',
           empRekening: 'BCA - 5432109876 (Dewi)',
-          gajiPokok: 4200000,
-          tunjanganJabatan: 200000,
+          gajiPokok: 4300000,
+          tunjanganJabatan: 250000,
           rateMakanPerHari: 25000,
           rateTransportPerHari: 15000,
           hariTanggalMerah: 0,
-          totalMakan: 550000,
-          totalTransport: 330000,
+          totalMakan: 600000,
+          totalTransport: 360000,
           totalMerah: 0,
-          insentifLain: 0,
-          ketInsentifLain: '',
-          totalPenghasilan: 5280000,
-          potonganPph21: 0,
-          iuranBpjs: 120000,
-          cicilanPinjaman: 150000,
+          insentifLain: 150000,
+          ketInsentifLain: 'Insentif Penjualan',
+          totalPenghasilan: 5660000,
+          potonganPph21: 14150,
+          iuranBpjs: 130000,
+          cicilanPinjaman: 100000,
           potonganLain: 0,
-          totalPotongan: 270000,
-          netGaji: 5010000
+          totalPotongan: 244150,
+          netGaji: 5415850
         },
+
+        // Unit 3: Snaprint Zamrud (PIC: M. Rengga Swana Herlambang)
         {
-          id: 'SAMPLE_5',
+          id: 'SAMPLE_SNP_ZMR_1',
           savedAt: new Date().toLocaleString('id-ID'),
-          companyName: 'PT. MAJU BERSAMA SUKSES',
-          companyAddress: 'Jl. Jenderal Sudirman No. 88, Jakarta',
+          unitId: 'snaprint_zamrud',
+          unitUsaha: 'Snaprint Zamrud',
+          picName: 'M. Rengga Swana Herlambang',
+          companyName: 'Snaprint Zamrud',
+          companyAddress: 'Dukuh Zamrud Blok M No. 12, Mustikajaya, Kota Bekasi',
           payPeriod: 'September 2026',
           payDate: '25 September 2026',
           empName: 'Rian Kurniawan',
-          empId: 'EMP-20260905',
-          empJabatan: 'Driver / Kurir Logistik',
-          empDivisi: 'Gudang & Logistik',
+          empId: 'SNP-ZM01',
+          empJabatan: 'Operator Mesin Digital Printing',
+          empDivisi: 'Operasional',
           empStatus: 'Karyawan Tetap',
           empPtkp: 'K/1',
           empNpwp: '05.567.890.1-016.000',
           hariKerja: 26,
           empKeteranganHadir: 'Hadir Penuh',
           empRekening: 'BRI - 001234567890123 (Rian)',
-          gajiPokok: 4300000,
+          gajiPokok: 4600000,
           tunjanganJabatan: 300000,
           rateMakanPerHari: 25000,
           rateTransportPerHari: 20000,
@@ -1472,14 +2186,52 @@
           totalTransport: 520000,
           totalMerah: 225000,
           insentifLain: 300000,
-          ketInsentifLain: 'Insentif Lembur Pengiriman',
-          totalPenghasilan: 6295000,
+          ketInsentifLain: 'Insentif Lembur Produksi',
+          totalPenghasilan: 6595000,
           potonganPph21: 0,
           iuranBpjs: 140000,
           cicilanPinjaman: 100000,
           potonganLain: 0,
           totalPotongan: 240000,
-          netGaji: 6055000
+          netGaji: 6355000
+        },
+        {
+          id: 'SAMPLE_SNP_ZMR_2',
+          savedAt: new Date().toLocaleString('id-ID'),
+          unitId: 'snaprint_zamrud',
+          unitUsaha: 'Snaprint Zamrud',
+          picName: 'M. Rengga Swana Herlambang',
+          companyName: 'Snaprint Zamrud',
+          companyAddress: 'Dukuh Zamrud Blok M No. 12, Mustikajaya, Kota Bekasi',
+          payPeriod: 'September 2026',
+          payDate: '25 September 2026',
+          empName: 'Indah Permata',
+          empId: 'SNP-ZM02',
+          empJabatan: 'Staff Finishing & Packing',
+          empDivisi: 'Operasional',
+          empStatus: 'Karyawan Kontrak (PKWT)',
+          empPtkp: 'TK/0',
+          empNpwp: '04.678.901.2-017.000',
+          hariKerja: 24,
+          empKeteranganHadir: 'Hadir Penuh',
+          empRekening: 'BCA - 6789012345 (Indah)',
+          gajiPokok: 4200000,
+          tunjanganJabatan: 200000,
+          rateMakanPerHari: 25000,
+          rateTransportPerHari: 15000,
+          hariTanggalMerah: 1,
+          totalMakan: 600000,
+          totalTransport: 360000,
+          totalMerah: 75000,
+          insentifLain: 0,
+          ketInsentifLain: '',
+          totalPenghasilan: 5435000,
+          potonganPph21: 13588,
+          iuranBpjs: 120000,
+          cicilanPinjaman: 0,
+          potonganLain: 0,
+          totalPotongan: 133588,
+          netGaji: 5301412
         }
       ];
 
@@ -1487,7 +2239,7 @@
       if (existing.length === 0) {
         saveDatabaseRecords(sample);
       } else {
-        if (confirm("Tambahkan 5 data karyawan contoh ke database?")) {
+        if (confirm("Tambahkan 6 data karyawan contoh (3 Unit Usaha) ke database?")) {
           saveDatabaseRecords([...sample, ...existing]);
         }
       }
@@ -1496,10 +2248,8 @@
     }
 
     // =========================================================================
-    // GLOBAL SETTINGS & BACKUP/RESTORE SYSTEM
+    // GLOBAL SETTINGS & BACKUP/RESTORE SYSTEM (PROTECTED BY DIREKTUR: IR. SWANTO)
     // =========================================================================
-    const SETTINGS_STORAGE_KEY = 'PAYROLL_SYSTEM_SETTINGS_V1';
-
     const DEFAULT_SETTINGS = {
       companyName: "PT. MAJU BERSAMA SUKSES",
       companyAddress: "Jl. Jenderal Sudirman No. 88, Jakarta",
@@ -1510,8 +2260,9 @@
       signerRole: "Manager Keuangan & Akuntansi",
       makerName: "Siti Rahmawati, S.E.",
       makerRole: "Staff Keuangan & Penggajian",
-      directorName: "Ir. Bambang Prakoso",
+      directorName: "Ir. Swanto",
       directorRole: "Direktur Utama",
+      directorPin: "swanto",
       defaultWorkDays: 24,
       defaultMakanRate: 25000,
       defaultTransportRate: 15000,
@@ -1543,7 +2294,99 @@
       }
     }
 
-    function openSettingsModal() {
+    // =========================================================================
+    // VERIFIKASI OTORISASI DIREKTUR (IR. SWANTO)
+    // =========================================================================
+    function isDirectorSession() {
+      try {
+        const session = getCurrentSession();
+        return session && (session.roleType === 'director' || session.username === 'direktur' || session.username === 'swanto');
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function checkDirectorPin(pin) {
+      if (!pin) return false;
+      const enteredPin = String(pin).trim().toLowerCase();
+      const cfg = getSettings();
+      const validPins = ['swanto', 'swanto123', 'swanto2026', '123456', 'direktur'];
+      if (cfg.directorPin && !validPins.includes(cfg.directorPin.toLowerCase())) {
+        validPins.push(cfg.directorPin.toLowerCase());
+      }
+      return validPins.includes(enteredPin);
+    }
+
+    function verifyDirectorPermission() {
+      if (isDirectorSession()) {
+        return true;
+      }
+      const pinInput = document.getElementById('cfgDirectorAuthPin');
+      const enteredPin = pinInput ? pinInput.value.trim().toLowerCase() : "";
+      
+      if (checkDirectorPin(enteredPin)) {
+        return true;
+      }
+
+      // Jika tidak diisi atau salah, munculkan Modal Note Peringatan
+      showDirectorAuthNote();
+      return false;
+    }
+
+    function showDirectorAuthNote() {
+      const modal = document.getElementById('directorAuthNoteModal');
+      const pinField = document.getElementById('noteDirectorAuthPin');
+      if (pinField) {
+        pinField.value = "";
+        pinField.style.borderColor = "#cbd5e1";
+      }
+      if (modal) {
+        modal.classList.add('show');
+        setTimeout(() => {
+          if (pinField) pinField.focus();
+        }, 150);
+      } else {
+        alert("⛔ AKSES DITOLAK!\n\nSeluruh Pengaturan hanya boleh dilihat Oleh Direktur ( Ir. Swanto ).\n\n⚠️ HARUS IZIN DIREKTUR!");
+      }
+      if (typeof showToast === 'function') {
+        showToast("⚠️ Akses Ditolak: Hanya Direktur (Ir. Swanto) yang berhak melihat pengaturan!", false);
+      }
+    }
+
+    function closeDirectorAuthNote() {
+      const modal = document.getElementById('directorAuthNoteModal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    function unlockSettingsWithPin() {
+      const pinInput = document.getElementById('noteDirectorAuthPin');
+      const enteredPin = pinInput ? pinInput.value.trim() : "";
+      if (checkDirectorPin(enteredPin)) {
+        closeDirectorAuthNote();
+        if (typeof showToast === 'function') {
+          showToast("✅ Otorisasi Direktur Terverifikasi! Membuka Pengaturan...", true);
+        }
+        openSettingsModal(true);
+      } else {
+        if (typeof showToast === 'function') {
+          showToast("❌ Password / PIN Direktur salah! Akses ditolak.", false);
+        } else {
+          alert("❌ Password / PIN Direktur salah! Akses ditolak.");
+        }
+        if (pinInput) {
+          pinInput.style.borderColor = "#dc2626";
+          pinInput.focus();
+        }
+      }
+    }
+
+    function openSettingsModal(bypassAuth = false) {
+      // Pembatasan: Seluruh Pengaturan HANYA BISA DILIHAT oleh Direktur (Ir. Swanto)
+      if (!bypassAuth && !isDirectorSession()) {
+        showDirectorAuthNote();
+        return;
+      }
+
       const cfg = getSettings();
       document.getElementById('cfgCompanyName').value = cfg.companyName;
       document.getElementById('cfgCompanyAddress').value = cfg.companyAddress;
@@ -1551,12 +2394,15 @@
       document.getElementById('cfgSignerName').value = cfg.signerName;
       document.getElementById('cfgSignerRole').value = cfg.signerRole || "Manager Keuangan";
       document.getElementById('cfgMakerName').value = cfg.makerName || "Staff Payroll";
-      document.getElementById('cfgDirectorName').value = cfg.directorName || "Direktur Utama";
+      document.getElementById('cfgDirectorName').value = cfg.directorName || "Ir. Swanto";
       document.getElementById('cfgDefaultWorkDays').value = cfg.defaultWorkDays || 24;
       document.getElementById('cfgDefaultMakanRate').value = formatRupiah(cfg.defaultMakanRate || 25000);
       document.getElementById('cfgDefaultTransportRate').value = formatRupiah(cfg.defaultTransportRate || 15000);
       document.getElementById('cfgDefaultMerahRate').value = formatRupiah(cfg.defaultMerahRate || 75000);
       document.getElementById('cfgDefaultPtkp').value = cfg.defaultPtkp || 'TK/0';
+
+      const pinInput = document.getElementById('cfgDirectorAuthPin');
+      if (pinInput) pinInput.value = "";
 
       document.getElementById('settingsModal').classList.add('show');
     }
@@ -1568,10 +2414,20 @@
     function closeModalOnBackdrop(e) {
       if (e.target.id === 'settingsModal') {
         closeSettingsModal();
+      } else if (e.target.id === 'directorAuthNoteModal') {
+        closeDirectorAuthNote();
+      } else if (e.target.id === 'loginModal') {
+        closeLoginModal();
       }
     }
 
     function saveSettingsFromModal() {
+      // Validasi Otorisasi Direktur
+      if (!verifyDirectorPermission()) {
+        return;
+      }
+
+      const cfg = getSettings();
       const newSettings = {
         companyName: document.getElementById('cfgCompanyName').value.trim() || DEFAULT_SETTINGS.companyName,
         companyAddress: document.getElementById('cfgCompanyAddress').value.trim() || DEFAULT_SETTINGS.companyAddress,
@@ -1579,7 +2435,9 @@
         signerName: document.getElementById('cfgSignerName').value.trim() || DEFAULT_SETTINGS.signerName,
         signerRole: document.getElementById('cfgSignerRole').value.trim() || DEFAULT_SETTINGS.signerRole,
         makerName: document.getElementById('cfgMakerName').value.trim() || DEFAULT_SETTINGS.makerName,
-        directorName: document.getElementById('cfgDirectorName').value.trim() || DEFAULT_SETTINGS.directorName,
+        directorName: "Ir. Swanto",
+        directorRole: "Direktur Utama",
+        directorPin: cfg.directorPin || "swanto",
         defaultWorkDays: parseInt(document.getElementById('cfgDefaultWorkDays').value, 10) || 24,
         defaultMakanRate: parseRupiah(document.getElementById('cfgDefaultMakanRate').value) || 25000,
         defaultTransportRate: parseRupiah(document.getElementById('cfgDefaultTransportRate').value) || 15000,
@@ -1593,24 +2451,26 @@
       saveSettings(newSettings);
       applySettingsToReport(newSettings);
       closeSettingsModal();
-      alert("Pengaturan sistem berhasil disimpan & diterapkan ke seluruh laporan!");
+      alert("✅ Izin Direktur (Ir. Swanto) Terverifikasi. Pengaturan sistem berhasil disimpan & diterapkan ke seluruh laporan!");
     }
 
     function applySettingsToReport(cfg = null) {
       if (!cfg) cfg = getSettings();
-      if (document.getElementById('reportCompanyName')) document.getElementById('reportCompanyName').innerText = cfg.companyName;
-      if (document.getElementById('reportCompanyAddress')) document.getElementById('reportCompanyAddress').innerText = cfg.companyAddress;
-      if (document.getElementById('sigDibuat')) document.getElementById('sigDibuat').innerText = `( ${cfg.makerName} )`;
-      if (document.getElementById('sigDiperiksa')) document.getElementById('sigDiperiksa').innerText = `( ${cfg.signerName} )`;
-      if (document.getElementById('sigDisetujui')) document.getElementById('sigDisetujui').innerText = `( ${cfg.directorName} )`;
+      if (document.getElementById('sigDiperiksa')) document.getElementById('sigDiperiksa').innerText = `( ${cfg.signerName || 'Hendra Wijaya, S.E.'} )`;
+      if (document.getElementById('sigDisetujui')) document.getElementById('sigDisetujui').innerText = `( ${cfg.directorName || 'Ir. Swanto'} )`;
     }
 
     function resetSettingsToDefault() {
-      if (confirm("Kembalikan seluruh pengaturan sistem ke standar awal?")) {
+      // Validasi Otorisasi Direktur
+      if (!verifyDirectorPermission()) {
+        return;
+      }
+
+      if (confirm("Izin Direktur (Ir. Swanto) Terkonfirmasi. Kembalikan seluruh pengaturan sistem ke standar awal?")) {
         saveSettings(DEFAULT_SETTINGS);
         openSettingsModal();
         applySettingsToReport(DEFAULT_SETTINGS);
-        alert("Pengaturan telah dikembalikan ke standar awal.");
+        alert("Pengaturan telah dikembalikan ke standar awal oleh Direktur.");
       }
     }
 
@@ -1621,6 +2481,7 @@
       const payload = {
         app: "Sistem Slip Gaji & Rekapitulasi Karyawan",
         developer: "dev by dutaglobaltech enterprise",
+        director: "Ir. Swanto",
         exportedAt: new Date().toISOString(),
         version: "1.0",
         settings: settings,
@@ -1636,6 +2497,12 @@
 
     // IMPORT BACKUP JSON
     function importBackupJSON(event) {
+      // Validasi Otorisasi Direktur
+      if (!verifyDirectorPermission()) {
+        event.target.value = "";
+        return;
+      }
+
       const file = event.target.files[0];
       if (!file) return;
 
@@ -1669,12 +2536,18 @@
     // Initialize on load
     window.addEventListener('DOMContentLoaded', () => {
       applySettingsToReport();
+      applySessionToUI();
       const records = getDatabaseRecords();
       if (records.length === 0) {
         loadSampleDataIfEmpty();
       } else {
         populatePeriodOptions();
         renderPayrollReport();
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('gate') === '1') {
+        openFrontGate();
       }
     });
 

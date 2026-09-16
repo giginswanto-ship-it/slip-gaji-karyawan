@@ -1,21 +1,61 @@
 ===================================================================
               PETUNJUK PENGGUNAAN APLIKASI SLIP GAJI
+              SISTEM MULTI-UNIT USAHA & REKAPITULASI
              >> dev by dutaglobaltech enterprise <<
 ===================================================================
 
-Aplikasi Slip Gaji Karyawan ini dibuat lengkap dengan perhitungan otomatis:
+Aplikasi Slip Gaji Karyawan ini mendukung 3 Unit Usaha lengkap dengan
+manajemen PIC, hak akses otorisasi Direktur, dan perhitungan otomatis:
 - Gaji Pokok
 - Tunjangan Makan (Otomatis: Hari Masuk × Tarif/Hari)
 - Tunjangan Transport (Otomatis: Hari Masuk × Tarif/Hari)
 - Insentif Kerja Tanggal Merah (Otomatis: Jumlah Hari × Rp 75.000)
-- Tunjangan Jabatan
+- Tunjangan Jabatan & Insentif Lainnya
 - TOTAL PENERIMAAN (PENGHASILAN KOTOR / BRUTO)
 - Potongan Pajak PPh 21 (Otomatis sesuai Status PTKP & TER Bulanan PP 58/2023)
 - Iuran BPJS (Kesehatan / Ketenagakerjaan)
 - Informasi Pinjaman / Kasbon (Total Pokok, Cicilan/Bln, Cicilan Ke/Tenor, & Sisa Pinjaman)
-- TOTAL POTONGAN
-- GAJI BERSIH (TAKE HOME PAY)
+- TOTAL POTONGAN & GAJI BERSIH (TAKE HOME PAY)
 - Terbilang Otomatis (Format teks bahasa Indonesia)
+
+-------------------------------------------------------------------
+DAFTAR USERNAME & PASSWORD PENGGUNA SISTEM:
+-------------------------------------------------------------------
+1. DIREKTUR UTAMA
+   - Nama     : Ir. Swanto
+   - Username : direktur  (Alias: swanto)
+   - Password : swanto123
+   - Akses    : Penuh ke 3 Unit Usaha + Hak Akses Edit Pengaturan Sistem
+
+2. UNIT 1: SHOP AND DRIVE GRAND WISATA
+   - PIC      : Adis Setiawan
+   - Username : adis
+   - Password : adis123
+   - Unit     : Shop And Drive Grand Wisata
+
+3. UNIT 2: SNAPRINT GRAND WISATA
+   - PIC      : Eki Dwi Saputra
+   - Username : eki
+   - Password : eki123
+   - Unit     : Snaprint Grand Wisata
+
+4. UNIT 3: SNAPRINT ZAMRUD
+   - PIC      : M. Rengga Swana Herlambang
+   - Username : rengga
+   - Password : rengga123
+   - Unit     : Snaprint Zamrud
+
+-------------------------------------------------------------------
+KEAMANAN & OTORISASI PENGATURAN SISTEM:
+-------------------------------------------------------------------
+- SELURUH PENGATURAN SISTEM (Melihat, Mengubah Profil Perusahaan,
+  Tarif Standar Tunjangan, Reset Standar, & Pemulihan Cadangan/Restore JSON)
+  HANYA BISA DILIHAT DAN DIUBAH OLEH DIREKTUR ( Ir. Swanto ).
+- Jika ada pengguna PIC atau pihak lain yang mencoba membuka/melihat pengaturan
+  tanpa izin, sistem otomatis menolak akses dan memunculkan Note Resmi:
+  "⚠️ HARUS IZIN DIREKTUR !"
+- Pengaturan dapat dibuka langsung dengan memasukkan Password/PIN Direktur
+  (swanto123 / swanto / 123456) atau dengan Login sebagai Direktur.
 
 -------------------------------------------------------------------
 ATURAN POTONGAN PPh 21 & PTKP:
@@ -25,42 +65,30 @@ ATURAN POTONGAN PPh 21 & PTKP:
    - TER Kategori A : TK/0 (PTKP Rp 54 Jt), TK/1 (PTKP Rp 58.5 Jt), K/0 (PTKP Rp 58.5 Jt)
    - TER Kategori B : TK/2 (PTKP Rp 63 Jt), TK/3 (PTKP Rp 67.5 Jt), K/1 (PTKP Rp 63 Jt), K/2 (PTKP Rp 67.5 Jt)
    - TER Kategori C : K/3 (PTKP Rp 72 Jt)
-3. Sistem secara otomatis mencocokkan Penghasilan Bruto ke layer persentase tarif TER (0%, 0.25%, 0.5%, 0.75%, dst) dan menghitung nominal pemotongan pajak PPh 21.
-4. Tersedia 3 mode: Otomatis TER, Manual Input, dan Bebas Pajak (Non-Pajak).
+3. Sistem secara otomatis mencocokkan Penghasilan Bruto ke layer persentase tarif TER dan menghitung potongan pajak PPh 21.
 
 -------------------------------------------------------------------
 PILIHAN UKURAN KERTAS & ORIENTASI CETAK (PORTRAIT):
 -------------------------------------------------------------------
 Orientasi Cetak default dikunci pada **PORTRAIT (Tegak)** sesuai standar dokumen slip gaji resmi.
 Tersedia 5 pilihan ukuran kertas yang dapat dipilih langsung sebelum mencetak:
-1. 📄 [A4 Full Page]   : Standar 1 halaman penuh A4 Portrait (dokumen resmi).
-2. 📑 [A4 Bagi Dua]    : 1 lembar A4 Portrait berisi 2 slip kembar (Lembar Karyawan & Arsip Kantor) dengan garis potong gunting di tengah.
+1. 📄 [A4 Full Page]   : Standar 1 halaman penuh A4 Portrait.
+2. 📑 [A4 Bagi Dua]    : 1 lembar A4 Portrait berisi 2 slip kembar (Lembar Karyawan & Arsip Kantor).
 3. 📋 [Kertas A5]      : Ukuran setengah A4 Portrait/Landscape.
 4. 📑 [F4 / Folio]     : Ukuran HVS Folio Portrait standar kantor Indonesia.
 5. 🧾 [Struk 80mm]     : Ukuran gulungan printer kasir thermal struk.
-
-Pilihan Orientasi:
-- 📱 [Portrait (Tegak)] : Pengaturan default untuk semua ukuran kertas.
-- 💻 [Landscape (Mendatar)] : Pilihan opsional jika ingin format mendatar.
-
--------------------------------------------------------------------
-FITUR DATABASE TERPISAH (INSERT & RIWAYAT):
--------------------------------------------------------------------
-- 💾 [Simpan ke Database] : Tombol terpisah untuk insert data slip ke penyimpanan lokal.
-- 🗄️ [Database & Riwayat] : Modal manajemen riwayat, filter pencarian, load data, hapus, dan Export Rekap ke Excel/CSV.
 
 -------------------------------------------------------------------
 CARA MENGGUNAKAN:
 -------------------------------------------------------------------
 1. Klik ganda file [ Buka_Slip_Gaji.bat ] atau buka langsung [ index.html ] di browser.
-2. Pilih ukuran kertas dan orientasi (default: Portrait).
-3. Isi data karyawan & nominal di form sebelah kiri (Tunjangan Makan & Transport otomatis dihitung per hari masuk kerja).
-4. Klik tombol "💾 Simpan ke Database" untuk mengarsipkan.
-5. Klik tombol "Cetak Slip" untuk mencetak langsung dalam mode Portrait atau simpan sebagai PDF.
-
-6. Template Excel:
-   Buka file [ Template_Slip_Gaji_Excel.xls ] langsung dengan Microsoft Excel jika ingin mengedit via spreadsheet.
+2. Login / Pilih Akun (Direktur / PIC Unit Usaha terkait).
+3. Isi data karyawan & nominal (Tunjangan Makan & Transport otomatis dihitung per hari masuk kerja).
+4. Klik tombol "💾 Simpan ke Database" untuk mengarsipkan ke database unit usaha.
+5. Klik tombol "Cetak Slip" untuk mencetak langsung atau simpan sebagai PDF.
+6. Untuk melihat rekapitulasi gabungan seluruh unit atau per unit, klik tombol "📊 Rekapitulasi Gaji" atau buka [ rekap_gaji.html ].
 
 ===================================================================
 Developer: dev by dutaglobaltech enterprise
+Direktur : Ir. Swanto
 ===================================================================
