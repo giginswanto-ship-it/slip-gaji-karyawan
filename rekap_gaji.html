@@ -2080,11 +2080,11 @@
         const sample = filtered[0];
         document.getElementById('reportCompanyName').innerText = unitFilter === 'ALL' ? "KONSOLIDASI 3 UNIT USAHA" : (sample.companyName || "PT. MAJU BERSAMA SUKSES");
         document.getElementById('reportCompanyAddress').innerText = unitFilter === 'ALL' ? "Shop & Drive Grand Wisata • Snaprint GW • Snaprint Zamrud" : (sample.companyAddress || "Bekasi");
-        document.getElementById('sigDibuat').innerText = `( ${sample.picName || 'Adis Setiawan'} )`;
+        document.getElementById('sigDibuat').innerText = unitFilter === 'ALL' ? "( Staff Keuangan / PIC Terkait )" : `( ${sample.picName || 'Staff Payroll'} )`;
       } else {
         document.getElementById('reportCompanyName').innerText = "KONSOLIDASI 3 UNIT USAHA";
         document.getElementById('reportCompanyAddress').innerText = "Shop & Drive Grand Wisata • Snaprint GW • Snaprint Zamrud";
-        document.getElementById('sigDibuat').innerText = "( Adis Setiawan )";
+        document.getElementById('sigDibuat').innerText = "( Staff Keuangan / PIC Terkait )";
       }
 
       if (filtered.length > 0) {
