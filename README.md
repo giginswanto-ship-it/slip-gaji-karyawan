@@ -39,9 +39,11 @@ Aplikasi web modern berbasis HTML5, CSS3, dan JavaScript Vanilla untuk pembuatan
    - Konversi nominal gaji ke ejaan huruf (*Terbilang* otomatis).
    - Pengaturan tata letak cetak dokumen (**Portrait** standar & Landscape, pilihan ukuran A4 / F4 / A5 / Struk).
    - Database internal berbasis browser (`LocalStorage`) untuk simpan, perbarui, dan filter data slip per unit usaha.
+   - **Mode Koreksi & Edit Khusus Direktur**: Direktur dapat memuat dan mengedit kembali slip gaji yang telah tersimpan untuk memperbaiki kesalahan input tanpa membuat data duplikat.
 
 2. **Rekapitulasi Daftar Gaji Semua Unit (`rekap_gaji.html`)**:
    - Master sheet rekapitulasi penggajian seluruh karyawan per periode dan per unit usaha.
+   - **Fitur Edit & Koreksi Langsung (Khusus Akun Direktur)**: Tombol `✏️ Edit` pada setiap baris tabel dan tombol `✏️ Koreksi Input Data` di toolbar untuk membuka form modal koreksi data karyawan (Unit, NIK, Nama, Hari Kerja, Gaji Pokok, Tunjangan, PPh 21 TER, BPJS, Pinjaman, dll) secara instan dan langsung memperbarui database & rekapitulasi.
    - Kartu statistik ringkasan total (Total Karyawan, Total Gaji Bruto, Total PPh 21, Total Potongan BPJS/Kasbon, Total THP).
    - Filter data berdasarkan Unit Usaha, Periode Gaji, dan Divisi/Departemen.
    - Kolom tanda tangan pengesahan formal dinamis sesuai unit:

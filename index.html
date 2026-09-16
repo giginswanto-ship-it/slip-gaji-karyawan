@@ -1865,6 +1865,27 @@
       </div>
       <div class="card-body">
 
+        <!-- Banner Mode Koreksi Input (Khusus Akun Direktur) -->
+        <div id="editModeBanner" style="display: none; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1.5px solid #f59e0b; border-radius: 10px; padding: 0.85rem 1.15rem; margin-bottom: 1.25rem; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem; box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.15);">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <div style="width: 38px; height: 38px; background: #fbbf24; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border: 1.5px solid #d97706;">
+              ✏️
+            </div>
+            <div>
+              <strong style="color: #92400e; font-size: 0.92rem; display: block; letter-spacing: -0.01em;">MODE KOREKSI KESALAHAN INPUT (AKUN DIREKTUR)</strong>
+              <div id="editModeDetail" style="font-size: 0.78rem; color: #78350f; font-weight: 600;">Sedang mengoreksi data karyawan: -</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.45rem;">
+            <button type="button" class="btn btn-save" onclick="saveToDatabase()" style="padding: 0.4rem 0.85rem; font-size: 0.8rem; background: #d97706; border-color: #b45309;" title="Simpan hasil koreksi langsung ke database">
+              💾 Perbarui Data (Update)
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="exitEditMode()" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;" title="Batalkan mode koreksi dan kembali ke form input baru">
+              ✖️ Selesai / Form Baru
+            </button>
+          </div>
+        </div>
+
         <!-- Pilihan Ukuran Kertas Cetak -->
         <div class="paper-selection-box">
           <div class="paper-box-title">
@@ -3580,7 +3601,16 @@
       if (badge) badge.innerText = records.length;
     }
 
-    // INSERT / SIMPAN KE DATABASE
+    let currentEditingRecordId = null;
+
+    function exitEditMode() {
+      currentEditingRecordId = null;
+      const banner = document.getElementById('editModeBanner');
+      if (banner) banner.style.display = 'none';
+      showToast("Mode koreksi selesai. Kembali ke formulir input baru.", false);
+    }
+
+    // INSERT / SIMPAN / PERBARUI KE DATABASE
     function saveToDatabase() {
       const empName = document.getElementById('empName').value.trim();
       if (!empName) {
@@ -3589,13 +3619,16 @@
         return;
       }
 
+      const session = getCurrentSession();
       const ptkpStatus = document.getElementById('empPtkp').value;
       const pph21Mode = document.getElementById('pph21Mode').value;
-      const unitKey = document.getElementById('selectUnitUsaha') ? document.getElementById('selectUnitUsaha').value : 'shop_and_drive_gw';
+      const unitKey = document.getElementById('selectUnitUsaha') ? document.getElementById('selectUnitUsaha').value : (session.activeUnit || 'shop_and_drive_gw');
       const unitInfo = BUSINESS_UNITS[unitKey] || BUSINESS_UNITS['shop_and_drive_gw'];
 
+      const recordId = currentEditingRecordId ? currentEditingRecordId : ('SLIP_' + Date.now());
+
       const record = {
-        id: 'SLIP_' + Date.now(),
+        id: recordId,
         savedAt: new Date().toLocaleString('id-ID'),
         unitId: unitKey,
         unitUsaha: unitInfo.name,
@@ -3644,19 +3677,45 @@
       record.totalPotongan = record.iuranBpjs + record.potonganPph21 + record.cicilanPinjaman + record.potonganLain;
       record.netGaji = record.totalPenghasilan - record.totalPotongan;
 
-      const records = getDatabaseRecords();
+      let records = getDatabaseRecords();
+
+      if (currentEditingRecordId) {
+        // Mode Update / Koreksi
+        const idx = records.findIndex(r => r.id === currentEditingRecordId);
+        if (idx !== -1) {
+          records[idx] = { 
+            ...records[idx],
+            ...record, 
+            updatedAt: new Date().toLocaleString('id-ID') + ' (Direktur: Ir. Swanto)' 
+          };
+          saveDatabaseRecords(records);
+          updateDatabaseBadge();
+          showToast(`✅ Data "${empName}" Berhasil Diperbarui oleh Direktur (Ir. Swanto)!`, true);
+          exitEditMode();
+          return;
+        }
+      }
+
       // Add to beginning of array
       records.unshift(record);
       saveDatabaseRecords(records);
+      updateDatabaseBadge();
 
       showToast(`Data Slip Gaji "${empName}" [${unitInfo.shortName}] Berhasil Disimpan!`, true);
     }
 
-    // LOAD DATA FROM DATABASE TO FORM & PREVIEW
+    // LOAD DATA FROM DATABASE TO FORM & PREVIEW (MODE KOREKSI DIREKTUR)
     function loadRecordToForm(id) {
       const records = getDatabaseRecords();
       const rec = records.find(r => r.id === id);
       if (!rec) return;
+
+      currentEditingRecordId = id;
+      const banner = document.getElementById('editModeBanner');
+      if (banner) {
+        banner.style.display = 'flex';
+        document.getElementById('editModeDetail').innerText = `Sedang mengoreksi data: ${rec.empName} (NIK: ${rec.empId || '-'} | Unit: ${rec.unitUsaha || rec.companyName})`;
+      }
 
       if (rec.unitId && document.getElementById('selectUnitUsaha')) {
         document.getElementById('selectUnitUsaha').value = rec.unitId;
@@ -3717,7 +3776,7 @@
 
       calcAllowancesAndTotals();
       closeDatabaseModal();
-      showToast(`Data Slip Gaji "${rec.empName}" Berhasil Dimuat!`, true);
+      showToast(`✏️ Data "${rec.empName}" Dimuat ke Formulir (Mode Koreksi Aktif)`, true);
     }
 
     // DELETE SINGLE RECORD
@@ -3832,6 +3891,9 @@
             <td style="font-weight: 700; color: #15803d; font-size: 0.9rem;">Rp ${formatRupiah(r.netGaji || 0)}</td>
             <td style="font-size: 0.75rem; color: #64748b;">${r.savedAt || '-'}</td>
             <td style="text-align: center; white-space: nowrap;">
+              <button class="btn btn-sm" style="padding: 0.32rem 0.65rem; font-size: 0.75rem; background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; font-weight: 700;" onclick="loadRecordToForm('${r.id}')" title="Koreksi / Perbaiki Kesalahan Input Data (Khusus Direktur)">
+                ✏️ Edit
+              </button>
               <button class="btn btn-sm btn-load-sm" onclick="loadRecordToForm('${r.id}')" title="Buka data ke formulir">
                 👁️ Buka
               </button>
@@ -4643,6 +4705,7 @@
         document.getElementById('cicilanKe').value = "1";
         document.getElementById('tenorBulan').value = "1";
         document.getElementById('potonganLain').value = "0";
+        exitEditMode();
         calcAllowancesAndTotals();
         showToast("Form berhasil di-reset dengan pengaturan default.", false);
       }

@@ -1296,7 +1296,10 @@
         </div>
       </div>
 
-      <div style="display: flex; gap: 0.5rem;">
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button class="btn btn-sm" style="background: #fef3c7; color: #92400e; border: 1.5px solid #f59e0b; font-weight: 700;" onclick="openDirectorQuickEditPicker()" title="Pilih &amp; Koreksi Kesalahan Input Data Karyawan (Khusus Direktur)">
+          ✏️ Koreksi Input Data
+        </button>
         <button class="btn btn-sm btn-edit-sm" onclick="loadSampleDataIfEmpty()" title="Isi data contoh jika database masih kosong">
           💡 Isi Contoh Data
         </button>
@@ -1560,6 +1563,207 @@
         <div style="display: flex; gap: 0.6rem;">
           <button class="btn btn-secondary" onclick="closeSettingsModal()">Tutup</button>
           <button class="btn btn-success" onclick="saveSettingsFromModal()">💾 Terapkan &amp; Simpan Pengaturan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit / Koreksi Kesalahan Input Gaji (Khusus Akun Direktur) -->
+  <div class="modal-backdrop no-print" id="editRecordModal" onclick="closeModalOnBackdrop(event)" style="z-index: 180;">
+    <div class="modal-content" style="max-width: 900px; border-top: 5px solid #d97706;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #b45309 0%, #78350f 100%);">
+        <h3>
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          ✏️ Koreksi &amp; Perbaiki Kesalahan Input Data Gaji
+        </h3>
+        <button onclick="closeEditRecordModal()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.5rem; line-height: 1;">&times;</button>
+      </div>
+
+      <div class="modal-body" style="max-height: 75vh; overflow-y: auto;">
+        <!-- Header Note -->
+        <div style="background: #fef3c7; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+          <div style="font-size: 0.82rem; color: #92400e; font-weight: 700;">
+            👑 Otorisasi Direktur Utama (Ir. Swanto) &bull; Mode Koreksi Data Database
+          </div>
+          <span id="editBadgeRecordId" style="font-size: 0.72rem; background: #fffbeb; color: #b45309; padding: 2px 8px; border-radius: 4px; font-weight: 800; border: 1px solid #fde68a;">
+            ID: -
+          </span>
+        </div>
+
+        <input type="hidden" id="editRecordId">
+
+        <!-- Section 1: Unit Usaha & Periode -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+          <div style="font-size: 0.85rem; font-weight: 800; color: #1e3a8a; margin-bottom: 0.75rem; border-bottom: 1px solid #cbd5e1; padding-bottom: 0.35rem;">
+            🏢 1. Unit Usaha &amp; Periode Penggajian
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem;">
+            <div class="form-group">
+              <label for="editUnitId" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Pilih Unit Usaha</label>
+              <select id="editUnitId" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" onchange="onEditUnitChange(this.value)">
+                <option value="shop_and_drive_gw">🚗 Shop And Drive Grand Wisata (PIC: Adis Setiawan)</option>
+                <option value="snaprint_gw">🖨️ Snaprint Grand Wisata (PIC: Eki Dwi Saputra)</option>
+                <option value="snaprint_zamrud">🏢 Snaprint Zamrud (PIC: M. Rengga Swana Herlambang)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editPayPeriod" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Periode Gaji (Bulan &amp; Tahun)</label>
+              <input type="text" id="editPayPeriod" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" placeholder="September 2026">
+            </div>
+            <div class="form-group">
+              <label for="editPayDate" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Tanggal Pembayaran</label>
+              <input type="text" id="editPayDate" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" placeholder="25 September 2026">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Identitas Karyawan -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+          <div style="font-size: 0.85rem; font-weight: 800; color: #1e3a8a; margin-bottom: 0.75rem; border-bottom: 1px solid #cbd5e1; padding-bottom: 0.35rem;">
+            👤 2. Identitas &amp; Status Karyawan
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+            <div class="form-group">
+              <label for="editEmpName" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Nama Lengkap Karyawan</label>
+              <input type="text" id="editEmpName" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; font-weight: 700; color: #1e3a8a;">
+            </div>
+            <div class="form-group">
+              <label for="editEmpId" style="font-size: 0.8rem; font-weight: 700; color: #334155;">NIK / ID Karyawan</label>
+              <input type="text" id="editEmpId" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            </div>
+            <div class="form-group">
+              <label for="editEmpJabatan" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Jabatan</label>
+              <input type="text" id="editEmpJabatan" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            </div>
+            <div class="form-group">
+              <label for="editEmpDivisi" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Divisi</label>
+              <input type="text" id="editEmpDivisi" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            </div>
+            <div class="form-group">
+              <label for="editEmpStatus" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Status Karyawan</label>
+              <input type="text" id="editEmpStatus" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            </div>
+            <div class="form-group">
+              <label for="editEmpPtkp" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Status PTKP (PPh 21 TER)</label>
+              <select id="editEmpPtkp" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" onchange="calcEditTotals()">
+                <option value="TK/0">TK/0 (Rp 54 Jt - Kat A)</option>
+                <option value="TK/1">TK/1 (Rp 58.5 Jt - Kat A)</option>
+                <option value="TK/2">TK/2 (Rp 63 Jt - Kat B)</option>
+                <option value="TK/3">TK/3 (Rp 67.5 Jt - Kat B)</option>
+                <option value="K/0">K/0 (Rp 58.5 Jt - Kat A)</option>
+                <option value="K/1">K/1 (Rp 63 Jt - Kat B)</option>
+                <option value="K/2">K/2 (Rp 67.5 Jt - Kat B)</option>
+                <option value="K/3">K/3 (Rp 72 Jt - Kat C)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editEmpNpwp" style="font-size: 0.8rem; font-weight: 700; color: #334155;">NPWP</label>
+              <input type="text" id="editEmpNpwp" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            </div>
+            <div class="form-group">
+              <label for="editEmpRekening" style="font-size: 0.8rem; font-weight: 700; color: #334155;">No. Rekening &amp; Bank</label>
+              <input type="text" id="editEmpRekening" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Kehadiran, Tarif & Penghasilan -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+          <div style="font-size: 0.85rem; font-weight: 800; color: #1e3a8a; margin-bottom: 0.75rem; border-bottom: 1px solid #cbd5e1; padding-bottom: 0.35rem;">
+            💵 3. Kehadiran &amp; Rincian Penghasilan
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.75rem;">
+            <div class="form-group">
+              <label for="editHariKerja" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Hari Masuk Kerja</label>
+              <input type="number" id="editHariKerja" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" oninput="calcEditTotals()">
+            </div>
+            <div class="form-group">
+              <label for="editHariTanggalMerah" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Hari Libur / Merah</label>
+              <input type="number" id="editHariTanggalMerah" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" oninput="calcEditTotals()">
+            </div>
+            <div class="form-group">
+              <label for="editRateMakan" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Tarif Makan / Hari</label>
+              <input type="text" id="editRateMakan" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" oninput="formatAndCalcEdit(this)">
+            </div>
+            <div class="form-group">
+              <label for="editRateTransport" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Tarif Transport / Hari</label>
+              <input type="text" id="editRateTransport" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" oninput="formatAndCalcEdit(this)">
+            </div>
+            <div class="form-group">
+              <label for="editGajiPokok" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Gaji Pokok</label>
+              <input type="text" id="editGajiPokok" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; font-weight: 700; color: #1e3a8a;" oninput="formatAndCalcEdit(this)">
+            </div>
+            <div class="form-group">
+              <label for="editTunjanganJabatan" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Tunjangan Jabatan</label>
+              <input type="text" id="editTunjanganJabatan" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" oninput="formatAndCalcEdit(this)">
+            </div>
+            <div class="form-group">
+              <label for="editInsentifLain" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Insentif Lain-lain</label>
+              <input type="text" id="editInsentifLain" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" oninput="formatAndCalcEdit(this)">
+            </div>
+            <div class="form-group">
+              <label for="editKetInsentifLain" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Ket. Insentif</label>
+              <input type="text" id="editKetInsentifLain" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Potongan-Potongan -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+          <div style="font-size: 0.85rem; font-weight: 800; color: #991b1b; margin-bottom: 0.75rem; border-bottom: 1px solid #cbd5e1; padding-bottom: 0.35rem;">
+            📉 4. Rincian Potongan Gaji
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.75rem;">
+            <div class="form-group">
+              <label for="editPph21Mode" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Mode PPh 21</label>
+              <select id="editPph21Mode" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" onchange="toggleEditPph21Mode()">
+                <option value="auto">Auto (TER 2024)</option>
+                <option value="manual">Manual Input</option>
+                <option value="none">Bebas Pajak (Rp 0)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editPotonganPph21" style="font-size: 0.8rem; font-weight: 700; color: #991b1b;">Potongan PPh 21</label>
+              <input type="text" id="editPotonganPph21" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; font-weight: 700; color: #991b1b;" oninput="formatAndCalcEdit(this)">
+            </div>
+            <div class="form-group">
+              <label for="editIuranBpjs" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Iuran BPJS</label>
+              <input type="text" id="editIuranBpjs" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" oninput="formatAndCalcEdit(this)">
+            </div>
+            <div class="form-group">
+              <label for="editCicilanPinjaman" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Cicilan Kasbon / Pinjaman</label>
+              <input type="text" id="editCicilanPinjaman" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" oninput="formatAndCalcEdit(this)">
+            </div>
+            <div class="form-group">
+              <label for="editPotonganLain" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Potongan Lain-lain</label>
+              <input type="text" id="editPotonganLain" style="width: 100%; padding: 0.45rem 0.65rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" oninput="formatAndCalcEdit(this)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Live Summary Box -->
+        <div style="background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); color: white; border-radius: 10px; padding: 1.15rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+          <div>
+            <div style="font-size: 0.75rem; color: #93c5fd; font-weight: 600; text-transform: uppercase;">Total Penghasilan Bruto</div>
+            <strong id="editPreviewBruto" style="font-size: 1.15rem; color: #67e8f9; font-weight: 800;">Rp 0</strong>
+          </div>
+          <div>
+            <div style="font-size: 0.75rem; color: #fca5a5; font-weight: 600; text-transform: uppercase;">Total Potongan</div>
+            <strong id="editPreviewPotongan" style="font-size: 1.15rem; color: #f87171; font-weight: 800;">Rp 0</strong>
+          </div>
+          <div>
+            <div style="font-size: 0.75rem; color: #86efac; font-weight: 600; text-transform: uppercase;">Gaji Bersih / THP</div>
+            <strong id="editPreviewTHP" style="font-size: 1.25rem; color: #4ade80; font-weight: 900;">Rp 0</strong>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1rem 1.5rem; background: #f1f5f9; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <span style="font-size: 0.75rem; color: #64748b;">Koreksi Langsung Database &bull; <em>dev by dutaglobaltech enterprise</em></span>
+        <div style="display: flex; gap: 0.6rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeEditRecordModal()">Tutup</button>
+          <button type="button" class="btn btn-primary" onclick="openCurrentEditInSlipForm()" style="background: #2563eb;">📝 Buka di Pembuat Slip</button>
+          <button type="button" class="btn btn-save" onclick="saveEditRecord()" style="background: #d97706; border-color: #b45309;">💾 Simpan Koreksi Data</button>
         </div>
       </div>
     </div>
@@ -2206,7 +2410,8 @@
             <td class="col-right col-bold" style="background: #f0fdf4; color: #15803d; font-size: 0.8rem;">${formatRupiah(thp)}</td>
             <td style="font-size: 0.72rem; white-space: nowrap;">${r.empRekening || '-'}</td>
             <td class="col-center no-print col-action" style="white-space: nowrap;">
-              <a href="index.html?loadId=${r.id}" class="btn btn-sm btn-edit-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;" title="Buka / Edit di Formulir Slip Gaji">👁️ Buka</a>
+              <button class="btn btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem; background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; font-weight: 700;" onclick="openEditRecordModal('${r.id}')" title="Koreksi &amp; Perbaiki Kesalahan Input Data Karyawan (Khusus Direktur)">✏️ Edit</button>
+              <a href="index.html?loadId=${r.id}" class="btn btn-sm btn-edit-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;" title="Buka / Edit di Formulir Slip Gaji">👁️ Slip</a>
               <a href="index.html?loadId=${r.id}&print=1" class="btn btn-sm btn-success" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;" title="Cetak Slip Gaji Karyawan Ini Langsung">🖨️ Cetak</a>
               <button class="btn btn-sm btn-danger-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;" onclick="deleteRecord('${r.id}', '${r.empName}')" title="Hapus dari Database">🗑️</button>
             </td>
@@ -2263,6 +2468,310 @@
         saveDatabaseRecords(records);
         populatePeriodOptions();
         renderPayrollReport();
+      }
+    }
+
+    // =========================================================================
+    // FITUR KOREKSI & PERBAIKAN INPUT DATA (AKUN DIREKTUR: IR. SWANTO)
+    // =========================================================================
+    const TER_A_EDIT = [
+      { max: 5400000, rate: 0.00 }, { max: 5650000, rate: 0.0025 }, { max: 5950000, rate: 0.005 },
+      { max: 6300000, rate: 0.0075 }, { max: 6750000, rate: 0.01 }, { max: 7500000, rate: 0.0125 },
+      { max: 8550000, rate: 0.015 }, { max: 9650000, rate: 0.0175 }, { max: 10050000, rate: 0.02 },
+      { max: 10350000, rate: 0.03 }, { max: 10700000, rate: 0.04 }, { max: 11050000, rate: 0.05 },
+      { max: 11600000, rate: 0.06 }, { max: 12500000, rate: 0.07 }, { max: 13750000, rate: 0.08 },
+      { max: 15100000, rate: 0.09 }, { max: 16950000, rate: 0.10 }, { max: 19750000, rate: 0.11 },
+      { max: 24150000, rate: 0.12 }, { max: 26450000, rate: 0.13 }, { max: 28000000, rate: 0.14 },
+      { max: 30050000, rate: 0.15 }, { max: 32400000, rate: 0.16 }, { max: 35400000, rate: 0.17 },
+      { max: 39100000, rate: 0.18 }, { max: 43850000, rate: 0.19 }, { max: 47800000, rate: 0.20 },
+      { max: 51400000, rate: 0.21 }, { max: 56300000, rate: 0.22 }, { max: 62200000, rate: 0.23 },
+      { max: 68600000, rate: 0.24 }, { max: 77500000, rate: 0.25 }, { max: 89000000, rate: 0.26 },
+      { max: 103000000, rate: 0.27 }, { max: 125000000, rate: 0.28 }, { max: 157000000, rate: 0.29 },
+      { max: 206000000, rate: 0.30 }, { max: 337000000, rate: 0.31 }, { max: 454000000, rate: 0.32 },
+      { max: 1414000000, rate: 0.33 }, { max: Infinity, rate: 0.34 }
+    ];
+
+    const TER_B_EDIT = [
+      { max: 6200000, rate: 0.00 }, { max: 6500000, rate: 0.0025 }, { max: 6850000, rate: 0.005 },
+      { max: 7300000, rate: 0.0075 }, { max: 9200000, rate: 0.01 }, { max: 10750000, rate: 0.015 },
+      { max: 11250000, rate: 0.02 }, { max: 11600000, rate: 0.03 }, { max: 12600000, rate: 0.04 },
+      { max: 13600000, rate: 0.05 }, { max: 14950000, rate: 0.06 }, { max: 16400000, rate: 0.07 },
+      { max: 18450000, rate: 0.08 }, { max: 21850000, rate: 0.09 }, { max: 26000000, rate: 0.10 },
+      { max: 27700000, rate: 0.11 }, { max: 29350000, rate: 0.12 }, { max: 31450000, rate: 0.13 },
+      { max: 33950000, rate: 0.14 }, { max: 37100000, rate: 0.15 }, { max: 41100000, rate: 0.16 },
+      { max: 45800000, rate: 0.17 }, { max: 49500000, rate: 0.18 }, { max: 53800000, rate: 0.19 },
+      { max: 58500000, rate: 0.20 }, { max: 64000000, rate: 0.21 }, { max: 71000000, rate: 0.22 },
+      { max: 80000000, rate: 0.23 }, { max: 93000000, rate: 0.24 }, { max: 109000000, rate: 0.25 },
+      { max: 129000000, rate: 0.26 }, { max: 162000000, rate: 0.27 }, { max: 211000000, rate: 0.28 },
+      { max: 342000000, rate: 0.29 }, { max: 459000000, rate: 0.30 }, { max: 1419000000, rate: 0.31 },
+      { max: Infinity, rate: 0.34 }
+    ];
+
+    const TER_C_EDIT = [
+      { max: 6600000, rate: 0.00 }, { max: 6950000, rate: 0.0025 }, { max: 7350000, rate: 0.005 },
+      { max: 7800000, rate: 0.0075 }, { max: 8850000, rate: 0.01 }, { max: 9800000, rate: 0.0125 },
+      { max: 10950000, rate: 0.015 }, { max: 11200000, rate: 0.0175 }, { max: 12050000, rate: 0.02 },
+      { max: 12950000, rate: 0.03 }, { max: 14150000, rate: 0.04 }, { max: 15550000, rate: 0.05 },
+      { max: 17050000, rate: 0.06 }, { max: 19500000, rate: 0.07 }, { max: 22700000, rate: 0.08 },
+      { max: 26600000, rate: 0.09 }, { max: 28100000, rate: 0.10 }, { max: 30100000, rate: 0.11 },
+      { max: 32600000, rate: 0.12 }, { max: 35400000, rate: 0.13 }, { max: 38900000, rate: 0.14 },
+      { max: 43000000, rate: 0.15 }, { max: 47400000, rate: 0.16 }, { max: 51200000, rate: 0.17 },
+      { max: 55800000, rate: 0.18 }, { max: 60400000, rate: 0.19 }, { max: 66700000, rate: 0.20 },
+      { max: 74500000, rate: 0.21 }, { max: 83200000, rate: 0.22 }, { max: 95600000, rate: 0.23 },
+      { max: 110000000, rate: 0.24 }, { max: 134000000, rate: 0.25 }, { max: 169000000, rate: 0.26 },
+      { max: 220000000, rate: 0.27 }, { max: 405000000, rate: 0.28 }, { max: 515000000, rate: 0.29 },
+      { max: 740000000, rate: 0.30 }, { max: 1410000000, rate: 0.31 }, { max: Infinity, rate: 0.34 }
+    ];
+
+    function getPtkpCategory(ptkpStatus) {
+      if (['TK/0', 'TK/1', 'K/0'].includes(ptkpStatus)) return 'A';
+      if (['TK/2', 'TK/3', 'K/1', 'K/2'].includes(ptkpStatus)) return 'B';
+      if (['K/3'].includes(ptkpStatus)) return 'C';
+      return 'A';
+    }
+
+    function calculateEditPph21(bruto, ptkpStatus) {
+      const cat = getPtkpCategory(ptkpStatus);
+      let table = TER_A_EDIT;
+      if (cat === 'B') table = TER_B_EDIT;
+      if (cat === 'C') table = TER_C_EDIT;
+      const bracket = table.find(b => bruto <= b.max);
+      const rate = bracket ? bracket.rate : 0;
+      return Math.round(bruto * rate);
+    }
+
+    function openDirectorQuickEditPicker() {
+      if (!verifyDirectorPermission()) return;
+      const records = getDatabaseRecords();
+      if (records.length === 0) {
+        alert("Database slip gaji masih kosong. Silakan isi data contoh atau input data terlebih dahulu.");
+        return;
+      }
+      openEditRecordModal(records[0].id);
+    }
+
+    function openEditRecordModal(recordId) {
+      if (!verifyDirectorPermission()) return;
+
+      const records = getDatabaseRecords();
+      const rec = records.find(r => r.id === recordId);
+      if (!rec) {
+        alert("Data karyawan tidak ditemukan di database!");
+        return;
+      }
+
+      document.getElementById('editRecordId').value = rec.id;
+      document.getElementById('editBadgeRecordId').innerText = `ID: ${rec.id}`;
+
+      // Section 1
+      const unitKey = rec.unitId || (rec.unitUsaha && rec.unitUsaha.toLowerCase().includes('snaprint') ? (rec.unitUsaha.toLowerCase().includes('zamrud') ? 'snaprint_zamrud' : 'snaprint_gw') : 'shop_and_drive_gw');
+      document.getElementById('editUnitId').value = unitKey;
+      document.getElementById('editPayPeriod').value = rec.payPeriod || 'September 2026';
+      document.getElementById('editPayDate').value = rec.payDate || '25 September 2026';
+
+      // Section 2
+      document.getElementById('editEmpName').value = rec.empName || '';
+      document.getElementById('editEmpId').value = rec.empId || '';
+      document.getElementById('editEmpJabatan').value = rec.empJabatan || '';
+      document.getElementById('editEmpDivisi').value = rec.empDivisi || 'Operasional';
+      document.getElementById('editEmpStatus').value = rec.empStatus || 'Karyawan Tetap';
+      document.getElementById('editEmpPtkp').value = rec.empPtkp || 'TK/0';
+      document.getElementById('editEmpNpwp').value = rec.empNpwp || '';
+      document.getElementById('editEmpRekening').value = rec.empRekening || '';
+
+      // Section 3
+      document.getElementById('editHariKerja').value = rec.hariKerja !== undefined ? rec.hariKerja : 24;
+      document.getElementById('editHariTanggalMerah').value = rec.hariTanggalMerah || 0;
+      document.getElementById('editRateMakan').value = formatRupiah(rec.rateMakanPerHari || 25000);
+      document.getElementById('editRateTransport').value = formatRupiah(rec.rateTransportPerHari || 15000);
+      document.getElementById('editGajiPokok').value = formatRupiah(rec.gajiPokok || 0);
+      document.getElementById('editTunjanganJabatan').value = formatRupiah(rec.tunjanganJabatan || 0);
+      document.getElementById('editInsentifLain').value = formatRupiah(rec.insentifLain || 0);
+      document.getElementById('editKetInsentifLain').value = rec.ketInsentifLain || '';
+
+      // Section 4
+      const pphMode = rec.pph21Mode || (rec.potonganPph21 > 0 ? 'auto' : 'none');
+      document.getElementById('editPph21Mode').value = pphMode;
+      document.getElementById('editPotonganPph21').value = formatRupiah(rec.potonganPph21 || 0);
+      document.getElementById('editIuranBpjs').value = formatRupiah(rec.iuranBpjs || 0);
+      document.getElementById('editCicilanPinjaman').value = formatRupiah(rec.cicilanPinjaman || 0);
+      document.getElementById('editPotonganLain').value = formatRupiah(rec.potonganLain || 0);
+
+      toggleEditPph21Mode();
+      calcEditTotals();
+
+      document.getElementById('editRecordModal').classList.add('show');
+    }
+
+    function closeEditRecordModal() {
+      const modal = document.getElementById('editRecordModal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    function onEditUnitChange(unitKey) {
+      calcEditTotals();
+    }
+
+    function toggleEditPph21Mode() {
+      const mode = document.getElementById('editPph21Mode').value;
+      const inputPph = document.getElementById('editPotonganPph21');
+      if (mode === 'auto') {
+        inputPph.readOnly = true;
+        inputPph.style.background = '#f8fafc';
+        calcEditTotals();
+      } else if (mode === 'manual') {
+        inputPph.readOnly = false;
+        inputPph.style.background = '#ffffff';
+        inputPph.focus();
+      } else {
+        inputPph.readOnly = true;
+        inputPph.value = '0';
+        inputPph.style.background = '#f8fafc';
+        calcEditTotals();
+      }
+    }
+
+    function formatAndCalcEdit(input) {
+      const cursor = input.selectionStart;
+      const prevLen = input.value.length;
+      const num = parseRupiah(input.value);
+      input.value = formatRupiah(num);
+      const newLen = input.value.length;
+      input.setSelectionRange(cursor + (newLen - prevLen), cursor + (newLen - prevLen));
+      calcEditTotals();
+    }
+
+    function calcEditTotals() {
+      const gp = parseRupiah(document.getElementById('editGajiPokok').value);
+      const tj = parseRupiah(document.getElementById('editTunjanganJabatan').value);
+      const hm = parseInt(document.getElementById('editHariKerja').value, 10) || 0;
+      const hrMerah = parseInt(document.getElementById('editHariTanggalMerah').value, 10) || 0;
+      const rm = parseRupiah(document.getElementById('editRateMakan').value);
+      const rt = parseRupiah(document.getElementById('editRateTransport').value);
+      const tm = hm * rm;
+      const tt = hm * rt;
+      const im = hrMerah * 75000;
+      const il = parseRupiah(document.getElementById('editInsentifLain').value);
+
+      const bruto = gp + tj + tm + tt + im + il;
+
+      const pphMode = document.getElementById('editPph21Mode').value;
+      let pph21 = 0;
+      if (pphMode === 'auto') {
+        const ptkp = document.getElementById('editEmpPtkp').value;
+        pph21 = calculateEditPph21(bruto, ptkp);
+        document.getElementById('editPotonganPph21').value = formatRupiah(pph21);
+      } else if (pphMode === 'manual') {
+        pph21 = parseRupiah(document.getElementById('editPotonganPph21').value);
+      } else {
+        pph21 = 0;
+      }
+
+      const bpjs = parseRupiah(document.getElementById('editIuranBpjs').value);
+      const cicilan = parseRupiah(document.getElementById('editCicilanPinjaman').value);
+      const potLain = parseRupiah(document.getElementById('editPotonganLain').value);
+
+      const totalPotongan = pph21 + bpjs + cicilan + potLain;
+      const thp = bruto - totalPotongan;
+
+      document.getElementById('editPreviewBruto').innerText = 'Rp ' + formatRupiah(bruto);
+      document.getElementById('editPreviewPotongan').innerText = 'Rp ' + formatRupiah(totalPotongan);
+      document.getElementById('editPreviewTHP').innerText = 'Rp ' + formatRupiah(thp);
+    }
+
+    function saveEditRecord() {
+      if (!verifyDirectorPermission()) return;
+
+      const recordId = document.getElementById('editRecordId').value;
+      const empName = document.getElementById('editEmpName').value.trim();
+      if (!empName) {
+        alert("Nama Karyawan wajib diisi!");
+        document.getElementById('editEmpName').focus();
+        return;
+      }
+
+      let records = getDatabaseRecords();
+      const idx = records.findIndex(r => r.id === recordId);
+      if (idx === -1) {
+        alert("Data yang akan diedit tidak ditemukan di database.");
+        return;
+      }
+
+      const unitKey = document.getElementById('editUnitId').value;
+      const unitInfo = BUSINESS_UNITS[unitKey] || BUSINESS_UNITS['shop_and_drive_gw'];
+
+      const gp = parseRupiah(document.getElementById('editGajiPokok').value);
+      const tj = parseRupiah(document.getElementById('editTunjanganJabatan').value);
+      const hm = parseInt(document.getElementById('editHariKerja').value, 10) || 0;
+      const hrMerah = parseInt(document.getElementById('editHariTanggalMerah').value, 10) || 0;
+      const rm = parseRupiah(document.getElementById('editRateMakan').value);
+      const rt = parseRupiah(document.getElementById('editRateTransport').value);
+      const tm = hm * rm;
+      const tt = hm * rt;
+      const im = hrMerah * 75000;
+      const il = parseRupiah(document.getElementById('editInsentifLain').value);
+      const ketIl = document.getElementById('editKetInsentifLain').value.trim();
+
+      const bruto = gp + tj + tm + tt + im + il;
+
+      const pphMode = document.getElementById('editPph21Mode').value;
+      const pph21 = parseRupiah(document.getElementById('editPotonganPph21').value);
+      const bpjs = parseRupiah(document.getElementById('editIuranBpjs').value);
+      const cicilan = parseRupiah(document.getElementById('editCicilanPinjaman').value);
+      const potLain = parseRupiah(document.getElementById('editPotonganLain').value);
+      const totalPotongan = pph21 + bpjs + cicilan + potLain;
+      const thp = bruto - totalPotongan;
+
+      records[idx] = {
+        ...records[idx],
+        unitId: unitKey,
+        unitUsaha: unitInfo.name,
+        picName: unitInfo.picName,
+        companyName: unitInfo.name,
+        companyAddress: unitInfo.address,
+        payPeriod: document.getElementById('editPayPeriod').value.trim() || 'September 2026',
+        payDate: document.getElementById('editPayDate').value.trim() || '25 September 2026',
+        empName: empName,
+        empId: document.getElementById('editEmpId').value.trim(),
+        empJabatan: document.getElementById('editEmpJabatan').value.trim(),
+        empDivisi: document.getElementById('editEmpDivisi').value.trim() || 'Operasional',
+        empStatus: document.getElementById('editEmpStatus').value.trim() || 'Karyawan Tetap',
+        empPtkp: document.getElementById('editEmpPtkp').value,
+        empNpwp: document.getElementById('editEmpNpwp').value.trim(),
+        empRekening: document.getElementById('editEmpRekening').value.trim(),
+        hariKerja: hm,
+        hariTanggalMerah: hrMerah,
+        rateMakanPerHari: rm,
+        rateTransportPerHari: rt,
+        totalMakan: tm,
+        totalTransport: tt,
+        totalMerah: im,
+        gajiPokok: gp,
+        tunjanganJabatan: tj,
+        insentifLain: il,
+        ketInsentifLain: ketIl,
+        pph21Mode: pphMode,
+        potonganPph21: pph21,
+        iuranBpjs: bpjs,
+        cicilanPinjaman: cicilan,
+        potonganLain: potLain,
+        totalPenghasilan: bruto,
+        totalPotongan: totalPotongan,
+        netGaji: thp,
+        updatedAt: new Date().toLocaleString('id-ID') + ' (Direktur: Ir. Swanto)'
+      };
+
+      saveDatabaseRecords(records);
+      populatePeriodOptions();
+      renderPayrollReport();
+      closeEditRecordModal();
+      alert(`✅ Koreksi Berhasil!\nData slip gaji karyawan "${empName}" telah diperbaiki & disimpan ke database oleh Direktur (Ir. Swanto).`);
+    }
+
+    function openCurrentEditInSlipForm() {
+      const recordId = document.getElementById('editRecordId').value;
+      if (recordId) {
+        window.location.href = `index.html?loadId=${recordId}`;
       }
     }
 
@@ -2732,6 +3241,8 @@
     function closeModalOnBackdrop(e) {
       if (e.target.id === 'settingsModal') {
         closeSettingsModal();
+      } else if (e.target.id === 'editRecordModal') {
+        closeEditRecordModal();
       } else if (e.target.id === 'directorAuthNoteModal') {
         closeDirectorAuthNote();
       } else if (e.target.id === 'loginModal') {
