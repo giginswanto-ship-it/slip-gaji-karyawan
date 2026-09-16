@@ -2071,20 +2071,33 @@
       });
 
       // Update Formal Meta Header & Signatures based on selected Unit
+      const cfg = getSettings();
+      let checkerName = (cfg.signerName || 'Hendra Wijaya, S.E.').trim();
+
+      // Aturan Khusus: Nama Adis Setiawan Dikosongkan di setiap Unit Usaha, KECUALI Unit Shop And Drive
+      if (unitFilter !== 'shop_and_drive_gw') {
+        if (/adis/i.test(checkerName) || /setiawan/i.test(checkerName)) {
+          checkerName = '';
+        }
+      }
+
       if (unitFilter !== 'ALL' && BUSINESS_UNITS[unitFilter]) {
         const u = BUSINESS_UNITS[unitFilter];
         document.getElementById('reportCompanyName').innerText = u.name;
         document.getElementById('reportCompanyAddress').innerText = u.address;
         document.getElementById('sigDibuat').innerText = `( ${u.picName} )`;
+        document.getElementById('sigDiperiksa').innerText = checkerName ? `( ${checkerName} )` : '(                                        )';
       } else if (filtered.length > 0 && filtered[0].companyName) {
         const sample = filtered[0];
         document.getElementById('reportCompanyName').innerText = unitFilter === 'ALL' ? "KONSOLIDASI 3 UNIT USAHA" : (sample.companyName || "PT. MAJU BERSAMA SUKSES");
         document.getElementById('reportCompanyAddress').innerText = unitFilter === 'ALL' ? "Shop & Drive Grand Wisata • Snaprint GW • Snaprint Zamrud" : (sample.companyAddress || "Bekasi");
         document.getElementById('sigDibuat').innerText = unitFilter === 'ALL' ? "( Staff Keuangan / PIC Terkait )" : `( ${sample.picName || 'Staff Payroll'} )`;
+        document.getElementById('sigDiperiksa').innerText = checkerName ? `( ${checkerName} )` : '(                                        )';
       } else {
         document.getElementById('reportCompanyName').innerText = "KONSOLIDASI 3 UNIT USAHA";
         document.getElementById('reportCompanyAddress').innerText = "Shop & Drive Grand Wisata • Snaprint GW • Snaprint Zamrud";
         document.getElementById('sigDibuat').innerText = "( Staff Keuangan / PIC Terkait )";
+        document.getElementById('sigDiperiksa').innerText = checkerName ? `( ${checkerName} )` : '(                                        )';
       }
 
       if (filtered.length > 0) {
@@ -2761,7 +2774,13 @@
 
     function applySettingsToReport(cfg = null) {
       if (!cfg) cfg = getSettings();
-      if (document.getElementById('sigDiperiksa')) document.getElementById('sigDiperiksa').innerText = `( ${cfg.signerName || 'Hendra Wijaya, S.E.'} )`;
+      const filterUnitEl = document.getElementById('filterUnit');
+      const unitFilter = filterUnitEl ? filterUnitEl.value : 'ALL';
+      let checkerName = (cfg.signerName || 'Hendra Wijaya, S.E.').trim();
+      if (unitFilter !== 'shop_and_drive_gw' && (/adis/i.test(checkerName) || /setiawan/i.test(checkerName))) {
+        checkerName = '';
+      }
+      if (document.getElementById('sigDiperiksa')) document.getElementById('sigDiperiksa').innerText = checkerName ? `( ${checkerName} )` : '(                                        )';
       if (document.getElementById('sigDisetujui')) document.getElementById('sigDisetujui').innerText = `( ${cfg.directorName || 'Ir. Swanto'} )`;
     }
 

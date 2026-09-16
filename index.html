@@ -4064,12 +4064,15 @@
 
     function applySettingsToUI(cfg = null) {
       if (!cfg) cfg = getSettings();
+      const session = getCurrentSession();
+      const activeUnitKey = session.activeUnit || 'shop_and_drive_gw';
+      const unitInfo = BUSINESS_UNITS[activeUnitKey] || BUSINESS_UNITS['shop_and_drive_gw'];
 
-      // Perbarui form & kop slip
-      if (document.getElementById('companyName')) document.getElementById('companyName').value = cfg.companyName;
-      if (document.getElementById('companyAddress')) document.getElementById('companyAddress').value = cfg.companyAddress;
-      if (document.getElementById('signerCity')) document.getElementById('signerCity').value = cfg.companyCity;
-      if (document.getElementById('signerName')) document.getElementById('signerName').value = cfg.signerName;
+      // Always respect active business unit info & PIC
+      if (document.getElementById('companyName')) document.getElementById('companyName').value = unitInfo.name;
+      if (document.getElementById('companyAddress')) document.getElementById('companyAddress').value = unitInfo.address;
+      if (document.getElementById('signerCity')) document.getElementById('signerCity').value = unitInfo.city;
+      if (document.getElementById('signerName')) document.getElementById('signerName').value = unitInfo.picName;
 
       // Rate defaults jika field masih bernilai default
       if (document.getElementById('rateMakanPerHari') && (!document.getElementById('rateMakanPerHari').value || document.getElementById('rateMakanPerHari').value === "0")) {
