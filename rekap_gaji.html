@@ -697,10 +697,65 @@
       font-family: monospace;
       font-weight: 700;
     }
+
+    .pic-tab-btn {
+      padding: 0.65rem 1rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      background: white;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: #475569;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .pic-tab-btn:hover {
+      border-color: #3b82f6;
+      color: #1e40af;
+      transform: translateY(-1px);
+    }
+    .pic-tab-btn.active-tab-adis {
+      background: #eff6ff;
+      border-color: #0284c7;
+      color: #0369a1;
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.18);
+    }
+    .pic-tab-btn.active-tab-eki {
+      background: #f0fdf4;
+      border-color: #16a34a;
+      color: #15803d;
+      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.18);
+    }
+    .pic-tab-btn.active-tab-rengga {
+      background: #fffbeb;
+      border-color: #d97706;
+      color: #b45309;
+      box-shadow: 0 4px 10px rgba(217, 119, 6, 0.18);
+    }
+    .pic-tab-btn.active-tab-direktur {
+      background: #fff1f2;
+      border-color: #be123c;
+      color: #9f1239;
+      box-shadow: 0 4px 10px rgba(190, 18, 60, 0.18);
+    }
+    .pic-window {
+      display: none;
+      animation: gateFadeIn 0.25s ease-out;
+    }
+    .pic-window.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
 
+  <!-- ========================================================================= -->
+  <!-- HALAMAN MUKA / PORTAL LOGIN 3 UNIT USAHA (SEBELUM MASUK SISTEM)           -->
+  <!-- ========================================================================= -->
   <!-- ========================================================================= -->
   <!-- HALAMAN MUKA / PORTAL LOGIN 3 UNIT USAHA (SEBELUM MASUK SISTEM)           -->
   <!-- ========================================================================= -->
@@ -714,179 +769,380 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <h1 style="font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.35rem;">
+        <h1 style="font-size: 1.55rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.35rem;">
           PORTAL REKAPITULASI DAFTAR GAJI 3 UNIT USAHA
         </h1>
-        <p style="font-size: 0.92rem; color: #e0f2fe; max-width: 700px; margin: 0 auto 0.85rem;">
+        <p style="font-size: 0.9rem; color: #e0f2fe; max-width: 700px; margin: 0 auto 0.85rem;">
           Master Rekapitulasi Gaji Karyawan &bull; Perhitungan PPh 21 TER (PP 58/2023) &bull; Format Cetak Landscape
         </p>
-        <div style="display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap;">
-          <span style="background: #be123c; color: white; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.3);">
+        <div style="display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+          <span style="background: #be123c; color: white; padding: 0.25rem 0.85rem; border-radius: 20px; font-size: 0.76rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.3);">
             👑 DIREKTUR UTAMA: Ir. Swanto
           </span>
-          <span style="background: rgba(255,255,255,0.18); color: white; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">
-            🏢 3 Unit Usaha: Grand Wisata &amp; Zamrud
+          <span style="background: rgba(255,255,255,0.18); color: white; padding: 0.25rem 0.85rem; border-radius: 20px; font-size: 0.76rem; font-weight: 600;">
+            🏢 3 Unit Usaha
           </span>
-          <span style="background: rgba(255,255,255,0.18); color: #e0f2fe; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">
+          <span style="background: rgba(255,255,255,0.18); color: #e0f2fe; padding: 0.25rem 0.85rem; border-radius: 20px; font-size: 0.76rem; font-weight: 600;">
             dev by dutaglobaltech enterprise
           </span>
         </div>
       </div>
 
-      <!-- Body Halaman Muka: Daftar Akun & Form Login -->
+      <!-- Body Halaman Muka: Jendela Login Masing-Masing PIC -->
       <div class="front-gate-body">
         
-        <!-- Judul Bagian Daftar Akun -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-          <div>
-            <h3 style="color: #0f172a; font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem;">
-              🔑 DAFTAR USERNAME &amp; PASSWORD PENGGUNA SISTEM
-            </h3>
-            <p style="font-size: 0.8rem; color: #64748b;">
-              Pilih salah satu akun di bawah ini untuk <strong>Masuk Cepat (1-Klik)</strong> atau gunakan form login manual:
-            </p>
+        <!-- Tab Selector: Jendela Login PIC -->
+        <div style="margin-bottom: 1.25rem;">
+          <div style="font-size: 0.82rem; font-weight: 800; color: #1e293b; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem;">
+            <span>🚪 PILIH JENDELA USER LOGIN PIC / PIMPINAN:</span>
+            <span style="font-size: 0.74rem; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 6px; font-weight: 700;">
+              ✨ Klik tab untuk membuka jendela PIC
+            </span>
           </div>
-          <span style="font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 0.25rem 0.65rem; border-radius: 6px; font-weight: 700;">
-            ⚡ 1-Click Fast Login
-          </span>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button type="button" class="pic-tab-btn active-tab-adis" id="picTabBtn_adis" onclick="selectPicLoginTab('adis')">
+              <span>🚗</span> <strong>PIC Adis Setiawan</strong> (Shop &amp; Drive GW)
+            </button>
+            <button type="button" class="pic-tab-btn" id="picTabBtn_eki" onclick="selectPicLoginTab('eki')">
+              <span>🖨️</span> <strong>PIC Eki Dwi Saputra</strong> (Snaprint GW)
+            </button>
+            <button type="button" class="pic-tab-btn" id="picTabBtn_rengga" onclick="selectPicLoginTab('rengga')">
+              <span>🏢</span> <strong>PIC M. Rengga Swana H.</strong> (Snaprint Zamrud)
+            </button>
+            <button type="button" class="pic-tab-btn" id="picTabBtn_direktur" onclick="selectPicLoginTab('direktur')">
+              <span>👑</span> <strong>Direktur Ir. Swanto</strong> (Pimpinan)
+            </button>
+          </div>
         </div>
 
-        <!-- 4 Grid Kartu Akun Lengkap -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-          
-          <!-- Kartu 1: Direktur Utama -->
-          <div class="user-credential-card" style="border-top: 4px solid #be123c; background: linear-gradient(to bottom, #fff1f2 0%, #ffffff 100%);">
+        <!-- ============================================================= -->
+        <!-- 4 JENDELA LOGIN KHUSUS MASING-MASING PIC                      -->
+        <!-- ============================================================= -->
+
+        <!-- JENDELA 1: PIC ADIS SETIAWAN (Shop And Drive GW) -->
+        <div id="picWindow_adis" class="pic-window active" style="background: white; border: 2px solid #0284c7; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.15); margin-bottom: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
             <div>
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
-                <span style="font-size: 0.7rem; font-weight: 800; background: #ffe4e6; color: #9f1239; padding: 2px 8px; border-radius: 4px;">PIMPINAN</span>
-                <span style="font-size: 1.25rem;">👑</span>
+              <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(255,255,255,0.2); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: 0.25rem;">
+                🚗 JENDELA LOGIN USER: PIC UNIT 1
               </div>
-              <h4 style="color: #9f1239; font-size: 0.95rem; font-weight: 800; margin-bottom: 2px;">Ir. Swanto</h4>
-              <p style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.6rem;">Direktur Utama (Semua Unit Usaha)</p>
-              
-              <div style="background: rgba(255,255,255,0.9); border: 1px dashed #f43f5e; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.25rem;">
-                <div>User: <span class="cred-badge" style="background: #ffe4e6; color: #9f1239; border-color: #fecdd3;">direktur</span> / <span class="cred-badge" style="background: #ffe4e6; color: #9f1239; border-color: #fecdd3;">swanto</span></div>
-                <div>Pass: <span class="cred-badge" style="background: #ffe4e6; color: #9f1239; border-color: #fecdd3;">swanto123</span></div>
-                <div style="font-size: 0.68rem; color: #881337; font-weight: 600; margin-top: 2px;">✓ Akses Penuh + Edit Pengaturan</div>
-              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;">Adis Setiawan &bull; Shop And Drive Grand Wisata</h3>
+              <p style="font-size: 0.76rem; color: #e0f2fe; margin: 0.2rem 0 0;">Kawasan Niaga Grand Wisata Blok AA No. 10, Bekasi</p>
             </div>
-            <button type="button" class="btn btn-primary" onclick="quickLoginAndEnter('direktur', 'swanto123', 'rekap')" style="width: 100%; justify-content: center; background: #be123c; font-size: 0.8rem; padding: 0.55rem;">
-              🚀 Masuk sbg Direktur
-            </button>
+            <span style="background: white; color: #0369a1; font-weight: 800; font-size: 0.8rem; padding: 0.35rem 0.85rem; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+              🚗 Shop And Drive GW
+            </span>
           </div>
 
-          <!-- Kartu 2: PIC Shop And Drive GW -->
-          <div class="user-credential-card" style="border-top: 4px solid #0284c7;">
-            <div>
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
-                <span style="font-size: 0.7rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">UNIT 1</span>
-                <span style="font-size: 1.25rem;">🚗</span>
-              </div>
-              <h4 style="color: #0369a1; font-size: 0.95rem; font-weight: 800; margin-bottom: 2px;">Adis Setiawan</h4>
-              <p style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.6rem;">Shop And Drive Grand Wisata</p>
+          <div style="padding: 1.25rem; background: linear-gradient(to bottom, #f0f9ff 0%, #ffffff 100%);">
+            <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.25rem; align-items: center;">
               
-              <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.25rem;">
-                <div>User: <span class="cred-badge">adis</span></div>
-                <div>Pass: <span class="cred-badge">adis123</span></div>
-                <div style="font-size: 0.68rem; color: #0284c7; font-weight: 600; margin-top: 2px;">✓ Rekap Cabang Grand Wisata</div>
+              <!-- Profil PIC -->
+              <div style="background: white; border: 1.5px solid #bae6fd; border-radius: 10px; padding: 1rem; text-align: center;">
+                <div style="width: 60px; height: 60px; background: #e0f2fe; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 0.6rem; border: 2px solid #7dd3fc;">
+                  🚗
+                </div>
+                <h4 style="color: #0369a1; font-weight: 800; font-size: 1rem; margin-bottom: 2px;">Adis Setiawan</h4>
+                <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.6rem;">PIC / Kepala Cabang</div>
+                <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.45rem; font-size: 0.74rem; text-align: left;">
+                  <div>ID User: <code style="font-weight:700; color:#0369a1;">adis</code></div>
+                  <div>Default PIN: <code style="font-weight:700; color:#0369a1;">adis123</code></div>
+                </div>
               </div>
-            </div>
-            <button type="button" class="btn btn-primary" onclick="quickLoginAndEnter('adis', 'adis123', 'rekap')" style="width: 100%; justify-content: center; background: #0284c7; font-size: 0.8rem; padding: 0.55rem;">
-              🚀 Masuk sbg PIC Adis
-            </button>
-          </div>
 
-          <!-- Kartu 3: PIC Snaprint GW -->
-          <div class="user-credential-card" style="border-top: 4px solid #16a34a;">
-            <div>
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
-                <span style="font-size: 0.7rem; font-weight: 800; background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 4px;">UNIT 2</span>
-                <span style="font-size: 1.25rem;">🖨️</span>
-              </div>
-              <h4 style="color: #15803d; font-size: 0.95rem; font-weight: 800; margin-bottom: 2px;">Eki Dwi Saputra</h4>
-              <p style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.6rem;">Snaprint Grand Wisata</p>
-              
-              <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.25rem;">
-                <div>User: <span class="cred-badge" style="background: #f0fdf4; color: #166534; border-color: #bbf7d0;">eki</span></div>
-                <div>Pass: <span class="cred-badge" style="background: #f0fdf4; color: #166534; border-color: #bbf7d0;">eki123</span></div>
-                <div style="font-size: 0.68rem; color: #16a34a; font-weight: 600; margin-top: 2px;">✓ Rekap Snaprint Grand Wisata</div>
-              </div>
-            </div>
-            <button type="button" class="btn btn-success" onclick="quickLoginAndEnter('eki', 'eki123', 'rekap')" style="width: 100%; justify-content: center; font-size: 0.8rem; padding: 0.55rem;">
-              🚀 Masuk sbg PIC Eki
-            </button>
-          </div>
+              <!-- Form Login Khusus Adis -->
+              <div style="background: white; border: 1.5px solid #bae6fd; border-radius: 10px; padding: 1rem;">
+                <div style="font-size: 0.82rem; font-weight: 800; color: #0369a1; margin-bottom: 0.6rem;">
+                  🔑 Masuk ke Sistem sebagai PIC Adis Setiawan:
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.65rem;">
+                  <div>
+                    <label style="font-size: 0.72rem; font-weight: 700; color: #475569;">Username:</label>
+                    <input type="text" id="frontUser_adis" value="adis" readonly style="width: 100%; padding: 0.45rem 0.6rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem; background: #f1f5f9; font-weight: 700; color: #0369a1;">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.72rem; font-weight: 700; color: #475569;">Password / PIN:</label>
+                    <div style="position: relative;">
+                      <input type="password" id="frontPass_adis" value="adis123" style="width: 100%; padding: 0.45rem 2rem 0.45rem 0.6rem; border: 1.5px solid #7dd3fc; border-radius: 6px; font-size: 0.82rem; font-weight: 700;" onkeyup="if(event.key==='Enter') loginAsPic('adis', 'rekap')">
+                      <button type="button" onclick="togglePassVisibility('frontPass_adis', this)" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 0.9rem; padding: 0; color: #64748b;" title="Lihat/Sembunyikan Password">👁️</button>
+                    </div>
+                  </div>
+                </div>
 
-          <!-- Kartu 4: PIC Snaprint Zamrud -->
-          <div class="user-credential-card" style="border-top: 4px solid #d97706;">
-            <div>
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
-                <span style="font-size: 0.7rem; font-weight: 800; background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 4px;">UNIT 3</span>
-                <span style="font-size: 1.25rem;">🏢</span>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                  <button type="button" class="btn btn-primary" onclick="loginAsPic('adis', 'rekap')" style="flex: 1; justify-content: center; background: #0284c7; font-size: 0.8rem; padding: 0.55rem;">
+                    📊 Masuk ke Rekap Gaji
+                  </button>
+                  <button type="button" class="btn btn-outline-white" onclick="loginAsPic('adis', 'slip')" style="flex: 1; justify-content: center; background: #eff6ff; color: #0284c7; border: 1.5px solid #93c5fd; font-size: 0.8rem; padding: 0.55rem; font-weight: 700;">
+                    📝 Buka Slip Gaji
+                  </button>
+                </div>
               </div>
-              <h4 style="color: #b45309; font-size: 0.92rem; font-weight: 800; margin-bottom: 2px;">M. Rengga Swana H.</h4>
-              <p style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.6rem;">Snaprint Dukuh Zamrud</p>
-              
-              <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.25rem;">
-                <div>User: <span class="cred-badge" style="background: #fffbeb; color: #92400e; border-color: #fde68a;">rengga</span></div>
-                <div>Pass: <span class="cred-badge" style="background: #fffbeb; color: #92400e; border-color: #fde68a;">rengga123</span></div>
-                <div style="font-size: 0.68rem; color: #d97706; font-weight: 600; margin-top: 2px;">✓ Rekap Snaprint Zamrud</div>
-              </div>
-            </div>
-            <button type="button" class="btn btn-amber" onclick="quickLoginAndEnter('rengga', 'rengga123', 'rekap')" style="width: 100%; justify-content: center; font-size: 0.8rem; padding: 0.55rem;">
-              🚀 Masuk sbg PIC Rengga
-            </button>
-          </div>
 
+            </div>
+          </div>
         </div>
 
-        <!-- Bagian Bawah: Form Login Manual & Shortcut Menu -->
-        <div style="background: white; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 1.25rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem; align-items: center;">
-          
-          <!-- Form Manual Input -->
-          <form onsubmit="handleFrontGateSubmit(event)">
-            <h4 style="font-size: 0.88rem; font-weight: 800; color: #1e3a8a; margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.35rem;">
-              📝 Atau Masukkan Akun Secara Manual:
-            </h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.65rem;">
-              <div>
-                <label for="frontGateUser" style="font-size: 0.74rem; font-weight: 700; color: #475569;">Username:</label>
-                <input type="text" id="frontGateUser" placeholder="direktur / adis / eki / rengga" required style="width: 100%; padding: 0.45rem 0.65rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem;">
+        <!-- JENDELA 2: PIC EKI DWI SAPUTRA (Snaprint GW) -->
+        <div id="picWindow_eki" class="pic-window" style="background: white; border: 2px solid #16a34a; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.15); margin-bottom: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: white; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(255,255,255,0.2); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: 0.25rem;">
+                🖨️ JENDELA LOGIN USER: PIC UNIT 2
               </div>
-              <div>
-                <label for="frontGatePass" style="font-size: 0.74rem; font-weight: 700; color: #475569;">Password:</label>
-                <input type="password" id="frontGatePass" placeholder="Masukkan password..." required style="width: 100%; padding: 0.45rem 0.65rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem;">
-              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;">Eki Dwi Saputra &bull; Snaprint Grand Wisata</h3>
+              <p style="font-size: 0.76rem; color: #dcfce7; margin: 0.2rem 0 0;">Ruko Grand Wisata Blok AA No. 12, Bekasi</p>
             </div>
-            <div style="display: flex; gap: 0.5rem;">
-              <select id="frontGateTarget" style="flex: 1; padding: 0.45rem 0.65rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.8rem; font-weight: 600; color: #1e3a8a;">
-                <option value="rekap">📊 Buka Rekapitulasi 3 Unit</option>
-                <option value="slip">📝 Buka Pembuat Slip Gaji</option>
-              </select>
-              <button type="submit" class="btn btn-primary" style="padding: 0.45rem 1.25rem; font-size: 0.82rem; background: #1e40af;">
-                🔓 Masuk ke Sistem
+            <span style="background: white; color: #15803d; font-weight: 800; font-size: 0.8rem; padding: 0.35rem 0.85rem; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+              🖨️ Snaprint GW
+            </span>
+          </div>
+
+          <div style="padding: 1.25rem; background: linear-gradient(to bottom, #f0fdf4 0%, #ffffff 100%);">
+            <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.25rem; align-items: center;">
+              
+              <!-- Profil PIC -->
+              <div style="background: white; border: 1.5px solid #bbf7d0; border-radius: 10px; padding: 1rem; text-align: center;">
+                <div style="width: 60px; height: 60px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 0.6rem; border: 2px solid #86efac;">
+                  🖨️
+                </div>
+                <h4 style="color: #15803d; font-weight: 800; font-size: 1rem; margin-bottom: 2px;">Eki Dwi Saputra</h4>
+                <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.6rem;">PIC / Unit Manager Percetakan GW</div>
+                <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.45rem; font-size: 0.74rem; text-align: left;">
+                  <div>ID User: <code style="font-weight:700; color:#15803d;">eki</code></div>
+                  <div>Default PIN: <code style="font-weight:700; color:#15803d;">eki123</code></div>
+                </div>
+              </div>
+
+              <!-- Form Login Khusus Eki -->
+              <div style="background: white; border: 1.5px solid #bbf7d0; border-radius: 10px; padding: 1rem;">
+                <div style="font-size: 0.82rem; font-weight: 800; color: #15803d; margin-bottom: 0.6rem;">
+                  🔑 Masuk ke Sistem sebagai PIC Eki Dwi Saputra:
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.65rem;">
+                  <div>
+                    <label style="font-size: 0.72rem; font-weight: 700; color: #475569;">Username:</label>
+                    <input type="text" id="frontUser_eki" value="eki" readonly style="width: 100%; padding: 0.45rem 0.6rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem; background: #f1f5f9; font-weight: 700; color: #15803d;">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.72rem; font-weight: 700; color: #475569;">Password / PIN:</label>
+                    <div style="position: relative;">
+                      <input type="password" id="frontPass_eki" value="eki123" style="width: 100%; padding: 0.45rem 2rem 0.45rem 0.6rem; border: 1.5px solid #86efac; border-radius: 6px; font-size: 0.82rem; font-weight: 700;" onkeyup="if(event.key==='Enter') loginAsPic('eki', 'rekap')">
+                      <button type="button" onclick="togglePassVisibility('frontPass_eki', this)" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 0.9rem; padding: 0; color: #64748b;" title="Lihat/Sembunyikan Password">👁️</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                  <button type="button" class="btn btn-success" onclick="loginAsPic('eki', 'rekap')" style="flex: 1; justify-content: center; font-size: 0.8rem; padding: 0.55rem;">
+                    📊 Masuk ke Rekap Gaji
+                  </button>
+                  <button type="button" class="btn btn-outline-white" onclick="loginAsPic('eki', 'slip')" style="flex: 1; justify-content: center; background: #f0fdf4; color: #166534; border: 1.5px solid #86efac; font-size: 0.8rem; padding: 0.55rem; font-weight: 700;">
+                    📝 Buka Slip Gaji
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- JENDELA 3: PIC M. RENGGA SWANA H. (Snaprint Zamrud) -->
+        <div id="picWindow_rengga" class="pic-window" style="background: white; border: 2px solid #d97706; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.15); margin-bottom: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: white; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(255,255,255,0.2); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: 0.25rem;">
+                🏢 JENDELA LOGIN USER: PIC UNIT 3
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;">M. Rengga Swana Herlambang &bull; Snaprint Zamrud</h3>
+              <p style="font-size: 0.76rem; color: #fef3c7; margin: 0.2rem 0 0;">Dukuh Zamrud Blok M No. 12, Mustikajaya, Kota Bekasi</p>
+            </div>
+            <span style="background: white; color: #b45309; font-weight: 800; font-size: 0.8rem; padding: 0.35rem 0.85rem; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+              🏢 Snaprint Zamrud
+            </span>
+          </div>
+
+          <div style="padding: 1.25rem; background: linear-gradient(to bottom, #fffbeb 0%, #ffffff 100%);">
+            <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.25rem; align-items: center;">
+              
+              <!-- Profil PIC -->
+              <div style="background: white; border: 1.5px solid #fde68a; border-radius: 10px; padding: 1rem; text-align: center;">
+                <div style="width: 60px; height: 60px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 0.6rem; border: 2px solid #fcd34d;">
+                  🏢
+                </div>
+                <h4 style="color: #b45309; font-weight: 800; font-size: 0.95rem; margin-bottom: 2px;">M. Rengga Swana H.</h4>
+                <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.6rem;">PIC / Unit Manager Percetakan Zamrud</div>
+                <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.45rem; font-size: 0.74rem; text-align: left;">
+                  <div>ID User: <code style="font-weight:700; color:#b45309;">rengga</code></div>
+                  <div>Default PIN: <code style="font-weight:700; color:#b45309;">rengga123</code></div>
+                </div>
+              </div>
+
+              <!-- Form Login Khusus Rengga -->
+              <div style="background: white; border: 1.5px solid #fde68a; border-radius: 10px; padding: 1rem;">
+                <div style="font-size: 0.82rem; font-weight: 800; color: #b45309; margin-bottom: 0.6rem;">
+                  🔑 Masuk ke Sistem sebagai PIC M. Rengga:
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.65rem;">
+                  <div>
+                    <label style="font-size: 0.72rem; font-weight: 700; color: #475569;">Username:</label>
+                    <input type="text" id="frontUser_rengga" value="rengga" readonly style="width: 100%; padding: 0.45rem 0.6rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem; background: #f1f5f9; font-weight: 700; color: #b45309;">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.72rem; font-weight: 700; color: #475569;">Password / PIN:</label>
+                    <div style="position: relative;">
+                      <input type="password" id="frontPass_rengga" value="rengga123" style="width: 100%; padding: 0.45rem 2rem 0.45rem 0.6rem; border: 1.5px solid #fcd34d; border-radius: 6px; font-size: 0.82rem; font-weight: 700;" onkeyup="if(event.key==='Enter') loginAsPic('rengga', 'rekap')">
+                      <button type="button" onclick="togglePassVisibility('frontPass_rengga', this)" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 0.9rem; padding: 0; color: #64748b;" title="Lihat/Sembunyikan Password">👁️</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                  <button type="button" class="btn btn-amber" onclick="loginAsPic('rengga', 'rekap')" style="flex: 1; justify-content: center; font-size: 0.8rem; padding: 0.55rem;">
+                    📊 Masuk ke Rekap Gaji
+                  </button>
+                  <button type="button" class="btn btn-outline-white" onclick="loginAsPic('rengga', 'slip')" style="flex: 1; justify-content: center; background: #fffbeb; color: #b45309; border: 1.5px solid #fde68a; font-size: 0.8rem; padding: 0.55rem; font-weight: 700;">
+                    📝 Buka Slip Gaji
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- JENDELA 4: DIREKTUR UTAMA (IR. SWANTO) -->
+        <div id="picWindow_direktur" class="pic-window" style="background: white; border: 2px solid #be123c; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(190, 18, 60, 0.15); margin-bottom: 1.5rem;">
+          <div style="background: linear-gradient(135deg, #be123c 0%, #881337 100%); color: white; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(255,255,255,0.2); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: 0.25rem;">
+                👑 JENDELA LOGIN USER: DIREKTUR UTAMA
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;">Ir. Swanto &bull; Direktur Utama</h3>
+              <p style="font-size: 0.76rem; color: #ffe4e6; margin: 0.2rem 0 0;">Otorisasi Penggajian Penuh 3 Unit Usaha &amp; Pengaturan Sistem</p>
+            </div>
+            <span style="background: white; color: #9f1239; font-weight: 800; font-size: 0.8rem; padding: 0.35rem 0.85rem; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+              👑 Direktur Utama
+            </span>
+          </div>
+
+          <div style="padding: 1.25rem; background: linear-gradient(to bottom, #fff1f2 0%, #ffffff 100%);">
+            <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.25rem; align-items: center;">
+              
+              <!-- Profil Direktur -->
+              <div style="background: white; border: 1.5px solid #fecdd3; border-radius: 10px; padding: 1rem; text-align: center;">
+                <div style="width: 60px; height: 60px; background: #ffe4e6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 0.6rem; border: 2px solid #fda4af;">
+                  👑
+                </div>
+                <h4 style="color: #9f1239; font-weight: 800; font-size: 1rem; margin-bottom: 2px;">Ir. Swanto</h4>
+                <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.6rem;">Direktur Utama / Owner</div>
+                <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.45rem; font-size: 0.74rem; text-align: left;">
+                  <div>ID User: <code style="font-weight:700; color:#9f1239;">direktur</code> / <code style="font-weight:700; color:#9f1239;">swanto</code></div>
+                  <div>Password: <code style="font-weight:700; color:#9f1239;">swanto123</code></div>
+                  <div style="color: #881337; font-size: 0.7rem; font-weight: 700; margin-top: 3px;">✓ Akses Pengaturan &amp; 3 Unit</div>
+                </div>
+              </div>
+
+              <!-- Form Login Khusus Direktur -->
+              <div style="background: white; border: 1.5px solid #fecdd3; border-radius: 10px; padding: 1rem;">
+                <div style="font-size: 0.82rem; font-weight: 800; color: #9f1239; margin-bottom: 0.6rem;">
+                  🔑 Masuk ke Sistem sebagai Direktur Utama:
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.65rem;">
+                  <div>
+                    <label style="font-size: 0.72rem; font-weight: 700; color: #475569;">Username:</label>
+                    <input type="text" id="frontUser_direktur" value="direktur" readonly style="width: 100%; padding: 0.45rem 0.6rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem; background: #f1f5f9; font-weight: 700; color: #9f1239;">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.72rem; font-weight: 700; color: #475569;">Password / PIN:</label>
+                    <div style="position: relative;">
+                      <input type="password" id="frontPass_direktur" value="swanto123" style="width: 100%; padding: 0.45rem 2rem 0.45rem 0.6rem; border: 1.5px solid #fda4af; border-radius: 6px; font-size: 0.82rem; font-weight: 700;" onkeyup="if(event.key==='Enter') loginAsPic('direktur', 'rekap')">
+                      <button type="button" onclick="togglePassVisibility('frontPass_direktur', this)" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 0.9rem; padding: 0; color: #64748b;" title="Lihat/Sembunyikan Password">👁️</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                  <button type="button" class="btn btn-primary" onclick="loginAsPic('direktur', 'rekap')" style="flex: 1; justify-content: center; background: #059669; font-size: 0.8rem; padding: 0.55rem;">
+                    📊 Rekap 3 Unit
+                  </button>
+                  <button type="button" class="btn btn-outline-white" onclick="loginAsPic('direktur', 'slip')" style="flex: 1; justify-content: center; background: #fff1f2; color: #9f1239; border: 1.5px solid #fda4af; font-size: 0.8rem; padding: 0.55rem; font-weight: 700;">
+                    📝 Slip Semua Unit
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Grid Kartu Akun Lengkap untuk Navigasi Cepat -->
+        <div style="margin-bottom: 1.25rem;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 0.5rem;">
+            ⚡ Atau Pilih Jendela PIC / 1-Klik Masuk Langsung di bawah ini:
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.75rem;">
+            
+            <div class="user-credential-card" onclick="selectPicLoginTab('adis')" style="border-top: 4px solid #0284c7; cursor: pointer;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: #0369a1; font-size: 0.86rem;">🚗 Adis Setiawan</strong>
+                <span style="font-size: 0.7rem; background: #e0f2fe; color: #0369a1; padding: 1px 6px; border-radius: 4px; font-weight: 700;">UNIT 1</span>
+              </div>
+              <div style="font-size: 0.73rem; color: #64748b;">Shop And Drive GW</div>
+              <button type="button" class="btn btn-primary" onclick="event.stopPropagation(); quickLoginAndEnter('adis', 'adis123', 'rekap')" style="width: 100%; justify-content: center; background: #0284c7; font-size: 0.78rem; padding: 0.45rem;">
+                🚀 1-Klik Masuk
               </button>
             </div>
-          </form>
 
-          <!-- Navigasi Pintas & Keamanan Direktur Note -->
-          <div style="border-left: 1px solid #e2e8f0; padding-left: 1.25rem;">
-            <div style="background: #fff1f2; border: 1px dashed #f43f5e; border-radius: 8px; padding: 0.75rem; margin-bottom: 0.75rem;">
-              <div style="font-size: 0.76rem; font-weight: 800; color: #9f1239; display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.25rem;">
-                <span>🔒</span> CATATAN RESMI OTORISASI:
+            <div class="user-credential-card" onclick="selectPicLoginTab('eki')" style="border-top: 4px solid #16a34a; cursor: pointer;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: #15803d; font-size: 0.86rem;">🖨️ Eki Dwi Saputra</strong>
+                <span style="font-size: 0.7rem; background: #dcfce7; color: #15803d; padding: 1px 6px; border-radius: 4px; font-weight: 700;">UNIT 2</span>
               </div>
-              <p style="font-size: 0.72rem; color: #881337; line-height: 1.4; margin: 0;">
-                Perubahan Pengaturan hanya boleh dilakukan Oleh Direktur <strong>( Ir. Swanto )</strong>. Jika mencoba merubah tanpa izin akan muncul Note: <em>HARUS IZIN DIREKTUR</em>.
-              </p>
-            </div>
-            <div style="display: flex; gap: 0.5rem;">
-              <button type="button" class="btn btn-outline-white" onclick="closeFrontGate()" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; font-size: 0.75rem; flex: 1; justify-content: center;">
-                ➡️ Lanjut Tanpa Ubah Akun
+              <div style="font-size: 0.73rem; color: #64748b;">Snaprint GW</div>
+              <button type="button" class="btn btn-success" onclick="event.stopPropagation(); quickLoginAndEnter('eki', 'eki123', 'rekap')" style="width: 100%; justify-content: center; font-size: 0.78rem; padding: 0.45rem;">
+                🚀 1-Klik Masuk
               </button>
             </div>
-          </div>
 
+            <div class="user-credential-card" onclick="selectPicLoginTab('rengga')" style="border-top: 4px solid #d97706; cursor: pointer;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: #b45309; font-size: 0.86rem;">🏢 M. Rengga Swana</strong>
+                <span style="font-size: 0.7rem; background: #fef3c7; color: #b45309; padding: 1px 6px; border-radius: 4px; font-weight: 700;">UNIT 3</span>
+              </div>
+              <div style="font-size: 0.73rem; color: #64748b;">Snaprint Zamrud</div>
+              <button type="button" class="btn btn-amber" onclick="event.stopPropagation(); quickLoginAndEnter('rengga', 'rengga123', 'rekap')" style="width: 100%; justify-content: center; font-size: 0.78rem; padding: 0.45rem;">
+                🚀 1-Klik Masuk
+              </button>
+            </div>
+
+            <div class="user-credential-card" onclick="selectPicLoginTab('direktur')" style="border-top: 4px solid #be123c; cursor: pointer;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: #9f1239; font-size: 0.86rem;">👑 Ir. Swanto</strong>
+                <span style="font-size: 0.7rem; background: #ffe4e6; color: #9f1239; padding: 1px 6px; border-radius: 4px; font-weight: 700;">DIREKSI</span>
+              </div>
+              <div style="font-size: 0.73rem; color: #64748b;">Direktur Utama</div>
+              <button type="button" class="btn btn-primary" onclick="event.stopPropagation(); quickLoginAndEnter('direktur', 'swanto123', 'rekap')" style="width: 100%; justify-content: center; background: #be123c; font-size: 0.78rem; padding: 0.45rem;">
+                🚀 1-Klik Masuk
+              </button>
+            </div>
+
+          </div>
         </div>
+
+        <!-- Footer / Bypass Bar -->
+        <div style="background: white; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 0.9rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+          <div style="font-size: 0.76rem; color: #64748b;">
+            🔒 <strong>Keamanan:</strong> Seluruh Pengaturan Sistem hanya boleh dilihat &amp; diubah oleh <strong>Direktur (Ir. Swanto)</strong>.
+          </div>
+          <button type="button" class="btn btn-outline-white" onclick="closeFrontGate()" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; font-size: 0.78rem; padding: 0.45rem 1rem;">
+            ➡️ Lanjut ke Aplikasi
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
       </div>
 
@@ -1576,10 +1832,59 @@
       renderPayrollReport();
     }
 
-    function openFrontGate() {
+    function selectPicLoginTab(picKey) {
+      const allPics = ['adis', 'eki', 'rengga', 'direktur'];
+      if (!allPics.includes(picKey)) picKey = 'adis';
+
+      allPics.forEach(k => {
+        const btn = document.getElementById('picTabBtn_' + k);
+        const win = document.getElementById('picWindow_' + k);
+        if (btn) {
+          btn.className = 'pic-tab-btn' + (k === picKey ? ` active-tab-${k}` : '');
+        }
+        if (win) {
+          if (k === picKey) {
+            win.classList.add('active');
+          } else {
+            win.classList.remove('active');
+          }
+        }
+      });
+
+      setTimeout(() => {
+        const passInput = document.getElementById('frontPass_' + picKey);
+        if (passInput) {
+          passInput.focus();
+          passInput.select();
+        }
+      }, 100);
+    }
+
+    function loginAsPic(picKey, destination = 'rekap') {
+      const passEl = document.getElementById('frontPass_' + picKey);
+      const pass = passEl ? passEl.value.trim() : '';
+      quickLoginAndEnter(picKey, pass, destination);
+    }
+
+    function togglePassVisibility(inputId, btnEl) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (btnEl) btnEl.innerText = '🔒';
+      } else {
+        input.type = 'password';
+        if (btnEl) btnEl.innerText = '👁️';
+      }
+    }
+
+    function openFrontGate(specificPic = null) {
       const gate = document.getElementById('frontLoginGate');
       if (gate) {
         gate.style.display = 'flex';
+      }
+      if (specificPic) {
+        selectPicLoginTab(specificPic);
       }
     }
 
@@ -2546,7 +2851,14 @@
       }
 
       const params = new URLSearchParams(window.location.search);
-      if (params.get('gate') === '1') {
+      let picParam = params.get('pic') || window.location.hash.replace('#', '');
+      if (picParam) {
+        picParam = picParam.toLowerCase();
+        if (picParam === 'swanto') picParam = 'direktur';
+        if (['adis', 'eki', 'rengga', 'direktur'].includes(picParam)) {
+          openFrontGate(picParam);
+        }
+      } else if (params.get('gate') === '1') {
         openFrontGate();
       }
     });

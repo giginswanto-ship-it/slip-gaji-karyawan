@@ -53,9 +53,13 @@ Aplikasi web modern berbasis HTML5, CSS3, dan JavaScript Vanilla untuk pembuatan
 
 ---
 
-## 🚀 Cara Menjalankan
+## 🚀 Cara Menjalankan & Jendela Login PIC
 
-Cukup klik dua kali (*double click*) pada salah satu file batch launcher berikut:
+Cukup klik dua kali (*double click*) pada salah satu file batch launcher sesuai PIC / Kebutuhan:
+- **`Buka_Login_PIC_Adis.bat`** -> 🚗 Langsung ke Jendela Login **PIC Adis Setiawan** (*Shop And Drive GW*).
+- **`Buka_Login_PIC_Eki.bat`** -> 🖨️ Langsung ke Jendela Login **PIC Eki Dwi Saputra** (*Snaprint GW*).
+- **`Buka_Login_PIC_Rengga.bat`** -> 🏢 Langsung ke Jendela Login **PIC M. Rengga Swana H.** (*Snaprint Zamrud*).
+- **`Buka_Login_Direktur_Swanto.bat`** -> 👑 Langsung ke Jendela Login **Direktur Utama Ir. Swanto**.
 - **`Buka_Slip_Gaji.bat`** -> Membuka aplikasi input & cetak Slip Gaji Karyawan di browser.
 - **`Buka_Rekap_Gaji.bat`** -> Membuka halaman Rekapitulasi Daftar Gaji Semua Karyawan di browser.
 

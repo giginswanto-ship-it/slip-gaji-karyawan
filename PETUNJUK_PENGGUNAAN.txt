@@ -79,10 +79,22 @@ Tersedia 5 pilihan ukuran kertas yang dapat dipilih langsung sebelum mencetak:
 5. 🧾 [Struk 80mm]     : Ukuran gulungan printer kasir thermal struk.
 
 -------------------------------------------------------------------
+JENDELA USER LOGIN & LAUNCHER KHUSUS MASING-MASING PIC:
+-------------------------------------------------------------------
+Setiap PIC dan Direktur dapat langsung masuk ke jendela login masing-masing:
+1. PIC Adis Setiawan (Shop & Drive GW) : Buka [ Buka_Login_PIC_Adis.bat ]
+2. PIC Eki Dwi Saputra (Snaprint GW)   : Buka [ Buka_Login_PIC_Eki.bat ]
+3. PIC M. Rengga (Snaprint Zamrud)     : Buka [ Buka_Login_PIC_Rengga.bat ]
+4. Direktur Utama (Ir. Swanto)         : Buka [ Buka_Login_Direktur_Swanto.bat ]
+
+Atau di Halaman Muka aplikasi, cukup klik Tab PIC yang bersangkutan untuk
+membuka Jendela Login Khusus PIC tersebut lengkap dengan tombol 1-Klik Masuk.
+
+-------------------------------------------------------------------
 CARA MENGGUNAKAN:
 -------------------------------------------------------------------
-1. Klik ganda file [ Buka_Slip_Gaji.bat ] atau buka langsung [ index.html ] di browser.
-2. Login / Pilih Akun (Direktur / PIC Unit Usaha terkait).
+1. Buka launcher sesuai PIC masing-masing atau buka [ Buka_Slip_Gaji.bat ] / [ index.html ].
+2. Masuk melalui Jendela User Login PIC Anda.
 3. Isi data karyawan & nominal (Tunjangan Makan & Transport otomatis dihitung per hari masuk kerja).
 4. Klik tombol "💾 Simpan ke Database" untuk mengarsipkan ke database unit usaha.
 5. Klik tombol "Cetak Slip" untuk mencetak langsung atau simpan sebagai PDF.
