@@ -51,7 +51,7 @@ Aplikasi web modern berbasis HTML5, CSS3, dan JavaScript Vanilla untuk pembuatan
      - **Diperiksa Oleh**: Manager Keuangan (`Hendra Wijaya, S.E.`).
      - **Disetujui Oleh**: Direktur (`Ir. Swanto`).
    - Ekspor data ke format **Excel (.XLS / CSV)** dengan kolom Unit Usaha.
-   - Format cetak laporan **A4 Landscape**.
+   - Format cetak laporan **Folio / F4 Landscape** (HVS 21,5 cm × 33,0 cm).
 
 ---
 

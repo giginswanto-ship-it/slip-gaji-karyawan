@@ -557,10 +557,81 @@
       flex: 1;
     }
 
-    /* Print Media Query */
+    /* Print Preview Modal Styles */
+    .preview-modal-dialog {
+      max-width: 1280px !important;
+      width: 96% !important;
+      height: 94vh !important;
+      max-height: 94vh !important;
+      background: #0f172a;
+    }
+
+    .preview-modal-dialog .modal-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      border-bottom: 1px solid #334155;
+    }
+
+    .preview-stage {
+      background: #334155;
+      padding: 1.5rem 1rem;
+      overflow: auto;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .preview-paper-sheet {
+      background: white;
+      color: #0f172a;
+      width: 100%;
+      max-width: 1140px;
+      min-width: 960px;
+      padding: 1.5cm 1.25cm;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin: 0 auto;
+    }
+
+    .preview-meta-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid #334155;
+    }
+
+    .meta-chip {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #475569;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .meta-chip.highlight {
+      background: #0284c7;
+      color: white;
+      border-color: #38bdf8;
+    }
+
+    .meta-chip.green {
+      background: #15803d;
+      color: white;
+      border-color: #4ade80;
+    }
+
+    /* Print Media Query - Kertas Folio / F4 Landscape (215mm x 330mm) */
     @page {
-      size: A4 landscape;
-      margin: 8mm 8mm;
+      size: 330mm 215mm landscape;
+      margin: 6mm 8mm;
     }
 
     @media print {
@@ -570,6 +641,8 @@
         padding: 0 !important;
         margin: 0 !important;
         font-size: 7.5pt !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .app-header,
@@ -582,6 +655,7 @@
 
       .main-container {
         max-width: 100% !important;
+        width: 100% !important;
         padding: 0 !important;
         margin: 0 !important;
       }
@@ -593,17 +667,21 @@
       }
 
       .report-formal-header {
-        padding: 0 0 0.5cm !important;
+        padding: 0 0 0.4cm !important;
+      }
+
+      .table-scroll-wrapper {
+        overflow: visible !important;
       }
 
       .payroll-table {
         min-width: 100% !important;
         width: 100% !important;
-        font-size: 7pt !important;
+        font-size: 7.2pt !important;
       }
 
       .payroll-table th, .payroll-table td {
-        padding: 2.5mm 1.5mm !important;
+        padding: 2mm 1.5mm !important;
         border: 0.5pt solid #475569 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
@@ -615,10 +693,7 @@
       }
 
       .sig-col-role {
-        margin-bottom: 2.2cm !important;
-      }
-      .sig-col-role {
-        margin-bottom: 2.2cm !important;
+        margin-bottom: 2cm !important;
       }
     }
 
@@ -1195,9 +1270,9 @@
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
           📊 Export Excel
         </button>
-        <button class="btn btn-success" onclick="window.print()" title="Cetak Rekapitulasi Gaji (Landscape)">
-          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-          🖨️ Cetak Rekap (Landscape)
+        <button class="btn btn-success" onclick="openPrintPreviewModal()" title="Buka Pratinjau &amp; Cetak Rekapitulasi Gaji (Kertas Folio / F4 Landscape)">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          👁️ Pratinjau &amp; Cetak (Folio)
         </button>
       </div>
     </div>
@@ -1419,6 +1494,67 @@
       <div style="text-align: center; font-size: 7.5pt; color: #64748b; margin-top: 1.25rem; border-top: 1px dotted #cbd5e1; padding-top: 0.5rem;">
         Laporan Rekapitulasi Daftar Gaji Karyawan Sah &bull; Dicetak Otomatis &bull; <em>dev by dutaglobaltech enterprise</em>
       </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Pratinjau Cetak / Print Preview (Khusus Kertas Folio / F4 Landscape) -->
+  <div class="modal-backdrop no-print" id="printPreviewModal" onclick="closeModalOnBackdrop(event)" style="z-index: 190;">
+    <div class="modal-content preview-modal-dialog">
+      <div class="modal-header">
+        <h3>
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          👁️ Pratinjau Cetak Rekapitulasi Gaji (Kertas Folio / F4 Landscape)
+        </h3>
+        <button onclick="closePrintPreviewModal()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.5rem; line-height: 1;">&times;</button>
+      </div>
+
+      <!-- Meta Info Chips Bar -->
+      <div class="preview-meta-chips">
+        <span class="meta-chip highlight">
+          📄 Ukuran Kertas: <strong>Folio / F4 (21,5 × 33,0 cm)</strong>
+        </span>
+        <span class="meta-chip highlight">
+          🔄 Orientasi: <strong>Landscape (Mendatar)</strong>
+        </span>
+        <span class="meta-chip">
+          🏢 <span id="prevModalUnit">Semua Unit</span>
+        </span>
+        <span class="meta-chip">
+          📅 <span id="prevModalPeriod">September 2026</span>
+        </span>
+        <span class="meta-chip">
+          👥 <span id="prevModalTotalEmp">0 Orang</span>
+        </span>
+        <span class="meta-chip green">
+          💵 Total THP: <span id="prevModalTotalNet">Rp 0</span>
+        </span>
+      </div>
+
+      <!-- Preview Paper Viewport -->
+      <div class="preview-stage">
+        <div class="preview-paper-sheet" id="previewDocumentSheet">
+          <!-- Live Cloned Report Content Rendered Here -->
+        </div>
+      </div>
+
+      <!-- Modal Footer Action Bar -->
+      <div style="padding: 1rem 1.5rem; background: #0f172a; border-top: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+        <div style="font-size: 0.78rem; color: #94a3b8; display: flex; align-items: center; gap: 0.4rem;">
+          <span style="font-size: 1rem;">💡</span>
+          <span>Tips: Pada jendela printer browser, pastikan Paper Size dipilih <strong>Folio / F4 / 8.5 x 13 in</strong> dan Layout <strong>Landscape</strong>.</span>
+        </div>
+        <div style="display: flex; gap: 0.6rem;">
+          <button type="button" class="btn btn-secondary" onclick="closePrintPreviewModal()" style="background: #334155; color: #e2e8f0; border: 1px solid #475569;">
+            ❌ Batal / Tutup
+          </button>
+          <button type="button" class="btn btn-success" onclick="executePrint()" style="background: #16a34a; font-weight: 700; padding: 0.6rem 1.25rem; font-size: 0.85rem; box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);">
+            🖨️ Lanjut Cetak Dokumen Sekarang
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Settings / Pengaturan Sistem Modal Popup -->
   <div class="modal-backdrop no-print" id="settingsModal" onclick="closeModalOnBackdrop(event)">
@@ -3393,11 +3529,71 @@
       }
     });
 
-    // Shortcut Keyboard Ctrl+P untuk Cetak Rekap
+    // =========================================================================
+    // MODAL PRATINJAU CETAK (PRINT PREVIEW) - KERTAS FOLIO / F4 LANDSCAPE
+    // =========================================================================
+    function openPrintPreviewModal() {
+      // Pastikan data rekapitulasi ter-render paling mutakhir
+      renderPayrollReport();
+
+      const filterUnitEl = document.getElementById('filterUnit');
+      const unitText = filterUnitEl ? filterUnitEl.options[filterUnitEl.selectedIndex].text : 'Semua Unit';
+      const periodEl = document.getElementById('filterPeriod');
+      const periodText = (periodEl && periodEl.value !== 'ALL') ? periodEl.value : 'Semua Periode';
+      
+      const totalEmpEl = document.getElementById('statTotalEmployees');
+      const totalNetEl = document.getElementById('statTotalNet');
+
+      if (document.getElementById('prevModalUnit')) document.getElementById('prevModalUnit').innerText = unitText;
+      if (document.getElementById('prevModalPeriod')) document.getElementById('prevModalPeriod').innerText = periodText;
+      if (document.getElementById('prevModalTotalEmp')) document.getElementById('prevModalTotalEmp').innerText = totalEmpEl ? totalEmpEl.innerText : '0 Orang';
+      if (document.getElementById('prevModalTotalNet')) document.getElementById('prevModalTotalNet').innerText = totalNetEl ? totalNetEl.innerText : 'Rp 0';
+
+      // Render clone dokumen rekap ke lembar pratinjau kertas Folio
+      const reportCard = document.querySelector('.report-card');
+      const previewContainer = document.getElementById('previewDocumentSheet');
+      if (reportCard && previewContainer) {
+        const clone = reportCard.cloneNode(true);
+        // Hapus kolom tombol aksi agar tampilan pratinjau bersih 100% sama dengan hasil cetak
+        const actionCols = clone.querySelectorAll('.col-action');
+        actionCols.forEach(el => el.remove());
+        
+        // Hapus box shadow dan margin pembungkus pada hasil clone
+        clone.style.boxShadow = 'none';
+        clone.style.border = 'none';
+        clone.style.margin = '0';
+        clone.style.padding = '0';
+
+        previewContainer.innerHTML = '';
+        previewContainer.appendChild(clone);
+      }
+
+      const modal = document.getElementById('printPreviewModal');
+      if (modal) {
+        modal.classList.add('show');
+      }
+    }
+
+    function closePrintPreviewModal() {
+      const modal = document.getElementById('printPreviewModal');
+      if (modal) {
+        modal.classList.remove('show');
+      }
+    }
+
+    function executePrint() {
+      closePrintPreviewModal();
+      // Jeda kecil agar backdrop modal tertutup sempurna sebelum dialog print printer browser muncul
+      setTimeout(() => {
+        window.print();
+      }, 250);
+    }
+
+    // Shortcut Keyboard Ctrl+P untuk Buka Pratinjau & Cetak Rekap
     window.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
         e.preventDefault();
-        window.print();
+        openPrintPreviewModal();
       }
     });
   </script>
