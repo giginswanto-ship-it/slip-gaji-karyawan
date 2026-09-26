@@ -69,9 +69,38 @@ Atau langsung buka file `index.html` dan `rekap_gaji.html` menggunakan browser m
 
 ---
 
+---
+
+## 📁 Struktur Direktori & Berkas Proyek
+
+```text
+SLIP GAJI V2609/
+├── 📄 index.html                      # Halaman Utama: Input & Cetak Slip Gaji Karyawan
+├── 📄 rekap_gaji.html                 # Halaman Rekapitulasi Daftar Gaji 3 Unit Usaha
+├── 📂 css/                            # Modul Stylesheet & Layout Cetak
+│   ├── 🎨 slip.css                    # Desain Slip Gaji, Form Input & Format Kertas Cetak
+│   └── 🎨 rekap.css                   # Desain Dashboard Rekapitulasi & Tabel F4 Landscape
+├── 📂 js/                             # Modul JavaScript Logika Bisnis & Database
+│   ├── ⚙️ slip.js                     # Logika Kalkulasi THP, PPh 21 TER, Pratinjau & LocalStorage
+│   └── ⚙️ rekap.js                    # Logika Rekapitulasi, Statistik, Filter, Modal Koreksi & Ekspor Excel
+├── 📜 PETUNJUK_PENGGUNAAN.txt          # Dokumentasi & Panduan Operasional Pengguna
+├── 📊 Template_Slip_Gaji_Excel.xls    # Master Template Spreadsheet Format Excel
+├── 🚀 Buka_Login_Direktur_Swanto.bat  # Launcher Instan: Direktur Utama (Ir. Swanto)
+├── 🚗 Buka_Login_PIC_Adis.bat         # Launcher Instan: PIC Adis (Shop & Drive GW)
+├── 🖨️ Buka_Login_PIC_Eki.bat          # Launcher Instan: PIC Eki (Snaprint GW)
+├── 🏢 Buka_Login_PIC_Rengga.bat       # Launcher Instan: PIC Rengga (Snaprint Zamrud)
+├── 📑 Buka_Slip_Gaji.bat              # Launcher Aplikasi Slip Gaji
+├── 📈 Buka_Rekap_Gaji.bat             # Launcher Aplikasi Rekapitulasi
+├── 🔄 Push_ke_GitHub.bat              # Script Otomatis Commit & Push ke GitHub
+└── 📘 README.md                       # Dokumentasi Teknis Repositori
+```
+
+---
+
 ## 💻 Lisensi, Pimpinan & Pengembang
 - **Direktur**: `Ir. Swanto`
 - **Developer**: `dev by dutaglobaltech enterprise`
 - **GitHub**: [@giginswanto-ship-it](https://github.com/giginswanto-ship-it)
+
 
 
